@@ -16,9 +16,10 @@ limitations under the License.
 #define __OGG__
 
 #include <cstring>
-#include <min/mem_chunk.h>
 #include <vector>
 #include <vorbis/vorbisfile.h>
+
+#include "mem_chunk.h"
 
 namespace min
 {
@@ -36,80 +37,10 @@ struct fake_file
         : _head(head), _start(start), _size(size), _end(start + size) {}
 };
 
-size_t fake_read_ogg(void *const dest, const size_t byte_size, const size_t size_to_read, void *const fake)
-{
-    // Get the fake_file handle
-    fake_file *const ff = reinterpret_cast<fake_file *const>(fake);
-
-    // Size of the read
-    const size_t read_length = byte_size * size_to_read;
-
-    // Don't read past the end of the file
-    char *read_end = ff->_head + read_length;
-
-    // Calculate the size of the read, avoiding reading past EOF
-    const size_t length = (read_end > ff->_end) ? ff->_end - ff->_head : read_length;
-
-    // Copy the data
-    std::memcpy(dest, ff->_head, length);
-
-    // Increment the head
-    ff->_head += length;
-
-    // Return the read length
-    return length;
-}
-
-int fake_seek_ogg(void *const fake, const ogg_int64_t to, const int type)
-{
-    // Get the fake_file handle
-    fake_file *const ff = reinterpret_cast<fake_file *const>(fake);
-
-    // Implement the seek operation in the fake file
-    switch (type)
-    {
-    case SEEK_CUR:
-        ff->_head += to;
-        break;
-    case SEEK_END:
-        ff->_head = ff->_end - to;
-        break;
-    case SEEK_SET:
-        ff->_head = ff->_start + to;
-        break;
-    default:
-        return -1;
-    }
-
-    // If head is before the start of file
-    if (ff->_head < ff->_start)
-    {
-        ff->_head = ff->_start;
-    }
-
-    // If head is past the end of file
-    if (ff->_head > ff->_end)
-    {
-        ff->_head = ff->_end;
-    }
-
-    return 0;
-}
-
-int fake_close_ogg(void *const fake)
-{
-    // THE FILE IS FAKE!
-    return 0;
-}
-
-long fake_tell_ogg(void *const fake)
-{
-    // Get the fake_file handle
-    fake_file *const ff = reinterpret_cast<fake_file *const>(fake);
-
-    // Return the location from the start of the file
-    return (ff->_head - ff->_start);
-}
+size_t fake_read_ogg(void* const, const size_t, const size_t, void* const);
+int fake_seek_ogg(void* const, const ogg_int64_t, const int);
+int fake_close_ogg(void* const);
+long fake_tell_ogg(void* const);
 
 class ogg
 {
@@ -119,35 +50,9 @@ class ogg
     uint32_t _bits_per_sample;
     std::vector<uint8_t> _data;
 
-    inline void load(const std::string _file)
-    {
-        std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
-        if (file.is_open())
-        {
-            // Get the size of the file
-            const auto size = file.tellg();
+    inline void load(const std::string);
 
-            // Adjust file pointer to beginning
-            file.seekg(0, std::ios::beg);
-
-            // Allocate space for new file
-            std::vector<uint8_t> data(size);
-
-            // Read bytes and close the file
-            char *ptr = reinterpret_cast<char *>(data.data());
-            file.read(ptr, size);
-
-            // Close the file
-            file.close();
-
-            // Process the WAVE file
-            load_little_endian_16<std::vector<uint8_t>>(data);
-        }
-        else
-        {
-            throw std::runtime_error("wave: Could not load file '" + _file + "'");
-        }
-    }
+    // Definition needs to stay in class body because template
     template <class T>
     inline void load_little_endian_16(const T &data)
     {
@@ -216,49 +121,15 @@ class ogg
     }
 
   public:
-    ogg(const std::string &file)
-    {
-        load(file);
-    }
-    ogg(const mem_file &mem)
-    {
-        load_little_endian_16<mem_file>(mem);
-    }
-    void clear()
-    {
-        // Delete WAV data and reset WAV
-        _data.clear();
-
-        // Zero out fields so we dont try to use it later
-        _num_channels = 0;
-        _sample_rate = 0;
-        _bits_per_sample = 0;
-    }
-    bool is_mono() const
-    {
-        return _num_channels == 1;
-    }
-    bool is_stereo() const
-    {
-        return _num_channels > 1;
-    }
-    const std::vector<uint8_t> &data() const
-    {
-        return _data;
-    }
-    uint32_t get_bits_per_sample() const
-    {
-        return _bits_per_sample;
-    }
-    size_t get_data_samples() const
-    {
-        // Calculate number of samples in data buffer
-        return (_data.size() * 8) / _bits_per_sample;
-    }
-    uint32_t get_sample_rate() const
-    {
-        return _sample_rate;
-    }
+    ogg(const std::string&);
+    ogg(const mem_file&);
+    void clear();
+    bool is_mono() const;
+    bool is_stereo() const;
+    const std::vector<uint8_t> &data() const;
+    uint32_t get_bits_per_sample() const;
+    size_t get_data_samples() const;
+    uint32_t get_sample_rate() const;
 };
 }
 #endif
