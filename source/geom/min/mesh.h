@@ -15,13 +15,14 @@ limitations under the License.
 #ifndef __MESH__
 #define __MESH__
 #include <fstream>
-#include <min/mem_chunk.h>
-#include <min/vec2.h>
-#include <min/vec3.h>
-#include <min/vec4.h>
 #include <stdexcept>
 #include <string>
 #include <vector>
+
+#include "file/min/mem_chunk.h"
+#include "math/min/vec2.h"
+#include "math/min/vec3.h"
+#include "math/min/vec4.h"
 
 namespace min
 {

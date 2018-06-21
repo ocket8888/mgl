@@ -16,18 +16,19 @@ limitations under the License.
 #define __MD5_MESH__
 
 #include <array>
-#include <min/mat4.h>
-#include <min/md5_anim.h>
-#include <min/mem_chunk.h>
-#include <min/mesh.h>
-#include <min/quat.h>
-#include <min/strtoken.h>
-#include <min/vec3.h>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
+#include "md5_anim.h"
+#include "mem_chunk.h"
+#include "strtoken.h"
+
+#include "math/min/mat4.h"
+#include "geom/min/mesh.h"
+#include "math/min/quat.h"
+#include "math/min/vec3.h"
 // weights and vertex_weights are only needed to compute the bind pose vertex
 // after this they can be safely thrown away
 // this is why they no longer reside as a mesh property.
