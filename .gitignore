@@ -3,3 +3,5 @@ source/*.o
 source/*/*.o
 test/*.o
 .vscode/
+*.a
+
