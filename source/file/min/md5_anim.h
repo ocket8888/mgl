@@ -16,17 +16,18 @@ limitations under the License.
 #define __MD5_ANIM__
 
 #include <fstream>
-#include <min/aabbox.h>
-#include <min/mat4.h>
-#include <min/mem_chunk.h>
-#include <min/quat.h>
-#include <min/strtoken.h>
-#include <min/vec3.h>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "geom/min/aabbox.h"
+#include "math/min/mat4.h"
+#include "mem_chunk.h"
+#include "math/min/quat.h"
+#include "strtoken.h"
+#include "math/min/vec3.h"
 
 // A node is the same thing as a joint
 // A transform is a base frame
@@ -46,23 +47,13 @@ class md5_node
 
   public:
     md5_node(const std::string name, int parent, int flag, unsigned start) : _name(name), _parent(parent), _flag(flag), _start(start) {}
-    const std::string &get_name() const
-    {
-        return _name;
-    }
-    int get_parent() const
-    {
-        return _parent;
-    }
-    int get_flag() const
-    {
-        return _flag;
-    }
-    unsigned get_start() const
-    {
-        return _start;
-    }
+    const std::string &get_name() const;
+    int get_parent() const;
+    int get_flag() const;
+    unsigned get_start() const;
 };
+
+//The rest of these classes are templated
 
 template <typename T>
 class md5_transform

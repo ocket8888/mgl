@@ -17,7 +17,7 @@ limitations under the License.
 
 #include <cmath>
 #include <cstdio>
-#include <min/utility.h>
+#include "math/min/utility.h"
 #include <utility>
 #include <vector>
 
