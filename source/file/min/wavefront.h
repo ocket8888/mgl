@@ -19,14 +19,16 @@ limitations under the License.
 #include <fstream>
 #include <limits>
 #include <map>
-#include <min/mem_chunk.h>
-#include <min/mesh.h>
-#include <min/strtoken.h>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "geom/min/mesh.h"
+
+#include "mem_chunk.h"
+#include "strtoken.h"
 
 // This class offers limited support for reading WaveFront .obj files
 // The file will be parsed into a list of vertices, uv texture coordinates,

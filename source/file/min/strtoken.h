@@ -30,10 +30,10 @@ inline std::string &trim(std::string&);
 inline std::vector<std::string> split(const std::string&, const std::pointer_to_unary_function<int,int>&, const size_t);
 inline int isequal(int);
 inline int isslash(int);
-inline std::vector<std::string> split_space(const std::string&, const size_t);
-inline std::vector<std::string> split_equal(const std::string&, const size_t);
-inline std::vector<std::string> split_slash(const std::string&, const size_t);
-inline std::vector<std::pair<size_t, size_t>> read_lines(const std::string&, const size_t);
+inline std::vector<std::string> split_space(const std::string&, const size_t = 0);
+inline std::vector<std::string> split_equal(const std::string&, const size_t = 0);
+inline std::vector<std::string> split_slash(const std::string&, const size_t = 0);
+inline std::vector<std::pair<size_t, size_t>> read_lines(const std::string&, const size_t = 0);
 inline std::vector<std::string> get_lines(const std::string&, const std::vector<std::pair<size_t, size_t>>&, const unsigned, size_t&);
 std::string to_lower(const std::string &s);
 
