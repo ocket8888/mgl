@@ -3,13 +3,15 @@
 
 #include <cstdint>
 #include <cstring>
-#include "serial_mem.h"
-#include "math/min/vec2.h"
-#include "math/min/vec3.h"
-#include "math/min/vec4.h"
 #include <stdexcept>
 #include <string>
 #include <vector>
+
+#include "math/min/vec2.h"
+#include "math/min/vec3.h"
+#include "math/min/vec4.h"
+
+#include "serial_mem.h"
 
 // A CPU register is neither big or little endian
 // However accessing bytes through a pointer is big or little endian specific
