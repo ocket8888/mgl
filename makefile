@@ -9,6 +9,8 @@ OBJGRAPH_SOURCES = $(CGRAPH_SOURCES:.cpp=.o)
 # Query the freetype2 package config for the include directory
 FREETYPE2_INCLUDE = $(shell pkg-config freetype2 --cflags)
 
+CPP =
+
 # Linker parameters
 ifeq ($(OS),Windows_NT)
 	# 64 bit
@@ -31,17 +33,17 @@ else
 endif
 
 # Include directories
-LIB_SOURCES = -Isource/file -Isource/geom -Isource/math -Isource/platform -Isource/renderer -Isource/scene -Isource/sound $(FREETYPE2_INCLUDE)
+INCLUDES = -Isource/file -Isource/geom -Isource/math -Isource/platform -Isource/renderer -Isource/scene -Isource/sound $(FREETYPE2_INCLUDE)
 TEST_SOURCES = -Itest/file -Itest/geom -Itest/math -Itest/platform -Itest/renderer -Itest/scene -Itest/sound
 BENCH_SOURCES = -Ibench/math -Ibench/geom -Ibench/scene -Ibench/file
 
 # Enable GS rendering
 ifdef MGL_VB43
-	MGL_VB43 = -DMGL_VB43
+	CPPFLAGS += -DMGL_VB43
 endif
 
 # Compile parameters
-PARAMS = -s -std=c++14 -Wall -O3 -march=native -fomit-frame-pointer -freciprocal-math -ffast-math --param max-inline-insns-auto=100 --param early-inlining-insns=200 $(MGL_VB43)
+CXXFLAGS += -s -std=c++14 -Wall -O3 -march=native -fomit-frame-pointer -freciprocal-math -ffast-math --param max-inline-insns-auto=100 --param early-inlining-insns=200
 EXTRA = source/platform/min/glew.cpp
 WL_INCLUDE = -DGLEW_STATIC
 TEST_AL = test/al_test.cpp
@@ -63,6 +65,37 @@ ifdef MGL_DESTDIR
 	MGL_PATH = $(MGL_DESTDIR)/mgl
 endif
 
+ARFLAGS = -cvq
+
+LIBS = source/file/libmgl.file.a source/geom/libmgl.geom.a source/math/libmgl.math.a
+FILE_SOURCES := $(wildcard source/file/min/*.h)
+FILE_HEADERS := $(addsuffix .h.gch,$(basename $(FILE_SOURCES)))
+GEOM_SOURCES := $(wildcard source/geom/min/*.h)
+GEOM_HEADERS := $(addsuffix .h.gch,$(basename $(GEOM_SOURCES)))
+MATH_SOURCES := $(wildcard source/math/min/*.h)
+MATH_HEADERS := $(addsuffix .h.gch,$(basename $(MATH_SOURCES)))
+
+# For ease of cleaning
+ALL_HEADERS = $(FILE_HEADERS) $(GEOM_HEADERS)
+
+# $(AR) $(ARFLAGS)
+
+.PHONY: all install clean
+
+all: $(LIBS)
+
+source/file/libmgl.file.a: $(FILE_HEADERS)
+	$(AR) $(ARFLAGS) $@ $^
+
+source/file/libmgl.geom.a: $(GEOM_HEADERS)
+	$(AR) $(ARFLAGS) $@ $^
+
+%.h.gch: %.h
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	$(RM) $(ALL_HEADERS)
+
 # Default run target
 default: tests benchmarks examples
 
@@ -81,7 +114,7 @@ gl_test:
 wl_test:
 	g++ $(LIB_SOURCES) $(TEST_SOURCES) -Itest $(WL_INCLUDE) $(PARAMS) $(TEST_WL) -o bin/wl_test $(LINKER) 2> "wl_test.txt"
 tests: al_test gl_test wl_test
-	
+
 benchmarks:
 	g++ $(LIB_SOURCES) $(BENCH_SOURCES) -Ibench $(PARAMS) bench/gl_bench.cpp -o bin/gl_bench $(LINKER) 2> "gcc_bench.txt"
 example1:
@@ -105,22 +138,22 @@ example9:
 example10:
 	g++ $(LIB_SOURCES) $(TEST_SOURCES) $(WL_INCLUDE) $(PARAMS) $(EX10) -o bin/ex10 $(LINKER) 2> "min_ex10.txt"
 examples: example1 example2 example3 example4 example5 example6 example7 example8 example9 example10
-	
+
 
 # pattern matching .cpp
 %.o: %.cpp
 	g++ $(LIB_SOURCES) $(PARAMS) $(WL_INCLUDE) -c $< -o $@ 2> "gcc.txt"
 
 # clean targets
-clean: clean_junk clean_source clean_tests clean_benchmarks clean_bin
-clean_junk:
-	rm -f *.txt
-clean_source:
-	rm -f source/cpp/*.o
-	rm -f source/platform/*.o
-clean_tests:
-	rm -f test/*.o
-clean_benchmarks:
-	rm -f bench/*.o
-clean_bin:
-	rm -f bin/*
+# clean: clean_junk clean_source clean_tests clean_benchmarks clean_bin
+# clean_junk:
+# 	rm -f *.txt
+# clean_source:
+# 	rm -f source/cpp/*.o
+# 	rm -f source/platform/*.o
+# clean_tests:
+# 	rm -f test/*.o
+# clean_benchmarks:
+# 	rm -f bench/*.o
+# clean_bin:
+# 	rm -f bin/*

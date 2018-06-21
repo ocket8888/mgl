@@ -17,7 +17,7 @@ limitations under the License.
 
 #include <cstring>
 #include <fstream>
-#include <min/serial.h>
+#include "serial.h"
 #include <string>
 #include <unordered_map>
 #include <vector>

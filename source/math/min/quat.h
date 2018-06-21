@@ -22,8 +22,8 @@ class vec3;
 }
 
 #include <cmath>
-#include <min/utility.h>
-#include <min/vec3.h>
+#include "utility.h"
+#include "vec3.h"
 #include <stdexcept>
 
 namespace min

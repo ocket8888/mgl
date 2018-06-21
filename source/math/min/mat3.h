@@ -30,11 +30,11 @@ class vec3;
 }
 
 #include <cmath>
-#include <min/mat2.h>
-#include <min/mat4.h>
-#include <min/quat.h>
-#include <min/vec2.h>
-#include <min/vec3.h>
+#include "mat2.h"
+#include "mat4.h"
+#include "quat.h"
+#include "vec2.h"
+#include "vec3.h"
 
 // This matrix is left handed and follows the following conventions:
 // x-axis: (+) angle -> CW

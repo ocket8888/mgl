@@ -24,9 +24,9 @@ class mat3;
 }
 
 #include <cmath>
-#include <min/mat3.h>
-#include <min/utility.h>
-#include <min/vec2.h>
+#include "mat3.h"
+#include "utility.h"
+#include "vec2.h"
 
 // This matrix is left handed and follows the following conventions:
 // (+) angle -> CCW

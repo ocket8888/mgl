@@ -25,8 +25,8 @@ class coord_sys;
 #include <array>
 #include <cmath>
 #include <limits>
-#include <min/coord_sys.h>
-#include <min/utility.h>
+#include "coord_sys.h"
+#include "utility.h"
 #include <utility>
 #include <vector>
 

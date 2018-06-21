@@ -29,11 +29,11 @@ template <typename T>
 class quat;
 }
 
-#include <min/mat2.h>
-#include <min/quat.h>
-#include <min/vec2.h>
-#include <min/vec3.h>
-#include <min/vec4.h>
+#include "mat2.h"
+#include "quat.h"
+#include "vec2.h"
+#include "vec3.h"
+#include "vec4.h"
 
 namespace min
 {

@@ -3,10 +3,10 @@
 
 #include <cstdint>
 #include <cstring>
-#include <min/serial_mem.h>
-#include <min/vec2.h>
-#include <min/vec3.h>
-#include <min/vec4.h>
+#include "serial_mem.h"
+#include "math/min/vec2.h"
+#include "math/min/vec3.h"
+#include "math/min/vec4.h"
 #include <stdexcept>
 #include <string>
 #include <vector>
