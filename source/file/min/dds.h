@@ -18,9 +18,10 @@ limitations under the License.
 #include <algorithm>
 #include <cstring>
 #include <fstream>
-#include <min/mem_chunk.h>
 #include <string>
 #include <vector>
+
+#include "mem_chunk.h"
 
 namespace min
 {
@@ -42,64 +43,12 @@ class dds
     uint32_t _format;
     std::vector<uint8_t> _pixel;
 
-    inline uint32_t calculate_size() const
-    {
-        // Calculate the expected size of the pixel buffer
-        unsigned int block_size = (_format == DXT1) ? 8 : 16;
-        unsigned int width = _w;
-        unsigned int height = _h;
-        unsigned int total = 0;
+    inline uint32_t calculate_size() const;
 
-        // Calculate the total size of the image
-        for (size_t i = 0; i < _mips; i++)
-        {
-            total += ((width + 3) / 4) * ((height + 3) / 4) * block_size;
+    inline void check_size();
 
-            // Calculate width and height for next level, accurate for non-power of two textures
-            width = std::max((unsigned)1, width / 2);
-            height = std::max((unsigned)1, height / 2);
-        }
+    inline void load(const std::string);
 
-        return total;
-    }
-    inline void check_size()
-    {
-        // Verify dds has correct size
-        uint32_t expected = calculate_size();
-        if (_size != expected)
-        {
-            throw std::runtime_error("dds: Expected image size '" + std::to_string(expected) + "' got '" + std::to_string(_size) + "'");
-        }
-    }
-    inline void load(const std::string _file)
-    {
-        std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
-        if (file.is_open())
-        {
-            // Get the size of the file
-            const auto size = file.tellg();
-
-            // Adjust file pointer to beginning
-            file.seekg(0, std::ios::beg);
-
-            // Allocate space for new file
-            std::vector<uint8_t> data(size);
-
-            // Read bytes and close the file
-            char *ptr = reinterpret_cast<char *>(data.data());
-            file.read(ptr, size);
-
-            // Close the file
-            file.close();
-
-            // Process the DDS file
-            load<std::vector<uint8_t>>(data);
-        }
-        else
-        {
-            throw std::runtime_error("dds: Could not load file '" + _file + "'");
-        }
-    }
     template <class T>
     inline void load(const T &data)
     {
@@ -172,98 +121,16 @@ class dds
     }
 
   public:
-    dds(const std::string &file)
-    {
-        load(file);
-    }
-    dds(const mem_file &mem)
-    {
-        load<mem_file>(mem);
-    }
-    dds(const uint32_t w, const uint32_t h, const uint32_t mips, const uint32_t format, const std::vector<uint8_t> &pixel)
-        : _w(w), _h(h), _mips(mips), _format(format), _pixel(pixel)
-    {
-        // Check that we have data
-        if (_pixel.size() == 0)
-        {
-            throw std::runtime_error("dds: No pixel data provided to explicit constructor");
-        }
-
-        // Set the size of pixel data
-        _size = _pixel.size();
-
-        // Check format
-        if (_format != DXT1 && _format != DXT3 && _format != DXT5)
-        {
-            throw std::runtime_error("dds: Unsupported DXT format value of '" + std::to_string(_format) + "'");
-        }
-
-        // If _format == DXT1 channels = 3, else 4
-        _bpp = (_format == DXT1) ? 3 : 4;
-
-        // Check mip levels
-        if (_mips <= 0)
-        {
-            throw std::runtime_error("dds: Atleast one mipmap level is required");
-        }
-
-        // Verify dds has correct size
-        check_size();
-    }
-    uint32_t get_format() const
-    {
-        return _format;
-    }
-    uint32_t get_mips() const
-    {
-        return _mips;
-    }
-    uint32_t get_width() const
-    {
-        return _w;
-    }
-    uint32_t get_height() const
-    {
-        return _h;
-    }
-    uint32_t get_size() const
-    {
-        return _size;
-    }
-    const std::vector<uint8_t> &get_pixels() const
-    {
-        return _pixel;
-    }
-    std::vector<uint8_t> to_file() const
-    {
-        // Write out the dds file to a byte buffer for writing to file
-        size_t size = DDS_HEADER_SIZE + _size;
-        std::vector<uint8_t> out(size, 0);
-
-        // The DDS header
-        const char *head = "DDS ";
-        memcpy(&out[0], head, 4 * sizeof(char));
-
-        // 4 bytes the height of the image
-        write_le<uint32_t>(out, _h, 12);
-
-        // 4 bytes the width of the image
-        write_le<uint32_t>(out, _w, 16);
-
-        // 4 bytes the linear size of the image
-        write_le<uint32_t>(out, _size, 20);
-
-        // 4 bytes the number of mip maps in this image
-        write_le<uint32_t>(out, _mips, 28);
-
-        // 4 bytes the fourCC value from the header
-        write_le<uint32_t>(out, _format, 84);
-
-        // _size bytes the compressed pixel data
-        memcpy(&out[DDS_HEADER_SIZE], &_pixel[0], _size);
-
-        return out;
-    }
+    dds(const std::string&);
+    dds(const mem_file&);
+    dds(const uint32_t, const uint32_t, const uint32_t, const uint32_t, const std::vector<uint8_t>&);
+    uint32_t get_format() const;
+    uint32_t get_mips() const;
+    uint32_t get_width() const;
+    uint32_t get_height() const;
+    uint32_t get_size() const;
+    const std::vector<uint8_t> &get_pixels() const;
+    std::vector<uint8_t> to_file() const;
 };
 }
 #endif
