@@ -17,9 +17,10 @@ limitations under the License.
 
 #include <cstring>
 #include <fstream>
-#include <min/mem_chunk.h>
 #include <string>
 #include <vector>
+
+#include "mem_chunk.h"
 
 // Reads a RIFF WAV File with two subchunks, 'fmt' and 'data'
 // chunk_id (RIFF) - 4B - offset 0 == 'RIFF'
@@ -48,35 +49,9 @@ class wave
     uint32_t _bits_per_sample;
     std::vector<uint8_t> _data;
 
-    inline void load(const std::string _file)
-    {
-        std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
-        if (file.is_open())
-        {
-            // Get the size of the file
-            const auto size = file.tellg();
+    inline void load(const std::string);
 
-            // Adjust file pointer to beginning
-            file.seekg(0, std::ios::beg);
-
-            // Allocate space for new file
-            std::vector<uint8_t> data(size);
-
-            // Read bytes and close the file
-            char *ptr = reinterpret_cast<char *>(data.data());
-            file.read(ptr, size);
-
-            // Close the file
-            file.close();
-
-            // Process the WAVE file
-            load<std::vector<uint8_t>>(data);
-        }
-        else
-        {
-            throw std::runtime_error("wave: Could not load file '" + _file + "'");
-        }
-    }
+    // This needs to stay here because templates can't be split
     template <class T>
     inline void load(const T &data)
     {
@@ -197,49 +172,17 @@ class wave
     }
 
   public:
-    wave(const std::string &file)
-    {
-        load(file);
-    }
-    wave(const mem_file &mem)
-    {
-        load<mem_file>(mem);
-    }
-    void clear()
-    {
-        // Delete WAV data and reset WAV
-        _data.clear();
+    wave(const std::string&);
+    wave(const mem_file&);
 
-        // Zero out fields so we dont try to use it later
-        _num_channels = 0;
-        _sample_rate = 0;
-        _bits_per_sample = 0;
-    }
-    bool is_mono() const
-    {
-        return _num_channels == 1;
-    }
-    bool is_stereo() const
-    {
-        return _num_channels > 1;
-    }
-    const std::vector<uint8_t> &data() const
-    {
-        return _data;
-    }
-    uint32_t get_bits_per_sample() const
-    {
-        return _bits_per_sample;
-    }
-    size_t get_data_samples() const
-    {
-        // Calculate number of samples in data buffer
-        return (_data.size() * 8) / _bits_per_sample;
-    }
-    uint32_t get_sample_rate() const
-    {
-        return _sample_rate;
-    }
+    void clear();
+    bool is_mono() const;
+    bool is_stereo() const;
+    const std::vector<uint8_t> &data() const;
+    uint32_t get_bits_per_sample() const;
+    size_t  get_data_samples() const;
+    uint32_t get_sample_rate() const;
+
 };
 }
 #endif
