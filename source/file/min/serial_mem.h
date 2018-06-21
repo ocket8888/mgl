@@ -3,12 +3,13 @@
 
 #include <cstdint>
 #include <cstring>
-#include "math/min/vec2.h"
-#include "math/min/vec3.h"
-#include "math/min/vec4.h"
 #include <stdexcept>
 #include <string>
 #include <vector>
+
+#include "math/min/vec2.h"
+#include "math/min/vec3.h"
+#include "math/min/vec4.h"
 
 // A CPU register is neither big or little endian
 // However accessing bytes through a pointer is big or little endian specific
@@ -30,33 +31,12 @@ class mem_file
   public:
     mem_file(std::vector<uint8_t> *const data, const size_t offset, const size_t size)
         : _data(data), _offset(offset), _size(size) {}
-    const uint8_t &operator[](const size_t index) const
-    {
-        return (*_data)[_offset + index];
-    }
-    uint8_t &operator[](const size_t index)
-    {
-        return (*_data)[_offset + index];
-    }
-    size_t offset() const
-    {
-        return _offset;
-    }
-    size_t size() const
-    {
-        return _size;
-    }
-    std::string to_string() const
-    {
-        // Allocate space for the bytes
-        std::string out(_size, 0);
 
-        // Copy data into string
-        std::memcpy(&out[0], &(*_data)[_offset], _size);
-
-        // Return the copied string
-        return out;
-    }
+    const uint8_t &operator[](const size_t) const;
+    uint8_t &operator[](const size_t);
+    size_t offset() const;
+    size_t size() const;
+    std::string to_string() const;
 };
 
 template <typename T>
