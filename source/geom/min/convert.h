@@ -17,9 +17,10 @@ limitations under the License.
 
 #include <array>
 #include <initializer_list>
-#include <min/aabbox.h>
-#include <min/mesh.h>
-#include <min/sphere.h>
+
+#include "aabbox.h"
+#include "mesh.h"
+#include "sphere.h"
 
 namespace min
 {

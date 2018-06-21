@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef __RAY__
 #define __RAY__
 
-#include <min/utility.h>
+#include "math/min/utility.h"
 
 namespace min
 {

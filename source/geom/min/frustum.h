@@ -16,9 +16,11 @@ limitations under the License.
 #define __FRUSTUM__
 
 #include <cmath>
-#include <min/mat4.h>
-#include <min/plane.h>
-#include <min/vec3.h>
+
+#include "math/min/mat4.h"
+#include "math/min/vec3.h"
+
+#include "plane.h"
 
 namespace min
 {

@@ -17,9 +17,10 @@ limitations under the License.
 
 #include <cmath>
 #include <cstdio>
-#include "math/min/utility.h"
 #include <utility>
 #include <vector>
+
+#include "math/min/utility.h"
 
 namespace min
 {

@@ -16,9 +16,10 @@ limitations under the License.
 #define __OOBBOX__
 
 #include <cmath>
-#include <min/coord_sys.h>
-#include <min/utility.h>
 #include <vector>
+
+#include "math/min/coord_sys.h"
+#include "math/min/utility.h"
 
 namespace min
 {
