@@ -46,6 +46,124 @@ inline void wave::load(const std::string _file)
     }
 }
 
+template <class T>
+inline void wave::load(const T &data)
+{
+    // Check that nothing funky is going on with char and uint8_t
+    static_assert(sizeof(char) == 1, "Size of char is not 1");
+    static_assert(sizeof(uint8_t) == 1, "Size of uint8_t is not 1");
+    static_assert(std::is_same<std::uint8_t, unsigned char>::value,
+                  "std::uint8_t must be implemented as unsigned char");
+
+    // Get the size of the file
+    const size_t size = data.size();
+    if (size < 44)
+    {
+        throw std::runtime_error("wave: File not large enough to be WAV file");
+    }
+
+    // Asserted that size is unsigned previously
+    const size_t file_size = static_cast<size_t>(size);
+
+    // Check if this is a RIFF file
+    size_t offset = 0;
+    const uint32_t chunk_id = min::read_le<uint32_t>(data, offset);
+    if (chunk_id != 0x46464952)
+    {
+        throw std::runtime_error("wave: File not a RIFF file");
+    }
+
+    // Read the chunk size in little endian
+    const uint32_t chunk_size = min::read_le<uint32_t>(data, offset);
+    if (chunk_size != file_size - 8)
+    {
+        throw std::runtime_error("wave: Invalid chunk size");
+    }
+
+    // Check if this is a WAVE file
+    const uint32_t format = min::read_le<uint32_t>(data, offset);
+    if (format != 0x45564157)
+    {
+        throw std::runtime_error("wave: File not a WAVE file");
+    }
+
+    // Check the first subchunk ID
+    const uint32_t subchunk1_id = min::read_le<uint32_t>(data, offset);
+    if (subchunk1_id != 0x20746D66)
+    {
+        throw std::runtime_error("wave: Invalid subchunk1 ID");
+    }
+
+    // Check that the subchunk1 size equates to PCM
+    const uint32_t subchunk1_size = min::read_le<uint32_t>(data, offset);
+    if (subchunk1_size != 16)
+    {
+        throw std::runtime_error("wave: WAV not storing PCM data");
+    }
+
+    // Check that the audio format is linear PCM
+    const uint16_t audio_format = min::read_le<uint16_t>(data, offset);
+    if (audio_format != 1)
+    {
+        throw std::runtime_error("wave: WAV not storing linear quantized PCM data");
+    }
+
+    // Read the num_channels and sample rate
+    _num_channels = min::read_le<uint16_t>(data, offset);
+    _sample_rate = min::read_le<uint32_t>(data, offset);
+
+    // Read the byte rate, block align, and bits per sample
+    const uint32_t byte_rate = min::read_le<uint32_t>(data, offset);
+    const uint16_t block_align = min::read_le<uint16_t>(data, offset);
+
+    _bits_per_sample = min::read_le<uint16_t>(data, offset);
+
+    // Store the bytes per sample
+    const uint16_t bytes_per_sample = _bits_per_sample / 8;
+
+    // Check that the byte rate is correct
+    if (byte_rate != _sample_rate * _num_channels * bytes_per_sample)
+    {
+        throw std::runtime_error("wave: Incorrect byte rate specified");
+    }
+
+    // Check that the block align is correct
+    if (block_align != _num_channels * bytes_per_sample)
+    {
+        throw std::runtime_error("wave: Incorrect block align specified");
+    }
+
+    // Read the next subchunk ID and size
+    uint32_t subchunk2_id = min::read_le<uint32_t>(data, offset);
+    uint32_t subchunk2_size = min::read_le<uint32_t>(data, offset);
+
+    // Check the second subchunk ID
+    while (subchunk2_id != 0x61746164)
+    {
+        // Check that we didn't read past the end of file
+        if (offset >= file_size)
+        {
+            throw std::runtime_error("wave: Can't find data chunk ID in file");
+        }
+
+        // Skip over the chunk
+        offset += subchunk2_size;
+
+        // Read the chunk contents
+        subchunk2_id = min::read_le<uint32_t>(data, offset);
+        subchunk2_size = min::read_le<uint32_t>(data, offset);
+    }
+
+    // Check that the subchunk2 size is valid
+    if (subchunk2_size > file_size - 44)
+    {
+        throw std::runtime_error("wave: not enough sound data found in file");
+    }
+
+    // Allocate data and write into data buffer
+    _data.resize(subchunk2_size);
+    std::memcpy(&_data[0], &data[offset], subchunk2_size);
+}
 
 wave::wave(const std::string &file)
 {

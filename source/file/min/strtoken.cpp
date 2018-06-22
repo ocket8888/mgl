@@ -104,24 +104,24 @@ inline int min::isslash(int ch)
 }
 
 // This is effectively regex split on, "\\s+"
-inline std::vector<std::string> min::split_space(const std::string &s, const size_t hint = 0)
+inline std::vector<std::string> min::split_space(const std::string &s, const size_t hint)
 {
     return split(s, std::ptr_fun<int, int>(std::isspace), hint);
 }
 
 // This is effectively regex split on, "\\/+"
-inline std::vector<std::string> min::split_equal(const std::string &s, const size_t hint = 0)
+inline std::vector<std::string> min::split_equal(const std::string &s, const size_t hint)
 {
     return split(s, std::ptr_fun<int, int>(isequal), hint);
 }
 
 // This is effectively regex split on, "=+"
-inline std::vector<std::string> min::split_slash(const std::string &s, const size_t hint = 0)
+inline std::vector<std::string> min::split_slash(const std::string &s, const size_t hint)
 {
     return split(s, std::ptr_fun<int, int>(isslash), hint);
 }
 
-inline std::vector<std::pair<size_t, size_t>> min::read_lines(const std::string &data, const size_t hint = 0)
+inline std::vector<std::pair<size_t, size_t>> min::read_lines(const std::string &data, const size_t hint)
 {
     // Create output vector
     std::vector<std::pair<size_t, size_t>> out;
