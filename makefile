@@ -9,8 +9,6 @@ OBJGRAPH_SOURCES = $(CGRAPH_SOURCES:.cpp=.o)
 # Query the freetype2 package config for the include directory
 FREETYPE2_INCLUDE = $(shell pkg-config freetype2 --cflags)
 
-CPP =
-
 # Linker parameters
 ifeq ($(OS),Windows_NT)
 	# 64 bit
@@ -33,7 +31,7 @@ else
 endif
 
 # Include directories
-INCLUDES = -Isource/file -Isource/geom -Isource/math -Isource/platform -Isource/renderer -Isource/scene -Isource/sound $(FREETYPE2_INCLUDE)
+INCLUDES = -Isource $(FREETYPE2_INCLUDE)
 TEST_SOURCES = -Itest/file -Itest/geom -Itest/math -Itest/platform -Itest/renderer -Itest/scene -Itest/sound
 BENCH_SOURCES = -Ibench/math -Ibench/geom -Ibench/scene -Ibench/file
 
@@ -68,15 +66,14 @@ endif
 ARFLAGS = -cvq
 
 LIBS = source/file/libmgl.file.a source/geom/libmgl.geom.a source/math/libmgl.math.a
-FILE_SOURCES := $(wildcard source/file/min/*.h)
-FILE_HEADERS := $(addsuffix .h.gch,$(basename $(FILE_SOURCES)))
+FILE_SOURCES := $(addsuffix .o,$(basename $(wildcard source/file/min/*.cpp)))
 GEOM_SOURCES := $(wildcard source/geom/min/*.h)
 GEOM_HEADERS := $(addsuffix .h.gch,$(basename $(GEOM_SOURCES)))
 MATH_SOURCES := $(wildcard source/math/min/*.h)
 MATH_HEADERS := $(addsuffix .h.gch,$(basename $(MATH_SOURCES)))
 
 # For ease of cleaning
-ALL_HEADERS = $(FILE_HEADERS) $(GEOM_HEADERS)
+ALL_OBJECTS = $(FILE_SOURCES)# $(GEOM_OBJECTS)
 
 # $(AR) $(ARFLAGS)
 
@@ -84,17 +81,20 @@ ALL_HEADERS = $(FILE_HEADERS) $(GEOM_HEADERS)
 
 all: $(LIBS)
 
-source/file/libmgl.file.a: $(FILE_HEADERS)
+source/file/libmgl.file.a: $(FILE_SOURCES)
 	$(AR) $(ARFLAGS) $@ $^
 
-source/file/libmgl.geom.a: $(GEOM_HEADERS)
+source/geom/libmgl.geom.a: $(GEOM_HEADERS)
 	$(AR) $(ARFLAGS) $@ $^
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $<
 
 %.h.gch: %.h
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	$(RM) $(ALL_HEADERS)
+	$(RM) $(ALL_OBJECTS)
 
 # Default run target
 default: tests benchmarks examples
@@ -138,11 +138,6 @@ example9:
 example10:
 	g++ $(LIB_SOURCES) $(TEST_SOURCES) $(WL_INCLUDE) $(PARAMS) $(EX10) -o bin/ex10 $(LINKER) 2> "min_ex10.txt"
 examples: example1 example2 example3 example4 example5 example6 example7 example8 example9 example10
-
-
-# pattern matching .cpp
-%.o: %.cpp
-	g++ $(LIB_SOURCES) $(PARAMS) $(WL_INCLUDE) -c $< -o $@ 2> "gcc.txt"
 
 # clean targets
 # clean: clean_junk clean_source clean_tests clean_benchmarks clean_bin
