@@ -30,40 +30,13 @@ class ray
 
   public:
     ray() : _origin(), _dir(), _inv() {}
-    ray(const vec<T> &from, const vec<T> &to) : _origin(from)
-    {
-        // Calculate a ray in direction to - from
-        _dir = (to - from).normalize();
+    ray(const vec<T>&, const vec<T>&);
 
-        // If ray is axis aligned, element will be MAX(T)
-        _inv = _dir.inverse_safe();
-    }
-    inline T set(const vec<T> &from, const vec<T> &to)
-    {
-        _origin = from;
-
-        // Calculate the direction vector
-        const vec<T> dir = to - from;
-        const T length = dir.magnitude();
-        const T inv_len = 1.0 / length;
-
-        // Normalize
-        if (length > var<T>::TOL_REL)
-        {
-            _dir = dir * inv_len;
-            _inv = _dir.inverse_safe();
-        }
-
-        return length;
-    }
-    inline const vec<T> &get_origin() const { return _origin; }
-    inline const vec<T> &get_direction() const { return _dir; }
-    inline const vec<T> &get_inverse() const { return _inv; }
-    inline vec<T> interpolate(const T t) const
-    {
-        // Return the point on the ray
-        return _origin + _dir * t;
-    }
+    inline T set(const vec<T>&, const vec<T>&);
+    inline const vec<T> &get_origin() const;
+    inline const vec<T> &get_direction() const;
+    inline const vec<T> &get_inverse() const;
+    inline vec<T> interpolate(const T) const;
 };
 }
 

@@ -33,43 +33,13 @@ class plane
   public:
     // Default plane == xz plane
     plane() : _normal(vec<T>::up()), _constant(0.0) {}
-    plane(const vec<T> &a, const vec<T> &b)
-    {
-        // 2D only
-        // Calculate the unit normal vector by calculating orthonal vector to ba
-        _normal = (b - a).orthogonal().normalize();
-        _constant = _normal.dot(a);
-    }
-    plane(const vec<T> &a, const vec<T> &b, const vec<T> &c)
-    {
-        // 3D+
-        // Calculate the unit normal vector by calculating ba x ca
-        _normal = vec<T>::normal(a, b, c).normalize();
-        _constant = _normal.dot(a);
-    }
-    inline vec<T> get_closest_point(const vec<T> &point) const
-    {
-        // Calculate the distance between point and the plane
-        const T d = get_distance(point);
+    plane(const vec<T>&, const vec<T>&);
+    plane(const vec<T>&, const vec<T>&, const vec<T>&);
 
-        // Calculate the point that is d distance away from plane
-        return get_point(point, d);
-    }
-    inline T get_distance(const vec<T> &point) const
-    {
-        // Calculate the distance from the plane
-        // distance = 0 means you are on the plane
-        return (_normal.dot(point) - _constant);
-    }
-    inline const vec<T> &get_normal() const
-    {
-        return _normal;
-    }
-    inline vec<T> get_point(const vec<T> &point, const T d) const
-    {
-        // Return the point distance d away from p
-        return (point - _normal * d);
-    }
+    inline vec<T> get_closest_point(const vec<T>&) const;
+    inline T get_distance(const vec<T>&) const;
+    inline const vec<T> &get_normal() const;
+    inline vec<T> get_point(const vec<T>&, const T) const;
 };
 }
 

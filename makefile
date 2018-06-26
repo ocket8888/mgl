@@ -65,15 +65,14 @@ endif
 
 ARFLAGS = -cvq
 
-LIBS = source/file/libmgl.file.a source/geom/libmgl.geom.a source/math/libmgl.math.a
+LIBS = source/file/libmgl.file.a source/geom/libmgl.geom.a# source/math/libmgl.math.a
 FILE_SOURCES := $(addsuffix .o,$(basename $(wildcard source/file/min/*.cpp)))
-GEOM_SOURCES := $(wildcard source/geom/min/*.h)
-GEOM_HEADERS := $(addsuffix .h.gch,$(basename $(GEOM_SOURCES)))
+GEOM_SOURCES := $(addsuffix .o,$(basename $(wildcard source/geom/min/*.cpp)))
 MATH_SOURCES := $(wildcard source/math/min/*.h)
 MATH_HEADERS := $(addsuffix .h.gch,$(basename $(MATH_SOURCES)))
 
 # For ease of cleaning
-ALL_OBJECTS = $(FILE_SOURCES)# $(GEOM_OBJECTS)
+ALL_OBJECTS = $(FILE_SOURCES) $(GEOM_SOURCES)
 
 # $(AR) $(ARFLAGS)
 
@@ -84,7 +83,7 @@ all: $(LIBS)
 source/file/libmgl.file.a: $(FILE_SOURCES)
 	$(AR) $(ARFLAGS) $@ $^
 
-source/geom/libmgl.geom.a: $(GEOM_HEADERS)
+source/geom/libmgl.geom.a: $(GEOM_SOURCES)
 	$(AR) $(ARFLAGS) $@ $^
 
 %.o: %.cpp
