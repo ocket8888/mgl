@@ -12,4 +12,98 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 #include "mat2.h"
+
+// constructs an orthogonal 2D rotation matrix around the screen axis
+
+template <typename T>
+min::mat2<T>::mat2(const T angle) // Angle in degrees
+{
+    if (angle > 0.0)
+    {
+        T posAngle = deg_to_rad(std::abs(angle));
+        T sine = std::sin(posAngle);
+        T cosine = std::cos(posAngle);
+
+        _xc = cosine;
+        _ys = sine;
+        _xs = -sine;
+        _yc = cosine;
+    }
+    else if (angle < 0.0)
+    {
+        T negAngle = deg_to_rad(std::abs(angle));
+        T sine = std::sin(negAngle);
+        T cosine = std::cos(negAngle);
+        _xc = cosine;
+        _ys = -sine;
+        _xs = sine;
+        _yc = cosine;
+    }
+    else
+    {
+        _xc = 1.0;
+        _ys = 0.0;
+        _xs = 0.0;
+        _yc = 1.0;
+    }
+}
+
+template <typename T>
+inline min::mat2<T> &min::mat2<T>::operator*=(const min::mat2<T> &A)
+{
+    _xc = _xc * A._xc + _xs * A._ys;
+    _ys = _ys * A._xc + _yc * A._ys;
+    _xs = _xc * A._xs + _xs * A._yc;
+    _yc = _ys * A._xs + _yc * A._yc;
+    return *this;
+}
+
+template <typename T>
+inline min::mat2<T> min::mat2<T>::operator*(const min::mat2<T> &A) const
+{
+    T xc = _xc * A._xc + _xs * A._ys;
+    T ys = _ys * A._xc + _yc * A._ys;
+    T xs = _xc * A._xs + _xs * A._yc;
+    T yc = _ys * A._xs + _yc * A._yc;
+    return mat2<T>(xc, ys, xs, yc);
+}
+
+template <typename T>
+inline min::vec2<T> min::mat2<T>::operator*(const min::vec2<T> &vec) const
+{
+    T x = _xc * vec.x() + _xs * vec.y();
+    T y = _ys * vec.x() + _yc * vec.y();
+    return vec2<T>(x, y);
+}
+
+template <typename T>
+inline min::mat2<T> min::mat2<T>::inverse() const
+{
+    mat2<T> copy = *this;
+    return copy.invert();
+}
+
+template <typename T>
+inline min::mat2<T> &min::mat2<T>::invert()
+{
+    // this matrix is always orthogonal; use transpose()
+    return transpose();
+}
+
+template <typename T>
+inline min::vec2<T> min::mat2<T>::transform(const min::vec2<T> &v) const
+{
+    // This matches quat<T> API!
+    return this->operator*(v);
+}
+
+template <typename T>
+inline min::mat2<T> &min::mat2<T>::transpose()
+{
+    T temp = _ys;
+    _ys = _xs;
+    _xs = temp;
+    return *this;
+}

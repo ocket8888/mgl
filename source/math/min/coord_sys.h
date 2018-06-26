@@ -47,14 +47,8 @@ class coord_sys_base
 
   public:
     coord_sys_base(const vec<T> &x, const vec<T> &y) : _x(x), _y(y) {}
-    inline const vec<T> &x() const
-    {
-        return _x;
-    }
-    inline const vec<T> &y() const
-    {
-        return _y;
-    }
+    inline const vec<T> &x() const;
+    inline const vec<T> &y() const;
 };
 
 // General case for vec3/vec4
@@ -69,15 +63,8 @@ class coord_sys<T, vec2> : public coord_sys_base<T, vec2>
 {
   public:
     coord_sys(const vec2<T> &x, const vec2<T> &y) : coord_sys_base<T, vec2>(x, y) {}
-    inline void rotate(const mat2<T> &r)
-    {
-        this->_x = r.transform(this->_x);
-        this->_y = r.transform(this->_y);
-    }
-    inline vec2<T> align(const vec2<T> &v) const
-    {
-        return vec2<T>(v.dot(this->_x), v.dot(this->_y));
-    }
+    inline void rotate(const mat2<T>&);
+    inline vec2<T> align(const vec2<T>&) const;
 };
 
 // Specialization for vec3
@@ -89,20 +76,11 @@ class coord_sys<T, vec3> : public coord_sys_base<T, vec3>
 
   public:
     coord_sys(const vec3<T> &x, const vec3<T> &y, const vec3<T> &z) : coord_sys_base<T, vec3>(x, y), _z(z) {}
-    inline const vec3<T> &z() const
-    {
-        return _z;
-    }
-    inline void rotate(const quat<T> &r)
-    {
-        this->_x = r.transform(this->_x);
-        this->_y = r.transform(this->_y);
-        this->_z = r.transform(this->_z);
-    }
-    inline vec3<T> align(const vec3<T> &v) const
-    {
-        return vec3<T>(v.dot(this->_x), v.dot(this->_y), v.dot(this->_z));
-    }
+
+    inline const min::vec3<T> &z() const;
+    inline void rotate(const quat<T>&);
+    inline vec3<T> align(const vec3<T>&) const;
+
 };
 
 // Specialization for vec4
@@ -114,20 +92,10 @@ class coord_sys<T, vec4> : public coord_sys_base<T, vec4>
 
   public:
     coord_sys(const vec4<T> &x, const vec4<T> &y, const vec4<T> &z) : coord_sys_base<T, vec4>(x, y), _z(z) {}
-    inline const vec4<T> &z() const
-    {
-        return _z;
-    }
-    inline void rotate(const quat<T> &r)
-    {
-        this->_x = r.transform(this->_x);
-        this->_y = r.transform(this->_y);
-        this->_z = r.transform(this->_z);
-    }
-    inline vec4<T> align(const vec4<T> &v) const
-    {
-        return vec4<T>(v.dot(this->_x), v.dot(this->_y), v.dot(this->_z), 1.0);
-    }
+
+    inline const vec4<T> &z() const;
+    inline void rotate(const quat<T>&);
+    inline vec4<T> align(const vec4<T>&) const;
 };
 }
 

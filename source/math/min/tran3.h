@@ -15,20 +15,10 @@ limitations under the License.
 #ifndef __TRANSFORM3__
 #define __TRANSFORM3__
 
-namespace min
-{
-template <typename T>
-class mat4;
-template <typename T>
-class quat;
-template <typename T>
-class vec3;
-}
-
 #include <cmath>
-#include <min/mat4.h>
-#include <min/quat.h>
-#include <min/vec3.h>
+#include "mat4.h"
+#include "quat.h"
+#include "vec3.h"
 
 namespace min
 {
@@ -40,77 +30,25 @@ class tran3
     mat4<T> _m;
 
   public:
-    tran3() : _m() {}
-    tran3(const vec3<T> &t) : _m(t) {}
-    tran3(const quat<T> &r) : _m(r) {}
-    tran3(const vec3<T> &t, const quat<T> &r) : _m(t, r) {}
-    tran3(const vec3<T> &t, const quat<T> &r, const vec3<T> &s) : _m(t, r) { scale(s); }
-    inline tran3<T> &translate(const T x, const T y, const T z)
-    {
-        return translate(vec3<T>(x, y, z));
-    }
-    inline tran3<T> &translate(const vec3<T> &t)
-    {
-        mat4<T> translation = mat4<T>(t);
-        _m *= translation;
-        return *this;
-    }
-    inline tran3<T> &rotate(const quat<T> &r)
-    {
-        mat4<T> rotation = mat4<T>(r);
-        _m *= rotation;
-        return *this;
-    }
-    inline tran3<T> &rotate_x(const mat2<T> &r)
-    {
-        mat4<T> rotation = mat4<T>(mat3<T>().set_rotation_x(r));
-        _m *= rotation;
-        return *this;
-    }
-    inline tran3<T> &rotate_y(const mat2<T> &r)
-    {
-        mat4<T> rotation = mat4<T>(mat3<T>().set_rotation_y(r));
-        _m *= rotation;
-        return *this;
-    }
-    // Default rotation is about the Z axis
-    inline tran3<T> &rotate_z(const mat2<T> &r)
-    {
-        mat4<T> rotation = mat4<T>(mat3<T>(r));
-        _m *= rotation;
-        return *this;
-    }
-    inline tran3<T> &scale(const T x, const T y, const T z)
-    {
-        return scale(vec3<T>(x, y, z));
-    }
-    inline tran3<T> &scale(const vec3<T> &s)
-    {
-        mat4<T> scale = mat4<T>();
-        scale.set_scale(s);
-        _m *= scale;
-        return *this;
-    }
-    inline tran3<T> &transpose()
-    {
-        _m.transpose();
-        return *this;
-    }
-    inline tran3<T> &invert()
-    {
-        _m.invert();
-        return *this;
-    }
-    inline vec4<T> transform(const vec4<T> &v) const
-    {
-        return _m * v;
-    }
-    inline const mat4<T> &m() const
-    {
-        return _m;
-    }
+    tran3();
+    tran3(const vec3<T>&);
+    tran3(const quat<T>&);
+    tran3(const vec3<T>&, const quat<T>&);
+    tran3(const vec3<T>&, const quat<T>&, const vec3<T>&);
 
-  private:
+    inline tran3<T> &translate(const T, const T, const T);
+    inline tran3<T> &translate(const vec3<T>&);
+    inline tran3<T> &rotate(const quat<T>&);
+    inline tran3<T> &rotate_x(const mat2<T>&);
+    inline tran3<T> &rotate_y(const mat2<T>&);
+    inline tran3<T> &rotate_z(const mat2<T>&);
+    inline tran3<T> &scale(const T, const T, const T);
+    inline tran3<T> &scale(const vec3<T>&);
+    inline tran3<T> &transpose();
+    inline tran3<T> &invert();
+    inline vec4<T> transform(const vec4<T>&) const;
+    inline const mat4<T> &m() const;
+
 };
 }
 

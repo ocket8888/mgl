@@ -64,82 +64,16 @@ class mat2
     mat2(T xc, T ys, T xs, T yc)
         : _xc(xc), _ys(ys), _xs(xs), _yc(yc) {}
 
-    // constructs an orthogonal 2D rotation matrix around the screen axis
-    mat2(const T angle) // Angle in degrees
-    {
-        if (angle > 0.0)
-        {
-            T posAngle = deg_to_rad(std::abs(angle));
-            T sine = std::sin(posAngle);
-            T cosine = std::cos(posAngle);
+    mat2(const T);
 
-            _xc = cosine;
-            _ys = sine;
-            _xs = -sine;
-            _yc = cosine;
-        }
-        else if (angle < 0.0)
-        {
-            T negAngle = deg_to_rad(std::abs(angle));
-            T sine = std::sin(negAngle);
-            T cosine = std::cos(negAngle);
-            _xc = cosine;
-            _ys = -sine;
-            _xs = sine;
-            _yc = cosine;
-        }
-        else
-        {
-            _xc = 1.0;
-            _ys = 0.0;
-            _xs = 0.0;
-            _yc = 1.0;
-        }
-    }
-    inline mat2<T> &operator*=(const mat2<T> &A)
-    {
-        _xc = _xc * A._xc + _xs * A._ys;
-        _ys = _ys * A._xc + _yc * A._ys;
-        _xs = _xc * A._xs + _xs * A._yc;
-        _yc = _ys * A._xs + _yc * A._yc;
-        return *this;
-    }
-    inline mat2<T> operator*(const mat2<T> &A) const
-    {
-        T xc = _xc * A._xc + _xs * A._ys;
-        T ys = _ys * A._xc + _yc * A._ys;
-        T xs = _xc * A._xs + _xs * A._yc;
-        T yc = _ys * A._xs + _yc * A._yc;
-        return mat2<T>(xc, ys, xs, yc);
-    }
-    inline vec2<T> operator*(const vec2<T> &vec) const
-    {
-        T x = _xc * vec.x() + _xs * vec.y();
-        T y = _ys * vec.x() + _yc * vec.y();
-        return vec2<T>(x, y);
-    }
-    inline mat2<T> inverse() const
-    {
-        mat2<T> copy = *this;
-        return copy.invert();
-    }
-    inline mat2<T> &invert()
-    {
-        // this matrix is always orthogonal; use transpose()
-        return transpose();
-    }
-    inline vec2<T> transform(const vec2<T> &v) const
-    {
-        // This matches quat<T> API!
-        return this->operator*(v);
-    }
-    inline mat2<T> &transpose()
-    {
-        T temp = _ys;
-        _ys = _xs;
-        _xs = temp;
-        return *this;
-    }
+
+    inline mat2<T> &operator*=(const mat2<T>&);
+    inline mat2<T> operator*(const mat2<T>&) const;
+    inline vec2<T> operator*(const vec2<T>&) const;
+    inline mat2<T> inverse() const;
+    inline mat2<T> &invert();
+    inline vec2<T> transform(const vec2<T>&) const;
+    inline mat2<T> &transpose();
 };
 }
 

@@ -13,3 +13,75 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include "coord_sys.h"
+
+//// coord_sys_base ////
+template <typename T, template <typename> class vec>
+inline const vec<T> &min::coord_sys_base<T,vec>::x() const
+{
+	return _x;
+}
+
+template <typename T, template <typename> class vec>
+inline const vec<T> &min::coord_sys_base<T,vec>::y() const
+{
+	return _y;
+}
+
+
+//// coord_sys for vec2 ////
+template <typename T>
+inline void min::coord_sys<T, min::vec2>::rotate(const min::mat2<T> &r)
+{
+	this->_x = r.transform(this->_x);
+	this->_y = r.transform(this->_y);
+}
+
+template <typename T>
+inline min::vec2<T> min::coord_sys<T, min::vec2>::align( const min::vec2<T> &v) const
+{
+	return min::vec2<T>(v.dot(this->_x), v.dot(this->_y));
+}
+
+
+//// coord_sys for vec3 ////
+template <typename T>
+inline const min::vec3<T> &min::coord_sys<T, min::vec3>::z() const
+{
+    return _z;
+}
+
+template <typename T>
+inline void min::coord_sys<T, min::vec3>::rotate(const min::quat<T> &r)
+{
+    this->_x = r.transform(this->_x);
+    this->_y = r.transform(this->_y);
+    this->_z = r.transform(this->_z);
+}
+
+template <typename T>
+inline min::vec3<T> min::coord_sys<T, min::vec3>::align(const min::vec3<T> &v) const
+{
+    return vec3<T>(v.dot(this->_x), v.dot(this->_y), v.dot(this->_z));
+}
+
+//// coord_sys for vec4 ////
+
+template <typename T>
+inline const min::vec4<T> &min::coord_sys<T, min::vec4>::z() const
+{
+    return _z;
+}
+
+template <typename T>
+inline void min::coord_sys<T, min::vec4>::rotate(const min::quat<T> &r)
+{
+    this->_x = r.transform(this->_x);
+    this->_y = r.transform(this->_y);
+    this->_z = r.transform(this->_z);
+}
+
+template <typename T>
+inline min::vec4<T> min::coord_sys<T, min::vec4>::align(const min::vec4<T> &v) const
+{
+    return vec4<T>(v.dot(this->_x), v.dot(this->_y), v.dot(this->_z), 1.0);
+}
