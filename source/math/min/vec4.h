@@ -25,10 +25,11 @@ class coord_sys;
 #include <array>
 #include <cmath>
 #include <limits>
-#include "coord_sys.h"
-#include "utility.h"
 #include <utility>
 #include <vector>
+
+#include "coord_sys.h"
+#include "utility.h"
 
 namespace min
 {

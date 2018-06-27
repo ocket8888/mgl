@@ -15,6 +15,8 @@ limitations under the License.
 #ifndef __COORDSYS__
 #define __COORDSYS__
 
+#include "mat2.h"
+
 namespace min
 {
 template <typename T>
@@ -29,11 +31,10 @@ template <typename T>
 class quat;
 }
 
-#include "mat2.h"
-#include "quat.h"
 #include "vec2.h"
 #include "vec3.h"
 #include "vec4.h"
+#include "quat.h"
 
 namespace min
 {
