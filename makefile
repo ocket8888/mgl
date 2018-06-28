@@ -65,14 +65,13 @@ endif
 
 ARFLAGS = -cvq
 
-LIBS = source/file/libmgl.file.a source/geom/libmgl.geom.a# source/math/libmgl.math.a
+LIBS = source/file/libmgl.file.a source/geom/libmgl.geom.a source/math/libmgl.math.a
 FILE_SOURCES := $(addsuffix .o,$(basename $(wildcard source/file/min/*.cpp)))
 GEOM_SOURCES := $(addsuffix .o,$(basename $(wildcard source/geom/min/*.cpp)))
-MATH_SOURCES := $(wildcard source/math/min/*.h)
-MATH_HEADERS := $(addsuffix .h.gch,$(basename $(MATH_SOURCES)))
+MATH_SOURCES := $(addsuffix .o,$(basename $(wildcard source/math/min/*.cpp)))
 
 # For ease of cleaning
-ALL_OBJECTS = $(FILE_SOURCES) $(GEOM_SOURCES)
+ALL_OBJECTS = $(FILE_SOURCES) $(GEOM_SOURCES) $(MATH_SOURCES)
 
 # $(AR) $(ARFLAGS)
 
@@ -84,6 +83,9 @@ source/file/libmgl.file.a: $(FILE_SOURCES)
 	$(AR) $(ARFLAGS) $@ $^
 
 source/geom/libmgl.geom.a: $(GEOM_SOURCES)
+	$(AR) $(ARFLAGS) $@ $^
+
+source/math/libmgl.math.a: $(MATH_SOURCES)
 	$(AR) $(ARFLAGS) $@ $^
 
 %.o: %.cpp
@@ -103,7 +105,7 @@ install:
 	mkdir -p $(MGL_PATH)
 	cp -r source/* $(MGL_PATH)
 uninstall:
-	rm -rI $(MGL_PATH)
+	$(RM) -rI $(MGL_PATH)
 lib: $(OBJGRAPH_SOURCES)
 	ar rvs bin/libmin.a $(OBJGRAPH_SOURCES)
 al_test:
@@ -137,17 +139,3 @@ example9:
 example10:
 	g++ $(LIB_SOURCES) $(TEST_SOURCES) $(WL_INCLUDE) $(PARAMS) $(EX10) -o bin/ex10 $(LINKER) 2> "min_ex10.txt"
 examples: example1 example2 example3 example4 example5 example6 example7 example8 example9 example10
-
-# clean targets
-# clean: clean_junk clean_source clean_tests clean_benchmarks clean_bin
-# clean_junk:
-# 	rm -f *.txt
-# clean_source:
-# 	rm -f source/cpp/*.o
-# 	rm -f source/platform/*.o
-# clean_tests:
-# 	rm -f test/*.o
-# clean_benchmarks:
-# 	rm -f bench/*.o
-# clean_bin:
-# 	rm -f bin/*

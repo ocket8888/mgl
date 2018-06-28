@@ -29,6 +29,7 @@ class vec3;
 #include "mat3.h"
 #include "quat.h"
 #include "vec3.h"
+#include "vec4.h"
 
 // This matrix is left handed and follows the following conventions:
 // Rotation can be instantiated from a mat2<T>, mat3<T>, or a quat<T>

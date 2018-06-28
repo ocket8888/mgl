@@ -944,7 +944,7 @@ inline T min::vec3<T>::project_length(const min::coord_sys<T, min::vec3> &axis, 
 }
 
 template <typename T>
-static inline bool min::vec3<T>::project_sat(const min::coord_sys<T, min::vec3> &axis1, const min::vec3<T> &center1, const min::vec3<T> &extent1, const min::coord_sys<T, min::vec3> &axis2, const min::vec3<T> &center2, const min::vec3<T> &extent2)
+inline bool min::vec3<T>::project_sat(const min::coord_sys<T, min::vec3> &axis1, const min::vec3<T> &center1, const min::vec3<T> &extent1, const min::coord_sys<T, min::vec3> &axis2, const min::vec3<T> &center2, const min::vec3<T> &extent2)
 {
     // This performs the separating axis theorem for checking oobb-oobb intersections
     // For every axis test (C2-C1).dot(L) > (a.get_extent() + b.get_extent()).dot(L)
@@ -1234,7 +1234,7 @@ inline std::pair<min::vec3<T>, T> min::vec3<T>::project_sat_penetration(
 }
 
 template <typename T>
-static inline std::pair<min::vec3<T>, T> min::vec3<T>::project_sat_aligned_penetration(
+inline std::pair<min::vec3<T>, T> min::vec3<T>::project_sat_aligned_penetration(
     const min::vec3<T> &center1, const min::vec3<T> &extent1,
     const min::vec3<T> &center2, const min::vec3<T> &extent2, const T tolerance)
 {

@@ -33,6 +33,9 @@ template <typename T, template <typename> class vec>
 class coord_sys;
 
 template <typename T>
+class vec4;
+
+template <typename T>
 class vec3
 {
   private:
