@@ -17,7 +17,7 @@ limitations under the License.
 
 #if defined(_WIN32)
 
-#include <min/win32_window.h>
+#include "win32_window.h"
 
 namespace min
 {
@@ -26,7 +26,7 @@ using window = min::win32_window;
 
 #elif __linux__
 
-#include <min/x_window.h>
+#include "x_window.h"
 
 namespace min
 {
