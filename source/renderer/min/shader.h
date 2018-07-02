@@ -16,9 +16,10 @@ limitations under the License.
 #define __SHADER__
 
 #include <fstream>
-#include <min/mem_chunk.h>
-#include <min/window.h>
 #include <string>
+
+#include "platform/min/window.h"
+#include "file/min/mem_chunk.h"
 
 namespace min
 {

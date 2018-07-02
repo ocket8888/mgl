@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef __DYNAMICVERTEX__
 #define __DYNAMICVERTEX__
 
-#include <min/static_vertex.h>
+#include "static_vertex.h"
 
 namespace min
 {
@@ -24,10 +24,7 @@ template <typename T, typename K, GLenum FLOAT_TYPE>
 class dynamic_vertex : public static_vertex<T, K, FLOAT_TYPE>
 {
   public:
-    inline static constexpr GLenum buffer_type()
-    {
-        return GL_DYNAMIC_DRAW;
-    }
+	inline static constexpr GLenum buffer_type();
 };
 }
 

@@ -16,8 +16,9 @@ limitations under the License.
 #define __STATICVERTEX__
 
 #include <cstring>
-#include <min/mesh.h>
-#include <min/window.h>
+
+#include "geom/min/mesh.h"
+#include "platform/min/window.h"
 
 namespace min
 {
