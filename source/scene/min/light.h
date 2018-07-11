@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef __LIGHT__
 #define __LIGHT__
 
-#include <min/vec4.h>
+#include "math/min/vec4.h"
 
 namespace min
 {

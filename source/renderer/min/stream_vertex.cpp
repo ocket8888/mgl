@@ -12,20 +12,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __STREAMVERTEX__
-#define __STREAMVERTEX__
 
-#include "static_vertex.h"
-
-namespace min
-{
+#include "stream_vertex.h"
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-class stream_vertex : public static_vertex<T, K, FLOAT_TYPE>
+inline constexpr GLenum min::stream_vertex<T,K,FLOAT_TYPE>::buffer_type()
 {
-  public:
-    inline static constexpr GLenum buffer_type();
-};
+    return GL_STREAM_DRAW;
 }
-
-#endif
