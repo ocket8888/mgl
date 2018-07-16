@@ -63,7 +63,7 @@ ifdef MGL_DESTDIR
 	MGL_PATH = $(MGL_DESTDIR)/mgl
 endif
 
-ARFLAGS = -cvq
+ARFLAGS = -cvr
 
 SOURCES := $(wildcard source/*/min/*.cpp)
 HEADERS := $(SOURCES:cpp=h)
