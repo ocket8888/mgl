@@ -107,9 +107,6 @@ source/sound/libmgl.sound.a: $(SOUN_SOURCES)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $<
 
-%.h.gch: %.h
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
-
 clean:
 	$(RM) $(ALL_OBJECTS)
 
