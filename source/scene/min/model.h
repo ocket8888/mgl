@@ -16,11 +16,12 @@ limitations under the License.
 #define __MODEL__
 
 #include <algorithm>
-#include <min/mesh.h>
-#include <min/vec2.h>
-#include <min/vec3.h>
-#include <min/vec4.h>
 #include <vector>
+
+#include "geom/min/mesh.h"
+#include "math/min/vec2.h"
+#include "math/min/vec3.h"
+#include "math/min/vec4.h"
 
 namespace min
 {
@@ -33,93 +34,19 @@ class model
     std::vector<bound<T, vec>> _bounds;
     vec<T> _center;
 
-    inline void calculate_bounds()
-    {
-        // Creating bounding volumes for all meshes
-        for (auto &m : _mesh)
-        {
-            _bounds.emplace_back(m.vertex);
-        }
-
-        // Calculate the model center by averaging all mesh centers
-        _center = vec<T>();
-        for (size_t i = 0; i < _mesh.size(); i++)
-        {
-            _center += _bounds[i].get_center();
-        }
-        _center /= _mesh.size();
-    }
+    inline void calculate_bounds();
 
   public:
     // This will steal data from provider
-    model(std::vector<mesh<T, K>> &&mesh) : _mesh(std::move(mesh)), _center()
-    {
-        calculate_bounds();
+    model(std::vector<mesh<T, K>>&&);
+    model(const std::vector<mesh<T, K>>&);
 
-        // calculate normals
-        calculate_normals();
-
-        // calculate tangents
-        calculate_tangents();
-    }
-    model(const std::vector<mesh<T, K>> &mesh) : _mesh(mesh), _center()
-    {
-        calculate_bounds();
-
-        // calculate normals
-        calculate_normals();
-
-        // calculate tangents
-        calculate_tangents();
-    }
-    const vec<T> &center_model()
-    {
-        // Center all vertices in the model
-        for (auto &m : _mesh)
-        {
-            // Center all meshes by substracting the center
-            for (auto &vert : m.vertex)
-            {
-                vert -= _center;
-            }
-        }
-
-        // Clear out the model bounding volumes
-        _bounds.clear();
-
-        // Recalculate the model bounding volumes
-        calculate_bounds();
-
-        return _center;
-    }
-    void calculate_normals()
-    {
-        for (auto &m : _mesh)
-        {
-            m.calculate_normals();
-        }
-    }
-    void calculate_tangents()
-    {
-        for (auto &m : _mesh)
-        {
-            m.calculate_tangents();
-        }
-    }
-    inline const vec<T> &get_center() const
-    {
-        return _center;
-    }
-    inline const std::vector<mesh<T, K>> &get_meshes() const
-    {
-        // Allows for const usage
-        return _mesh;
-    }
-    inline std::vector<mesh<T, K>> &get_meshes()
-    {
-        // Allows for const usage
-        return _mesh;
-    }
+    const vec<T> &center_model();
+    void calculate_normals();
+    void calculate_tangents();
+    inline const vec<T> &get_center() const;
+    inline const std::vector<mesh<T, K>> &get_meshes() const;
+    inline std::vector<mesh<T, K>> &get_meshes();
 };
 }
 

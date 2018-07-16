@@ -75,6 +75,29 @@ inline int sgn(const T);
 template <typename T>
 inline void swap(T&, T&);
 
+// Typename must be an unsigned integer type
+template <typename K, typename L>
+class bit_flag
+{
+  private:
+    K _row;
+    K _col;
+    std::vector<uint8_t> _flags;
+
+    inline std::pair<L, uint_fast8_t> get_address(const L, const L) const;
+
+  public:
+    bit_flag();
+    bit_flag(const L, const L);
+
+    inline void clear();
+    inline bool get(const K, const K) const;
+    inline bool get_set_on(const K, const K);
+    inline void set_on(const K, const K);
+    inline void set_off(const K, const K);
+
+};
+
 template <typename T, typename F>
 inline void uint_sort(std::vector<T>&, std::vector<T>&, F&&);
 

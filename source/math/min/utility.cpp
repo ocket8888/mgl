@@ -128,74 +128,78 @@ inline void min::swap(T &a, T &b)
     b = _a;
 }
 
-// Typename must be an unsigned integer type
+//// bit_flag ////
 template <typename K, typename L>
-class bit_flag
+inline std::pair<L, uint_fast8_t> min::bit_flag<K,L>::get_address(const L row, const L col) const
 {
-  private:
-    K _row;
-    K _col;
-    std::vector<uint8_t> _flags;
+    // Divide by 8 to get into bytes
+    const L position = (row * _col) + col;
+    const L byte = position >> 3;
 
-    inline std::pair<L, uint_fast8_t> get_address(const L row, const L col) const
-    {
-        // Divide by 8 to get into bytes
-        const L position = (row * _col) + col;
-        const L byte = position >> 3;
+    // Get the offset
+    // 0-7 value
+    const uint_fast8_t offset = position % 8;
 
-        // Get the offset
-        // 0-7 value
-        const uint_fast8_t offset = position % 8;
+    // Return address
+    return std::make_pair(byte, offset);
+}
 
-        // Return address
-        return std::make_pair(byte, offset);
-    }
+template <typename K, typename L>
+min::bit_flag<K,L>::bit_flag() : _row(0), _col(0) {}
 
-  public:
-    bit_flag() : _row(0), _col(0) {}
-    bit_flag(const L row, const L col) : _row(row), _col(col), _flags((row * col >> 3) + 1, 0) {}
-    inline void clear()
-    {
-        // Zero out the bit buffer
-        std::fill(_flags.begin(), _flags.end(), 0);
-    }
-    inline bool get(const K row, const K col) const
-    {
-        // Get the address
-        const std::pair<L, uint_fast8_t> addr = get_address(row, col);
+template <typename K, typename L>
+min::bit_flag<K,L>::bit_flag(const L row, const L col) : _row(row), _col(col), _flags((row * col >> 3) + 1, 0) {}
 
-        // Return 1 if on and zero if off
-        return (_flags[addr.first] >> addr.second) & 0x1;
-    }
-    inline bool get_set_on(const K row, const K col)
-    {
-        // Get the address
-        const std::pair<L, uint_fast8_t> addr = get_address(row, col);
+template <typename K, typename L>
+inline void min::bit_flag<K,L>::clear()
+{
+    // Zero out the bit buffer
+    std::fill(_flags.begin(), _flags.end(), 0);
+}
 
-        // Cache shift for the read/write operation
-        const auto shift = (0x1 << addr.second);
+template <typename K, typename L>
+inline bool min::bit_flag<K,L>::get(const K row, const K col) const
+{
+    // Get the address
+    const std::pair<L, uint_fast8_t> addr = get_address(row, col);
 
-        // Return 1 if on and zero if off
-        const bool out = _flags[addr.first] & shift;
+    // Return 1 if on and zero if off
+    return (_flags[addr.first] >> addr.second) & 0x1;
+}
 
-        // Set bit on
-        _flags[addr.first] |= shift;
+template <typename K, typename L>
+inline bool min::bit_flag<K,L>::get_set_on(const K row, const K col)
+{
+    // Get the address
+    const std::pair<L, uint_fast8_t> addr = get_address(row, col);
 
-        return out;
-    }
-    inline void set_on(const K row, const K col)
-    {
-        // Get the address
-        const std::pair<L, uint_fast8_t> addr = get_address(row, col);
-        _flags[addr.first] |= (0x1 << addr.second);
-    }
-    inline void set_off(const K row, const K col)
-    {
-        // Get the address
-        const std::pair<L, uint_fast8_t> addr = get_address(row, col);
-        _flags[addr.first] &= ~(0x1 << addr.second);
-    }
-};
+    // Cache shift for the read/write operation
+    const auto shift = (0x1 << addr.second);
+
+    // Return 1 if on and zero if off
+    const bool out = _flags[addr.first] & shift;
+
+    // Set bit on
+    _flags[addr.first] |= shift;
+
+    return out;
+}
+
+template <typename K, typename L>
+inline void min::bit_flag<K,L>::set_on(const K row, const K col)
+{
+    // Get the address
+    const std::pair<L, uint_fast8_t> addr = get_address(row, col);
+    _flags[addr.first] |= (0x1 << addr.second);
+}
+
+template <typename K, typename L>
+inline void min::bit_flag<K,L>::set_off(const K row, const K col)
+{
+    // Get the address
+    const std::pair<L, uint_fast8_t> addr = get_address(row, col);
+    _flags[addr.first] &= ~(0x1 << addr.second);
+}
 
 // radix sort for unsigned integers
 template <typename T, typename F>

@@ -15,10 +15,11 @@ limitations under the License.
 #ifndef __MD5_MODEL__
 #define __MD5_MODEL__
 
-#include <min/md5_anim.h>
-#include <min/md5_mesh.h>
-#include <min/model.h>
 #include <vector>
+
+#include "file/min/md5_anim.h"
+#include "file/min/md5_mesh.h"
+#include "model.h"
 
 namespace min
 {
@@ -32,166 +33,24 @@ class md5_model : public model<T, K, vec, bound>
     std::vector<md5_anim<T>> _animations;
     size_t _current;
 
-    inline void check_bones()
-    {
-        // Check size of animated components
-        for (const auto &m : this->_mesh)
-        {
-            const size_t size = m.vertex.size();
-            if (m.bone_index.size() != size || m.bone_weight.size() != size)
-            {
-                throw std::runtime_error("md5_model: bone parameters are not of appropriate length");
-            }
-        }
-    }
-    inline void make_bind_pose(const std::vector<md5_joint<T>> &joints)
-    {
-        // Allocate bone matrices
-        _inverse_bp.reserve(joints.size());
-        _bones.resize(joints.size());
+    inline void check_bones();
+    inline void make_bind_pose(const std::vector<md5_joint<T>>&);
 
-        // Calculate the inverse bind pose matrices
-        for (const auto &joint : joints)
-        {
-            // Create inverse transformation matrix
-            mat4<T> bone(joint.get_position(), joint.get_rotation());
-
-            // Check if matrix has an inverse
-            if (!bone.invert())
-            {
-                throw std::runtime_error("md5_model: uninvertable matrix found while calculating inverse bind-pose");
-            }
-
-            // Save the inverse matrix for interpolation
-            _inverse_bp.push_back(bone);
-        }
-    }
 
   public:
     // This will steal data from provider
-    md5_model(md5_mesh<T, K> &&m)
-        : model<T, K, vec, bound>(std::move(m.get_meshes())), _current(0)
-    {
-        // Joints are thrown away after this
-        make_bind_pose(m.get_joints());
+    md5_model(md5_mesh<T, K>&&);
+    md5_model(const md5_mesh<T, K>&);
 
-        // Check the mesh bone dimensions
-        check_bones();
-    }
-    md5_model(const md5_mesh<T, K> &m)
-        : model<T, K, vec, bound>(m.get_meshes()), _current(0)
-    {
-        // Joints are thrown away after this
-        make_bind_pose(m.get_joints());
+    inline const std::vector<mat4<T>> &get_bones() const;
+    inline const md5_anim<T> &get_current_animation() const;
+    inline bool is_animating() const;
+    inline size_t load_animation(const std::string&);
+    inline size_t load_animation(const mem_file&);
+    inline void reset_bones() const;
+    inline void set_current_animation(const size_t);
+    inline void step(const T) const;
 
-        // Check the mesh bone dimensions
-        check_bones();
-    }
-    inline const std::vector<mat4<T>> &get_bones() const
-    {
-        return _bones;
-    }
-    inline const md5_anim<T> &get_current_animation() const
-    {
-        return _animations[_current];
-    }
-    inline bool is_animating() const
-    {
-        // If we loaded an animation file
-        if (_animations.size() > 0)
-        {
-            return (_animations[_current].get_loop_count() != 0);
-        }
-
-        // We haven't loaded any animations
-        return false;
-    }
-    inline size_t load_animation(const std::string &file)
-    {
-        // Load animation in place
-        _animations.emplace_back(file);
-
-        // Update the current animation
-        _current = _animations.size() - 1;
-
-        // Get current frame of animation
-        const std::vector<mat4<T>> &frame = _animations[_current].get_current_frame();
-
-        // Validate that the animation frame size matches the model bones
-        const size_t size = frame.size();
-        if (_bones.size() != size || _inverse_bp.size() != size)
-        {
-            throw std::runtime_error("md5_model: animation is not compatible with model");
-        }
-
-        // return current animation index
-        return _current;
-    }
-    inline size_t load_animation(const mem_file &mem)
-    {
-        // Load animation in place
-        _animations.emplace_back(mem);
-
-        // Update the current animation
-        _current = _animations.size() - 1;
-
-        // Get current frame of animation
-        const std::vector<mat4<T>> &frame = _animations[_current].get_current_frame();
-
-        // Validate that the animation frame size matches the model bones
-        const size_t size = frame.size();
-        if (_bones.size() != size || _inverse_bp.size() != size)
-        {
-            throw std::runtime_error("md5_model: animation is not compatible with model");
-        }
-
-        // return current animation index
-        return _current;
-    }
-    inline void reset_bones() const
-    {
-        // Reset bones to mind bose
-        for (auto &b : _bones)
-        {
-            b = mat4<T>();
-        }
-    }
-    inline void set_current_animation(const size_t animation)
-    {
-        // Set animation with index
-        _current = animation;
-    }
-    inline void step(const T time) const
-    {
-        // Check if we loaded an animation
-        if (_animations.size() == 0)
-        {
-            throw std::runtime_error("md5_model: no animations are loaded");
-        }
-
-        // Get the current animation
-        const md5_anim<T> &anim = _animations[_current];
-
-        // Step the animation
-        anim.step(time);
-
-        // Get current frame of animation
-        const std::vector<mat4<T>> &frame = anim.get_current_frame();
-
-        // Check frame size, consider removing since we checked on load
-        if (frame.size() != _bones.size())
-        {
-            throw std::runtime_error("md5_model: animation is not compatible with model");
-        }
-
-        // Update the model bones
-        const size_t size = frame.size();
-        for (size_t i = 0; i < size; i++)
-        {
-            // Transform the bone based off animation frame
-            _bones[i] = _inverse_bp[i] * frame[i];
-        }
-    }
 };
 }
 
