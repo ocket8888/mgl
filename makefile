@@ -31,8 +31,6 @@ else
 endif
 
 # Include directories
-INCLUDES = -Isource/ -Itest/ $(FREETYPE2_INCLUDE)
-TEST_SOURCES = -Itest/file -Itest/geom -Itest/math -Itest/platform -Itest/renderer -Itest/scene -Itest/sound
 BENCH_SOURCES = -Ibench/math -Ibench/geom -Ibench/scene -Ibench/file
 
 # Enable GS rendering
@@ -43,10 +41,6 @@ endif
 # Compile parameters
 CXXFLAGS += -s -std=c++14 -Wall -g -O3 -march=native -fPIC -fomit-frame-pointer -freciprocal-math -ffast-math --param max-inline-insns-auto=100 --param early-inlining-insns=200
 EXTRA = source/platform/min/glew.cpp
-WL_INCLUDE = -DGLEW_STATIC
-TEST_AL = test/al_test.cpp
-TEST_GL = test/gl_test.cpp
-TEST_WL = $(EXTRA) test/wl_test.cpp
 EX1 = $(EXTRA) example/programs/ex1.cpp
 EX2 = $(EXTRA) example/programs/ex2.cpp
 EX3 = $(EXTRA) example/programs/ex3.cpp
@@ -65,35 +59,52 @@ endif
 
 ARFLAGS = -cvr
 
+
+# Main source files
+INCLUDES = -Isource/ -Itest/ $(FREETYPE2_INCLUDE)
 SOURCES := $(wildcard source/*/min/*.cpp)
-HEADERS := $(SOURCES:cpp=h)
 OBJECTS := $(SOURCES:cpp=o)
+
+# Test source files
+TEST_SOURCES := $(wildcard test/*/min/*.cpp)
+TEST_OBJECTS :=	$(TEST_SOURCES:cpp=o)
+TEST_LDFLAGS := -L. -lmgl $(LDFLAGS)
 
 .PHONY: all install clean extra-clean tests
 
+
+# main targets
 all: libmgl.a libmgl.so
 
 libmgl.so: $(OBJECTS)
 	$(CXX) -std=c++14 $^ $(LDFLAGS) -shared -o $@
 
 libmgl.a: $(OBJECTS)
-	$(AR) $(ARFLAGS) libmgl.a $^
+	$(AR) $(ARFLAGS) libmgl.a $?
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $<
 
-clean:
-	$(RM) $(OBJECTS)
-
-extra-clean: clean
-	$(RM) libmgl.so libmgl.a
-
 
 # test targets
-tests: al_test
+tests: all bin/al_test bin/gl_test
 
-bin/al_test: test/al_test.o
-	$(CXX) -std=c++14 $< -L. -lmgl $(LDFLAGS) -o $@ && bin/al_test
+bin/al_test: test/al_test.o $(TEST_OBJECTS)
+	$(CXX) -std=c++14 $^ $(TEST_LDFLAGS) -o $@ && $@
+
+bin/gl_test: test/gl_test.o $(TEST_OBJECTS)
+	$(CXX) -std=c++14 $< $(TEST_LDFLAGS) -o $@ && $@
+
+bin/wl_test: test/wl_test.o $(TEST_OBJECTS)
+	$(CXX) -std=c++14 $< $(TEST_LDFLAGS) -o $@ && $@
+
+
+# cleaning targets
+clean:
+	$(RM) $(OBJECTS) $(TEST_OBJECTS) test/al_test.o test/gl_test.o test/wl_test.o
+
+extra-clean: clean
+	$(RM) libmgl.so libmgl.a bin/al_test bin/gl_test bin/wl_test
 
 # All run targets
 install:
@@ -101,8 +112,7 @@ install:
 	cp -r source/* $(MGL_PATH)
 uninstall:
 	$(RM) -rI $(MGL_PATH)
-lib: $(OBJGRAPH_SOURCES)
-	ar rvs bin/libmin.a $(OBJGRAPH_SOURCES)
+
 gl_test:
 	g++ $(LIB_SOURCES) $(TEST_SOURCES) -Itest $(PARAMS) $(TEST_GL) -o bin/gl_test $(LDFLAGS) 2> "gl_test.txt"
 wl_test:
