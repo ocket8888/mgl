@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TESTWINDOW__
-#define __TESTWINDOW__
+#ifndef TESTWINDOW
+#define TESTWINDOW
 
 #include <iostream>
 #include <min/test.h>

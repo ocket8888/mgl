@@ -16,7 +16,7 @@ limitations under the License.
 #include "uniform_buffer.h"
 
 template<typename T>
-inline void min::uniform_buffer<T>::check_extensions() const
+void min::uniform_buffer<T>::check_extensions() const
 {
     const bool ubo = GLEW_ARB_uniform_buffer_object;
 
@@ -28,19 +28,19 @@ inline void min::uniform_buffer<T>::check_extensions() const
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::get_light_bytes() const
+size_t min::uniform_buffer<T>::get_light_bytes() const
 {
     return _max_lights * sizeof_light + size_bytes;
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::get_matrix_bytes() const
+size_t min::uniform_buffer<T>::get_matrix_bytes() const
 {
     return _max_matrix * sizeof_matrix + size_bytes;
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::get_vector_bytes() const
+size_t min::uniform_buffer<T>::get_vector_bytes() const
 {
     return _max_vector * sizeof_vector + size_bytes;
 }
@@ -428,7 +428,7 @@ min::uniform_buffer<T>::~uniform_buffer()
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::add_light(const min::light<T> &light)
+size_t min::uniform_buffer<T>::add_light(const min::light<T> &light)
 {
     _lights.push_back(light);
 
@@ -437,7 +437,7 @@ inline size_t min::uniform_buffer<T>::add_light(const min::light<T> &light)
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::add_matrix(const min::mat4<T> &mat)
+size_t min::uniform_buffer<T>::add_matrix(const min::mat4<T> &mat)
 {
     _matrix.push_back(mat);
 
@@ -446,7 +446,7 @@ inline size_t min::uniform_buffer<T>::add_matrix(const min::mat4<T> &mat)
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::add_vector(const min::vec4<T> &v)
+size_t min::uniform_buffer<T>::add_vector(const min::vec4<T> &v)
 {
     _vector.push_back(v);
 
@@ -455,7 +455,7 @@ inline size_t min::uniform_buffer<T>::add_vector(const min::vec4<T> &v)
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::bind() const
+void min::uniform_buffer<T>::bind() const
 {
     // Bind lights
     if (_max_lights > 0)
@@ -480,25 +480,25 @@ inline void min::uniform_buffer<T>::bind() const
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::clear_lights()
+void min::uniform_buffer<T>::clear_lights()
 {
     _lights.clear();
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::clear_matrix()
+void min::uniform_buffer<T>::clear_matrix()
 {
     _matrix.clear();
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::clear_vector()
+void min::uniform_buffer<T>::clear_vector()
 {
     _vector.clear();
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::get_max_buffer_size()
+size_t min::uniform_buffer<T>::get_max_buffer_size()
 {
     // Get the maximum uniform buffer size
     GLint size;
@@ -508,100 +508,100 @@ inline size_t min::uniform_buffer<T>::get_max_buffer_size()
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::insert_light(const std::vector<min::light<T>> &v)
+void min::uniform_buffer<T>::insert_light(const std::vector<min::light<T>> &v)
 {
     _lights.insert(_lights.end(), v.begin(), v.end());
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::insert_matrix(const std::vector<min::mat4<T>> &v)
+void min::uniform_buffer<T>::insert_matrix(const std::vector<min::mat4<T>> &v)
 {
     _matrix.insert(_matrix.end(), v.begin(), v.end());
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::insert_vector(const std::vector<min::vec4<T>> &v)
+void min::uniform_buffer<T>::insert_vector(const std::vector<min::vec4<T>> &v)
 {
     _vector.insert(_vector.end(), v.begin(), v.end());
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::light_size() const
+size_t min::uniform_buffer<T>::light_size() const
 {
     return _lights.size();
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::matrix_size() const
+size_t min::uniform_buffer<T>::matrix_size() const
 {
     return _matrix.size();
 }
 
 template<typename T>
-inline size_t min::uniform_buffer<T>::vector_size() const
+size_t min::uniform_buffer<T>::vector_size() const
 {
     return _vector.size();
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::reserve_lights(const size_t size)
+void min::uniform_buffer<T>::reserve_lights(const size_t size)
 {
     _lights.reserve(size);
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::reserve_matrix(const size_t size)
+void min::uniform_buffer<T>::reserve_matrix(const size_t size)
 {
     _matrix.reserve(size);
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::reserve_vector(const size_t size)
+void min::uniform_buffer<T>::reserve_vector(const size_t size)
 {
     _vector.reserve(size);
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::set_light(const min::light<T> &light, const size_t id)
+void min::uniform_buffer<T>::set_light(const min::light<T> &light, const size_t id)
 {
     _lights[id] = light;
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::set_matrix(const min::mat4<T> &mat, const size_t id)
+void min::uniform_buffer<T>::set_matrix(const min::mat4<T> &mat, const size_t id)
 {
     _matrix[id] = mat;
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::set_vector(const min::vec4<T> &v, const size_t id)
+void min::uniform_buffer<T>::set_vector(const min::vec4<T> &v, const size_t id)
 {
     _vector[id] = v;
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::set_program_lights(const min::program &p) const
+void min::uniform_buffer<T>::set_program_lights(const min::program &p) const
 {
     // set the light buffer
     set_lights(p);
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::set_program_matrix(const min::program &p) const
+void min::uniform_buffer<T>::set_program_matrix(const min::program &p) const
 {
     // set the matrix buffer
     set_matrix(p);
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::set_program_vector(const min::program &p) const
+void min::uniform_buffer<T>::set_program_vector(const min::program &p) const
 {
     // set the vector buffer
     set_vector(p);
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::update() const
+void min::uniform_buffer<T>::update() const
 {
     // Update the light buffer
     update_light_buffer();
@@ -614,21 +614,21 @@ inline void min::uniform_buffer<T>::update() const
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::update_lights() const
+void min::uniform_buffer<T>::update_lights() const
 {
     // Update the light buffer
     update_light_buffer();
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::update_matrix() const
+void min::uniform_buffer<T>::update_matrix() const
 {
     // Update the light buffer
     update_matrix_buffer();
 }
 
 template<typename T>
-inline void min::uniform_buffer<T>::update_vector() const
+void min::uniform_buffer<T>::update_vector() const
 {
     // Update the light buffer
     update_vector_buffer();

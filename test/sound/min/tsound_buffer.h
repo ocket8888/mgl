@@ -12,15 +12,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TESTSOUND__
-#define __TESTSOUND__
+#ifndef TESTSOUND
+#define TESTSOUND
 
-#include <iostream>
-#include <min/ogg.h>
-#include <min/sound_buffer.h>
-#include <min/test.h>
-#include <min/wave.h>
 #include <stdexcept>
+#include <iostream>
+
+#include "file/min/ogg.h"
+#include "file/min/wave.h"
+#include "sound/min/sound_buffer.h"
+#include "platform/min/test.h"
 
 bool test_sound_buffer()
 {

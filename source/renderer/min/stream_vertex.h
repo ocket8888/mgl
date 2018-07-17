@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __STREAMVERTEX__
-#define __STREAMVERTEX__
+#ifndef STREAMVERTEX
+#define STREAMVERTEX
 
 #include "static_vertex.h"
 
@@ -24,7 +24,7 @@ template <typename T, typename K, GLenum FLOAT_TYPE>
 class stream_vertex : public static_vertex<T, K, FLOAT_TYPE>
 {
   public:
-    inline static constexpr GLenum buffer_type();
+    inline static constexpr GLenum buffer_type(){return GL_STREAM_DRAW;}
 };
 }
 

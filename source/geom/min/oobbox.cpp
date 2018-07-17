@@ -16,7 +16,7 @@ limitations under the License.
 #include "oobbox.h"
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline void min::oobbox_base<T,vec,rot>::add(const std::vector<vec<T>> &verts)
+void min::oobbox_base<T,vec,rot>::add(const std::vector<vec<T>> &verts)
 {
     // Calculate the maximum extent of the point list
     const auto size = verts.size();
@@ -39,14 +39,14 @@ inline void min::oobbox_base<T,vec,rot>::add(const std::vector<vec<T>> &verts)
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const vec<T> min::oobbox_base<T,vec,rot>::get_local_min() const
+const vec<T> min::oobbox_base<T,vec,rot>::get_local_min() const
 {
     // This returns min in object space (AABB)
     return _half_extent * -1.0;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const vec<T> min::oobbox_base<T,vec,rot>::get_local_max() const
+const vec<T> min::oobbox_base<T,vec,rot>::get_local_max() const
 {
     // This returns max in object space (AABB)
     return _half_extent;
@@ -59,14 +59,14 @@ min::oobbox_base<T,vec,rot>::oobbox_base(const std::vector<vec<T>> &verts) : _ax
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline vec<T> min::oobbox_base<T,vec,rot>::align(const vec<T> &v) const
+vec<T> min::oobbox_base<T,vec,rot>::align(const vec<T> &v) const
 {
     // Transform the point in object space
     return _axes.align(v);
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline vec<T> min::oobbox_base<T,vec,rot>::closest_point(const vec<T> &p) const
+vec<T> min::oobbox_base<T,vec,rot>::closest_point(const vec<T> &p) const
 {
     // Transform to local coordinates
     // Project the point vector along local axes and clamp to half extent
@@ -77,58 +77,58 @@ inline vec<T> min::oobbox_base<T,vec,rot>::closest_point(const vec<T> &p) const
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const min::coord_sys<T, vec> &min::oobbox_base<T,vec,rot>::get_axes() const
+const min::coord_sys<T, vec> &min::oobbox_base<T,vec,rot>::get_axes() const
 {
     return _axes;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const vec<T> &min::oobbox_base<T,vec,rot>::get_center() const
+const vec<T> &min::oobbox_base<T,vec,rot>::get_center() const
 {
     return _center;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const vec<T> &min::oobbox_base<T,vec,rot>::get_half_extent() const
+const vec<T> &min::oobbox_base<T,vec,rot>::get_half_extent() const
 {
     return _half_extent;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline vec<T> min::oobbox_base<T,vec,rot>::get_extent() const
+vec<T> min::oobbox_base<T,vec,rot>::get_extent() const
 {
     return _half_extent * 2.0;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const vec<T> min::oobbox_base<T,vec,rot>::get_min() const
+const vec<T> min::oobbox_base<T,vec,rot>::get_min() const
 {
     // This returns min in world space (AABB)
     return _center - _half_extent;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const vec<T> min::oobbox_base<T,vec,rot>::get_max() const
+const vec<T> min::oobbox_base<T,vec,rot>::get_max() const
 {
     // This returns max in world space (AABB)
     return _center + _half_extent;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline const rot<T> &min::oobbox_base<T,vec,rot>::get_rotation() const
+const rot<T> &min::oobbox_base<T,vec,rot>::get_rotation() const
 {
     return _rotation;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline std::vector<std::pair<vec<T>, vec<T>>> min::oobbox_base<T,vec,rot>::grid(size_t scale) const
+std::vector<std::pair<vec<T>, vec<T>>> min::oobbox_base<T,vec,rot>::grid(size_t scale) const
 {
     // Create the grid cells in world space AABB
     return vec<T>::grid(get_min(), get_max(), scale);
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline bool min::oobbox_base<T,vec,rot>::point_inside(const vec<T> &p) const
+bool min::oobbox_base<T,vec,rot>::point_inside(const vec<T> &p) const
 {
     // Transform the point into object's coordinate system
     const vec<T> t = align(p - _center);
@@ -138,13 +138,13 @@ inline bool min::oobbox_base<T,vec,rot>::point_inside(const vec<T> &p) const
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline void min::oobbox_base<T,vec,rot>::set_position(const vec<T> &position)
+void min::oobbox_base<T,vec,rot>::set_position(const vec<T> &position)
 {
     _center = position;
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline void min::oobbox_base<T,vec,rot>::set_rotation(const rot<T> &r)
+void min::oobbox_base<T,vec,rot>::set_rotation(const rot<T> &r)
 {
     // Reset rotation
     _rotation = r;
@@ -160,7 +160,7 @@ inline void min::oobbox_base<T,vec,rot>::set_rotation(const rot<T> &r)
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline T min::oobbox_base<T,vec,rot>::square_distance(const vec<T> &p) const
+T min::oobbox_base<T,vec,rot>::square_distance(const vec<T> &p) const
 {
     // Transform to local coordinates
     // Return square distance from point P
@@ -168,7 +168,7 @@ inline T min::oobbox_base<T,vec,rot>::square_distance(const vec<T> &p) const
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline T min::oobbox_base<T,vec,rot>::square_size() const
+T min::oobbox_base<T,vec,rot>::square_size() const
 {
     // This assumes a non rotated box (aabb)!
     // Calculates the squared distance across the box extent
@@ -177,7 +177,7 @@ inline T min::oobbox_base<T,vec,rot>::square_size() const
 }
 
 template <typename T, template <typename> class vec, template <typename> class rot>
-inline std::vector<std::pair<vec<T>, vec<T>>> min::oobbox_base<T,vec,rot>::subdivide() const
+std::vector<std::pair<vec<T>, vec<T>>> min::oobbox_base<T,vec,rot>::subdivide() const
 {
     // Create the subdivided space in world space AABB
     return vec<T>::subdivide(get_min(), get_max());

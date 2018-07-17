@@ -24,21 +24,21 @@ min::body_base<T, vec, angular, rot>::body_base(const vec<T> &center, const vec<
 
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::add_force(const vec<T> &force)
+void min::body_base<T, vec, angular, rot>::add_force(const vec<T> &force)
 {
     // Add force to force vector
     _force += force;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::clear_force(const vec<T> &gravity)
+void min::body_base<T, vec, angular, rot>::clear_force(const vec<T> &gravity)
 {
     // Gravity = mg
     _force = gravity * _mass;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::clear_no_force()
+void min::body_base<T, vec, angular, rot>::clear_no_force()
 {
     // Set no force on this object
     _force = vec<T>();
@@ -51,92 +51,92 @@ inline void min::body_base<T, vec, angular, rot>::clear_no_force()
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const angular &min::body_base<T, vec, angular, rot>::get_angular_velocity() const
+const angular &min::body_base<T, vec, angular, rot>::get_angular_velocity() const
 {
     return _angular_velocity;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline min::body_data min::body_base<T, vec, angular, rot>::get_data() const
+min::body_data min::body_base<T, vec, angular, rot>::get_data() const
 {
     return _data;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline size_t min::body_base<T, vec, angular, rot>::get_id() const
+size_t min::body_base<T, vec, angular, rot>::get_id() const
 {
     return _id;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const vec<T> min::body_base<T, vec, angular, rot>::get_linear_acceleration(const vec<T> &linear_velocity, const T damping) const
+const vec<T> min::body_base<T, vec, angular, rot>::get_linear_acceleration(const vec<T> &linear_velocity, const T damping) const
 {
     // Calculate the acceleration
     return (_force - linear_velocity * damping) * _inv_mass;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const vec<T> &min::body_base<T, vec, angular, rot>::get_linear_velocity() const
+const vec<T> &min::body_base<T, vec, angular, rot>::get_linear_velocity() const
 {
     return _linear_velocity;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const T min::body_base<T, vec, angular, rot>::get_mass() const
+const T min::body_base<T, vec, angular, rot>::get_mass() const
 {
     return _mass;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const T min::body_base<T, vec, angular, rot>::get_inv_mass() const
+const T min::body_base<T, vec, angular, rot>::get_inv_mass() const
 {
     return _inv_mass;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const rot<T> &min::body_base<T, vec, angular, rot>::get_rotation() const
+const rot<T> &min::body_base<T, vec, angular, rot>::get_rotation() const
 {
     return _rotation;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const vec<T> &min::body_base<T, vec, angular, rot>::get_position() const
+const vec<T> &min::body_base<T, vec, angular, rot>::get_position() const
 {
     return _position;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline bool min::body_base<T, vec, angular, rot>::is_dead() const
+bool min::body_base<T, vec, angular, rot>::is_dead() const
 {
     return _dead;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::kill()
+void min::body_base<T, vec, angular, rot>::kill()
 {
     _dead = true;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::set_angular_velocity(const angular w)
+void min::body_base<T, vec, angular, rot>::set_angular_velocity(const angular w)
 {
     _angular_velocity = w;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::set_data(const body_data data)
+void min::body_base<T, vec, angular, rot>::set_data(const body_data data)
 {
     _data = data;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::set_linear_velocity(const vec<T> &v)
+void min::body_base<T, vec, angular, rot>::set_linear_velocity(const vec<T> &v)
 {
     _linear_velocity = v;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::set_no_move()
+void min::body_base<T, vec, angular, rot>::set_no_move()
 {
     // Make the object's mass infinite
     _inv_mass = 0.0;
@@ -144,25 +144,25 @@ inline void min::body_base<T, vec, angular, rot>::set_no_move()
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::set_position(const vec<T> &p)
+void min::body_base<T, vec, angular, rot>::set_position(const vec<T> &p)
 {
     _position = p;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::set_rotation(const rot<T> &r)
+void min::body_base<T, vec, angular, rot>::set_rotation(const rot<T> &r)
 {
     _rotation = r;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline const void min::body_base<T, vec, angular, rot>::move_offset(const vec<T> &offset)
+const void min::body_base<T, vec, angular, rot>::move_offset(const vec<T> &offset)
 {
     _position += offset;
 }
 
 template <typename T, template <typename> class vec, class angular, template<typename> class rot>
-inline void min::body_base<T, vec, angular, rot>::update_position(const vec<T> &linear_velocity, const T time_step, const vec<T> &min, const vec<T> &max)
+void min::body_base<T, vec, angular, rot>::update_position(const vec<T> &linear_velocity, const T time_step, const vec<T> &min, const vec<T> &max)
 {
     // Update position from velocity
     _position += linear_velocity * time_step;
@@ -181,7 +181,7 @@ min::body<T, min::vec2>::body(const min::vec2<T> &center, const min::vec2<T> &gr
 
 
 template <typename T>
-inline void min::body<T, min::vec2>::callback(body<T, min::vec2> &b2)
+void min::body<T, min::vec2>::callback(body<T, min::vec2> &b2)
 {
     // If we registered a callback
     if (this->_f)
@@ -191,13 +191,13 @@ inline void min::body<T, min::vec2>::callback(body<T, min::vec2> &b2)
 }
 
 template <typename T>
-inline void min::body<T, min::vec2>::register_callback(const std::function<void(body<T, min::vec2> &, min::body<T, min::vec2> &)> &f)
+void min::body<T, min::vec2>::register_callback(const std::function<void(body<T, min::vec2> &, min::body<T, min::vec2> &)> &f)
 {
     this->_f = f;
 }
 
 template <typename T>
-inline min::mat2<T> min::body<T, min::vec2>::update_rotation(const T time_step)
+min::mat2<T> min::body<T, min::vec2>::update_rotation(const T time_step)
 {
     // Rotation is around the Z axis in euler angles
     const mat2<T> out(this->_angular_velocity * time_step);
@@ -217,7 +217,7 @@ min::body<T, min::vec3>::body(const min::vec3<T> &center, const min::vec3<T> &gr
 
 
 template <typename T>
-inline void min::body<T, min::vec3>::callback(body<T, min::vec3> &b2)
+void min::body<T, min::vec3>::callback(body<T, min::vec3> &b2)
 {
     // If we registered a callback
     if (this->_f)
@@ -227,13 +227,13 @@ inline void min::body<T, min::vec3>::callback(body<T, min::vec3> &b2)
 }
 
 template <typename T>
-inline void min::body<T, min::vec3>::register_callback(const std::function<void(body<T, min::vec3> &, min::body<T, min::vec3> &)> &f)
+void min::body<T, min::vec3>::register_callback(const std::function<void(body<T, min::vec3> &, min::body<T, min::vec3> &)> &f)
 {
     this->_f = f;
 }
 
 template <typename T>
-inline min::quat<T> min::body<T, min::vec3>::update_rotation(const T time_step)
+min::quat<T> min::body<T, min::vec3>::update_rotation(const T time_step)
 {
     // Calculate rotation for this timestep
     vec3<T> rotation = this->_angular_velocity * time_step;
@@ -268,7 +268,7 @@ min::body<T, min::vec4>::body(const min::vec4<T> &center, const min::vec4<T> &gr
 
 
 template <typename T>
-inline void min::body<T, min::vec4>::callback(body<T, min::vec4> &b2)
+void min::body<T, min::vec4>::callback(body<T, min::vec4> &b2)
 {
     // If we registered a callback
     if (this->_f)
@@ -278,13 +278,13 @@ inline void min::body<T, min::vec4>::callback(body<T, min::vec4> &b2)
 }
 
 template <typename T>
-inline void min::body<T, min::vec4>::register_callback(const std::function<void(body<T, min::vec4> &, min::body<T, min::vec4> &)> &f)
+void min::body<T, min::vec4>::register_callback(const std::function<void(body<T, min::vec4> &, min::body<T, min::vec4> &)> &f)
 {
     this->_f = f;
 }
 
 template <typename T>
-inline min::quat<T> min::body<T, min::vec4>::update_rotation(const T time_step)
+min::quat<T> min::body<T, min::vec4>::update_rotation(const T time_step)
 {
     // Calculate rotation for this timestep
     vec3<T> rotation = this->_angular_velocity * time_step;
@@ -315,7 +315,7 @@ inline min::quat<T> min::body<T, min::vec4>::update_rotation(const T time_step)
 //// physics ////
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::collide(const size_t index1, const size_t index2)
+void min::physics<T,K,L,vec,cell,shape,spatial>::collide(const size_t index1, const size_t index2)
 {
     // Get rigid bodies to solve energy equations
     body<T, vec> &b1 = _bodies[index1];
@@ -370,7 +370,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::collide(const size_t ind
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline bool min::physics<T,K,L,vec,cell,shape,spatial>::collide_static(const size_t index, const shape<T, vec> &s2)
+bool min::physics<T,K,L,vec,cell,shape,spatial>::collide_static(const size_t index, const shape<T, vec> &s2)
 {
     // Get rigid bodies to solve energy equations
     body<T, vec> &b = _bodies[index];
@@ -411,7 +411,7 @@ inline bool min::physics<T,K,L,vec,cell,shape,spatial>::collide_static(const siz
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_energy_conservation(body<T, vec> &b1, min::body<T, vec> &b2, const vec<T> &n, const vec<T> &intersect)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve_energy_conservation(body<T, vec> &b1, min::body<T, vec> &b2, const vec<T> &n, const vec<T> &intersect)
 {
     // Get velocities of bodies in world space
     const T v1n = b1.get_linear_velocity().dot(n);
@@ -463,7 +463,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_energy_conservatio
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_energy_conservation_static(body<T, vec> &b, const vec<T> &n, const vec<T> &intersect)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve_energy_conservation_static(body<T, vec> &b, const vec<T> &n, const vec<T> &intersect)
 {
     // Get velocities of bodies in world space
     const T v1n = b.get_linear_velocity().dot(n);
@@ -508,7 +508,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_energy_conservatio
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_integrals(const size_t index, const T dt, const T damping)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve_integrals(const size_t index, const T dt, const T damping)
 {
     // Check if body has died
     body<T, vec> &b = _bodies[index];
@@ -552,7 +552,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_integrals(const si
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_integrals(const T dt, const T damping)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve_integrals(const T dt, const T damping)
 {
     // Solve the first order initial value problem differential equations with Runge-Kutta4
     const size_t size = _bodies.size();
@@ -571,7 +571,7 @@ min::physics<T,K,L,vec,cell,shape,spatial>::physics(const cell<T, vec> &world, c
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline size_t min::physics<T,K,L,vec,cell,shape,spatial>::add_body(const shape<T, vec> &s, const T mass, const size_t id, const min::body_data data)
+size_t min::physics<T,K,L,vec,cell,shape,spatial>::add_body(const shape<T, vec> &s, const T mass, const size_t id, const min::body_data data)
 {
     // Clamp the body to be inside the grid
     const vec<T> center = clamp_bounds(s.get_center());
@@ -615,14 +615,14 @@ inline size_t min::physics<T,K,L,vec,cell,shape,spatial>::add_body(const shape<T
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline vec<T> min::physics<T,K,L,vec,cell,shape,spatial>::clamp_bounds(const vec<T> &point) const
+vec<T> min::physics<T,K,L,vec,cell,shape,spatial>::clamp_bounds(const vec<T> &point) const
 {
     return _spatial.clamp_bounds(point);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::clear_body(const size_t index)
+void min::physics<T,K,L,vec,cell,shape,spatial>::clear_body(const size_t index)
 {
     // Flag this body for destruction
     _bodies[index].kill();
@@ -636,7 +636,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::clear_body(const size_t 
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::clear()
+void min::physics<T,K,L,vec,cell,shape,spatial>::clear()
 {
     // Clear out the shapes
     _shapes.clear();
@@ -653,7 +653,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::clear()
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline bool min::physics<T,K,L,vec,cell,shape,spatial>::collide(const size_t index, const shape<T, vec> &s)
+bool min::physics<T,K,L,vec,cell,shape,spatial>::collide(const size_t index, const shape<T, vec> &s)
 {
     // return whether we collided or not
     return collide_static(index, s);
@@ -661,77 +661,77 @@ inline bool min::physics<T,K,L,vec,cell,shape,spatial>::collide(const size_t ind
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const min::body<T, vec> &min::physics<T,K,L,vec,cell,shape,spatial>::get_body(const size_t index) const
+const min::body<T, vec> &min::physics<T,K,L,vec,cell,shape,spatial>::get_body(const size_t index) const
 {
     return _bodies[index];
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline min::body<T, vec> &min::physics<T,K,L,vec,cell,shape,spatial>::get_body(const size_t index)
+min::body<T, vec> &min::physics<T,K,L,vec,cell,shape,spatial>::get_body(const size_t index)
 {
     return _bodies[index];
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const std::vector<min::body<T, vec>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_bodies() const
+const std::vector<min::body<T, vec>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_bodies() const
 {
     return _bodies;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline std::vector<min::body<T, vec>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_bodies()
+std::vector<min::body<T, vec>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_bodies()
 {
     return _bodies;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const std::vector<std::pair<K, vec<T>>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_collisions(const min::ray<T, vec> &r) const
+const std::vector<std::pair<K, vec<T>>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_collisions(const min::ray<T, vec> &r) const
 {
     return _spatial.get_collisions(r);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const vec<T> &min::physics<T,K,L,vec,cell,shape,spatial>::get_gravity() const
+const vec<T> &min::physics<T,K,L,vec,cell,shape,spatial>::get_gravity() const
 {
     return _gravity;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const std::vector<K> &min::physics<T,K,L,vec,cell,shape,spatial>::get_index_map() const
+const std::vector<K> &min::physics<T,K,L,vec,cell,shape,spatial>::get_index_map() const
 {
     return _spatial.get_index_map();
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const std::vector<std::pair<K, K>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_overlap(const shape<T, vec> &overlap) const
+const std::vector<std::pair<K, K>> &min::physics<T,K,L,vec,cell,shape,spatial>::get_overlap(const shape<T, vec> &overlap) const
 {
     return _spatial.get_overlap(overlap);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const size_t min::physics<T,K,L,vec,cell,shape,spatial>::get_scale() const
+const size_t min::physics<T,K,L,vec,cell,shape,spatial>::get_scale() const
 {
     return _spatial.get_scale();
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline const shape<T, vec> &min::physics<T,K,L,vec,cell,shape,spatial>::get_shape(const size_t index) const
+const shape<T, vec> &min::physics<T,K,L,vec,cell,shape,spatial>::get_shape(const size_t index) const
 {
     return _shapes[index];
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::prune_after(const size_t index)
+void min::physics<T,K,L,vec,cell,shape,spatial>::prune_after(const size_t index)
 {
     // Check if we need to prune
     if (!_clean)
@@ -742,7 +742,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::prune_after(const size_t
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::prune_after_force(const size_t index)
+void min::physics<T,K,L,vec,cell,shape,spatial>::prune_after_force(const size_t index)
 {
     // Clear all dead bodies
     _dead.clear();
@@ -770,14 +770,14 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::prune_after_force(const 
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::register_callback(const size_t index, const std::function<void(body<T, vec> &, min::body<T, vec> &)> &f)
+void min::physics<T,K,L,vec,cell,shape,spatial>::register_callback(const size_t index, const std::function<void(body<T, vec> &, min::body<T, vec> &)> &f)
 {
     _bodies[index].register_callback(f);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::reserve(const size_t size)
+void min::physics<T,K,L,vec,cell,shape,spatial>::reserve(const size_t size)
 {
     // Reserve memory for shapes and bodies
     _shapes.reserve(size);
@@ -787,7 +787,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::reserve(const size_t siz
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve(const T dt, const T damping)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve(const T dt, const T damping)
 {
     if (_shapes.size() > 0)
     {
@@ -814,7 +814,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve(const T dt, const 
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_no_collide(const T dt, const T damping)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve_no_collide(const T dt, const T damping)
 {
     // Solve the simulation
     solve_integrals(dt, damping);
@@ -822,7 +822,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_no_collide(const T
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_no_sort(const T dt, const T damping)
+void min::physics<T,K,L,vec,cell,shape,spatial>::solve_no_sort(const T dt, const T damping)
 {
     if (_shapes.size() > 0)
     {
@@ -846,7 +846,7 @@ inline void min::physics<T,K,L,vec,cell,shape,spatial>::solve_no_sort(const T dt
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline T min::physics<T,K,L,vec,cell,shape,spatial>::get_total_energy() const
+T min::physics<T,K,L,vec,cell,shape,spatial>::get_total_energy() const
 {
     T KE2 = 0.0;
     T PE = 0.0;
@@ -867,7 +867,7 @@ inline T min::physics<T,K,L,vec,cell,shape,spatial>::get_total_energy() const
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape,
     template <typename, typename, typename, template <typename> class, template <typename, template <typename> class> class, template <typename, template <typename> class> class> class spatial>
-inline void min::physics<T,K,L,vec,cell,shape,spatial>::set_elasticity(const T e)
+void min::physics<T,K,L,vec,cell,shape,spatial>::set_elasticity(const T e)
 {
     _elasticity = e;
 }

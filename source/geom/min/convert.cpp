@@ -16,7 +16,7 @@ limitations under the License.
 #include "convert.h"
 
 template <typename T, typename K>
-inline void min::finalize_mesh(min::mesh<T,K> &m)
+void min::finalize_mesh(min::mesh<T,K> &m)
 {
     // Calculate the normals
     m.calculate_normals();
@@ -26,7 +26,7 @@ inline void min::finalize_mesh(min::mesh<T,K> &m)
 }
 
 template <typename T, typename K>
-inline void min::append_mesh(const min::sphere<T, min::vec3> &s, min::mesh<T, K> &m)
+void min::append_mesh(const min::sphere<T, min::vec3> &s, min::mesh<T, K> &m)
 {
     // Calculate the index offset
     const size_t index_offset = m.vertex.size();
@@ -603,7 +603,7 @@ inline void min::append_mesh(const min::sphere<T, min::vec3> &s, min::mesh<T, K>
 }
 
 template <typename T, typename K>
-inline void min::append_mesh(const min::aabbox<T, min::vec3> &b, min::mesh<T, K> &m)
+void min::append_mesh(const min::aabbox<T, min::vec3> &b, min::mesh<T, K> &m)
 {
     // Get box dimensions
     const vec3<T> &min = b.get_min();
@@ -695,7 +695,7 @@ inline void min::append_mesh(const min::aabbox<T, min::vec3> &b, min::mesh<T, K>
 }
 
 template <typename T, typename K>
-inline min::mesh<T, K> min::to_mesh(const min::sphere<T, vec3> &s)
+min::mesh<T, K> min::to_mesh(const min::sphere<T, vec3> &s)
 {
     // Create a mesh to return
     min::mesh<T, K> m("sphere");
@@ -711,7 +711,7 @@ inline min::mesh<T, K> min::to_mesh(const min::sphere<T, vec3> &s)
 }
 
 template <typename T, typename K>
-inline min::mesh<T, K> min::to_mesh(const min::aabbox<T, min::vec3> &b)
+min::mesh<T, K> min::to_mesh(const min::aabbox<T, min::vec3> &b)
 {
     // Create a mesh to return
     min::mesh<T, K> m("aabbox");

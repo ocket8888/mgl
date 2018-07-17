@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __MODEL__
-#define __MODEL__
+#ifndef MODEL
+#define MODEL
 
 #include <algorithm>
 #include <vector>
@@ -34,7 +34,7 @@ class model
     std::vector<bound<T, vec>> _bounds;
     vec<T> _center;
 
-    inline void calculate_bounds();
+    void calculate_bounds();
 
   public:
     // This will steal data from provider
@@ -44,9 +44,9 @@ class model
     const vec<T> &center_model();
     void calculate_normals();
     void calculate_tangents();
-    inline const vec<T> &get_center() const;
-    inline const std::vector<mesh<T, K>> &get_meshes() const;
-    inline std::vector<mesh<T, K>> &get_meshes();
+    const vec<T> &get_center() const;
+    const std::vector<mesh<T, K>> &get_meshes() const;
+    std::vector<mesh<T, K>> &get_meshes();
 };
 }
 

@@ -14,9 +14,3 @@ limitations under the License.
 */
 
 #include "stream_vertex.h"
-
-template <typename T, typename K, GLenum FLOAT_TYPE>
-inline constexpr GLenum min::stream_vertex<T,K,FLOAT_TYPE>::buffer_type()
-{
-    return GL_STREAM_DRAW;
-}

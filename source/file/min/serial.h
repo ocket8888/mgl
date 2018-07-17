@@ -1,5 +1,5 @@
-#ifndef __SERIALIZE__
-#define __SERIALIZE__
+#ifndef SERIALIZE
+#define SERIALIZE
 
 #include <cstdint>
 #include <cstring>
@@ -22,39 +22,39 @@
 
 namespace min
 {
-template <typename T> inline T read_le(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline T read_be(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline void write_le(std::vector<uint8_t>&, const T);
-template <typename T> inline void write_be(std::vector<uint8_t>&, const T);
-template <typename T> inline void write_le(std::vector<uint8_t>&, const T, const size_t);
-template <typename T> inline void write_be(std::vector<uint8_t>&, const T, const size_t);
-template <typename T> inline std::vector<T> read_le_vector(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline std::vector<T> read_be_vector(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline void write_le_vector(std::vector<uint8_t>&, const std::vector<T>&);
-template <typename T> inline void write_be_vector(std::vector<uint8_t>&, const std::vector<T>&);
-template <typename T> inline min::vec2<T> read_le_vec2(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline min::vec2<T> read_be_vec2(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline min::vec3<T> read_le_vec3(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline min::vec3<T> read_be_vec3(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline min::vec4<T> read_le_vec4(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline min::vec4<T> read_be_vec4(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline void write_le_vec2(std::vector<uint8_t>&, const min::vec2<T> &v);
-template <typename T> inline void write_be_vec2(std::vector<uint8_t>&, const min::vec2<T> &v);
-template <typename T> inline void write_le_vec3(std::vector<uint8_t>&, const min::vec3<T> &v);
-template <typename T> inline void write_be_vec3(std::vector<uint8_t>&, const min::vec3<T> &v);
-template <typename T> inline void write_le_vec4(std::vector<uint8_t>&, const min::vec4<T> &v);
-template <typename T> inline void write_be_vec4(std::vector<uint8_t>&, const min::vec4<T> &v);
-template <typename T> inline std::vector<min::vec2<T>> read_le_vector_vec2(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline std::vector<min::vec2<T>> read_be_vector_vec2(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline std::vector<min::vec3<T>> read_le_vector_vec3(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline std::vector<min::vec3<T>> read_be_vector_vec3(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline std::vector<min::vec4<T>> read_le_vector_vec4(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline std::vector<min::vec4<T>> read_be_vector_vec4(const std::vector<uint8_t>&, size_t&);
-template <typename T> inline void write_le_vector_vec2(std::vector<uint8_t>&, const std::vector<vec2<T>>&);
-template <typename T> inline void write_be_vector_vec2(std::vector<uint8_t>&, const std::vector<vec2<T>>&);
-template <typename T> inline void write_le_vector_vec3(std::vector<uint8_t>&, const std::vector<vec3<T>>&);
-template <typename T> inline void write_be_vector_vec3(std::vector<uint8_t>&, const std::vector<vec3<T>>&);
-template <typename T> inline void write_le_vector_vec4(std::vector<uint8_t>&, const std::vector<vec4<T>>&);
-template <typename T> inline void write_be_vector_vec4(std::vector<uint8_t>&, const std::vector<vec4<T>>&);
+template <typename T> T read_le(const std::vector<uint8_t>&, size_t&);
+template <typename T> T read_be(const std::vector<uint8_t>&, size_t&);
+template <typename T> void write_le(std::vector<uint8_t>&, const T);
+template <typename T> void write_be(std::vector<uint8_t>&, const T);
+template <typename T> void write_le(std::vector<uint8_t>&, const T, const size_t);
+template <typename T> void write_be(std::vector<uint8_t>&, const T, const size_t);
+template <typename T> std::vector<T> read_le_vector(const std::vector<uint8_t>&, size_t&);
+template <typename T> std::vector<T> read_be_vector(const std::vector<uint8_t>&, size_t&);
+template <typename T> void write_le_vector(std::vector<uint8_t>&, const std::vector<T>&);
+template <typename T> void write_be_vector(std::vector<uint8_t>&, const std::vector<T>&);
+template <typename T> min::vec2<T> read_le_vec2(const std::vector<uint8_t>&, size_t&);
+template <typename T> min::vec2<T> read_be_vec2(const std::vector<uint8_t>&, size_t&);
+template <typename T> min::vec3<T> read_le_vec3(const std::vector<uint8_t>&, size_t&);
+template <typename T> min::vec3<T> read_be_vec3(const std::vector<uint8_t>&, size_t&);
+template <typename T> min::vec4<T> read_le_vec4(const std::vector<uint8_t>&, size_t&);
+template <typename T> min::vec4<T> read_be_vec4(const std::vector<uint8_t>&, size_t&);
+template <typename T> void write_le_vec2(std::vector<uint8_t>&, const min::vec2<T> &v);
+template <typename T> void write_be_vec2(std::vector<uint8_t>&, const min::vec2<T> &v);
+template <typename T> void write_le_vec3(std::vector<uint8_t>&, const min::vec3<T> &v);
+template <typename T> void write_be_vec3(std::vector<uint8_t>&, const min::vec3<T> &v);
+template <typename T> void write_le_vec4(std::vector<uint8_t>&, const min::vec4<T> &v);
+template <typename T> void write_be_vec4(std::vector<uint8_t>&, const min::vec4<T> &v);
+template <typename T> std::vector<min::vec2<T>> read_le_vector_vec2(const std::vector<uint8_t>&, size_t&);
+template <typename T> std::vector<min::vec2<T>> read_be_vector_vec2(const std::vector<uint8_t>&, size_t&);
+template <typename T> std::vector<min::vec3<T>> read_le_vector_vec3(const std::vector<uint8_t>&, size_t&);
+template <typename T> std::vector<min::vec3<T>> read_be_vector_vec3(const std::vector<uint8_t>&, size_t&);
+template <typename T> std::vector<min::vec4<T>> read_le_vector_vec4(const std::vector<uint8_t>&, size_t&);
+template <typename T> std::vector<min::vec4<T>> read_be_vector_vec4(const std::vector<uint8_t>&, size_t&);
+template <typename T> void write_le_vector_vec2(std::vector<uint8_t>&, const std::vector<vec2<T>>&);
+template <typename T> void write_be_vector_vec2(std::vector<uint8_t>&, const std::vector<vec2<T>>&);
+template <typename T> void write_le_vector_vec3(std::vector<uint8_t>&, const std::vector<vec3<T>>&);
+template <typename T> void write_be_vector_vec3(std::vector<uint8_t>&, const std::vector<vec3<T>>&);
+template <typename T> void write_le_vector_vec4(std::vector<uint8_t>&, const std::vector<vec4<T>>&);
+template <typename T> void write_be_vector_vec4(std::vector<uint8_t>&, const std::vector<vec4<T>>&);
 }
 #endif

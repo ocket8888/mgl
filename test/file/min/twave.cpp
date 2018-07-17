@@ -12,17 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef TESTWAVE
-#define TESTWAVE
 
-#include <stdexcept>
+#include "twave.h"
 
-// #include "platform/min/test.h"
-// #include "file/min/serial.cpp"
-#include "file/min/wave.cpp"
-
-// bool test_wave();
-bool test_wave()
+/*bool test_wave()
 {
     bool out = true;
 
@@ -74,6 +67,4 @@ bool test_wave()
     }
 
     return out;
-}
-
-#endif
+}*/

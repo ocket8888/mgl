@@ -13,9 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include <iostream>
-#include <min/togg.h>
-#include <min/tsound_buffer.h>
-#include <min/twave.h>
+
+#include "file/min/twave.h"
+// #include "file/min/togg.h"
+// #include "sound/min/tsound_buffer.h"
 
 int main()
 {
@@ -23,8 +24,8 @@ int main()
     {
         bool out = true;
         out = out && test_wave();
-        out = out && test_ogg();
-        out = out && test_sound_buffer();
+        // out = out && test_ogg();
+        // out = out && test_sound_buffer();
         if (out)
         {
             std::cout << "Sound tests passed!" << std::endl;

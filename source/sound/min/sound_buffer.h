@@ -42,42 +42,42 @@ class sound_buffer
     std::vector<ALuint> _sources;
     vec3<float> _listener;
 
-    inline static ALenum al_format(const bool, const unsigned);
-    inline size_t add_pcm_data(const ALvoid *const, const ALenum, const ALsizei, const ALsizei);
-    inline void clear_error() const;
-    inline void create_openal_context();
-    inline void shutdown();
+    static ALenum al_format(const bool, const unsigned);
+    size_t add_pcm_data(const ALvoid *const, const ALenum, const ALsizei, const ALsizei);
+    void clear_error() const;
+    void create_openal_context();
+    void shutdown();
 
   public:
     sound_buffer();
     ~sound_buffer();
     sound_buffer(const sound_buffer&) = delete;
 
-    inline void enumerate_devices() const;
-    inline size_t add_source();
-    inline size_t add_wave_pcm(const wave&);
-    inline size_t add_ogg_pcm(const ogg&);
-    inline void bind(const size_t, const size_t) const;
-    inline bool check_error() const;
-    inline void throw_internal_error() const;
-    inline bool is_playing(const size_t) const;
-    inline void play_async(const size_t) const;
-    inline void stop_async(const size_t) const;
-    inline void play_sync(const size_t) const;
-    inline void set_distance_model(const ALenum model) const;
-    inline void set_listener_position(const vec3<float>&);
-    inline void set_listener_orientation(const vec3<float>&, const vec3<float>&) const;
-    inline void set_listener_velocity(const vec3<float>&) const;
-    inline void set_source_at_listener(const size_t) const;
-    inline void set_source_direction(const size_t, const vec3<float>&) const;
-    inline void set_source_gain(const size_t, const float) const;
-    inline void set_source_loop(const size_t, const bool) const;
-    inline void set_source_position(const size_t, const vec3<float>&) const;
-    inline void set_source_max_dist(const size_t, const float) const;
-    inline void set_source_pitch(const size_t, const float) const;
-    inline void set_source_ref_dist(const size_t, const float) const;
-    inline void set_source_rolloff(const size_t, const float) const;
-    inline void set_source_velocity(const size_t, const vec3<float>&) const;
+    void enumerate_devices() const;
+    size_t add_source();
+    size_t add_wave_pcm(const wave&);
+    size_t add_ogg_pcm(const ogg&);
+    void bind(const size_t, const size_t) const;
+    bool check_error() const;
+    void throw_internal_error() const;
+    bool is_playing(const size_t) const;
+    void play_async(const size_t) const;
+    void stop_async(const size_t) const;
+    void play_sync(const size_t) const;
+    void set_distance_model(const ALenum model) const;
+    void set_listener_position(const vec3<float>&);
+    void set_listener_orientation(const vec3<float>&, const vec3<float>&) const;
+    void set_listener_velocity(const vec3<float>&) const;
+    void set_source_at_listener(const size_t) const;
+    void set_source_direction(const size_t, const vec3<float>&) const;
+    void set_source_gain(const size_t, const float) const;
+    void set_source_loop(const size_t, const bool) const;
+    void set_source_position(const size_t, const vec3<float>&) const;
+    void set_source_max_dist(const size_t, const float) const;
+    void set_source_pitch(const size_t, const float) const;
+    void set_source_ref_dist(const size_t, const float) const;
+    void set_source_rolloff(const size_t, const float) const;
+    void set_source_velocity(const size_t, const vec3<float>&) const;
 
 };
 }

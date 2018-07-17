@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __CONVERT__
-#define __CONVERT__
+#ifndef CONVERT
+#define CONVERT
 
 #include <array>
 #include <initializer_list>
@@ -27,23 +27,23 @@ namespace min
 
 // Calculates normals and tangents
 template <typename T, typename K>
-inline void finalize_mesh(mesh<T, K>&);
+void finalize_mesh(mesh<T, K>&);
 
 // Appends a sphere into a mesh for drawing
 template <typename T, typename K>
-inline void append_mesh(const sphere<T, vec3>&, mesh<T,K>&);
+void append_mesh(const sphere<T, vec3>&, mesh<T,K>&);
 
 // Converts an aabbox into a mesh for drawing
 template <typename T, typename K>
-inline void append_mesh(const aabbox<T, vec3>&, mesh<T,K>&);
+void append_mesh(const aabbox<T, vec3>&, mesh<T,K>&);
 
 // Converts a sphere into a mesh for drawing
 template <typename T, typename K>
-inline mesh<T,K> to_mesh(const sphere<T, vec3>&);
+mesh<T,K> to_mesh(const sphere<T, vec3>&);
 
 // Converts an aabbox into a mesh for drawing
 template <typename T, typename K>
-inline mesh<T, K> to_mesh(const aabbox<T, vec3>&);
+mesh<T, K> to_mesh(const aabbox<T, vec3>&);
 }
 
 #endif

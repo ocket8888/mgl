@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __BMP__
-#define __BMP__
+#ifndef BMP
+#define BMP
 
 #include <cstring>
 #include <fstream>
@@ -36,17 +36,17 @@ class bmp
         uint32_t _dib;
         std::vector<uint8_t> _pixel;
 
-        inline void load(const std::string);
-        template<class T> inline void load(const T&);
+        void load(const std::string);
+        template<class T> void load(const T&);
 
 public:
     bmp(const std::string &file);
     bmp(const mem_file &mem);
-    inline uint32_t get_width() const;
-    inline uint32_t get_height() const;
-    inline uint32_t get_size() const;
-    inline const std::vector<uint8_t> &get_pixels() const;
-    inline uint32_t get_pixel_size() const;
+    uint32_t get_width() const;
+    uint32_t get_height() const;
+    uint32_t get_size() const;
+    const std::vector<uint8_t> &get_pixels() const;
+    uint32_t get_pixel_size() const;
 };
 
 }

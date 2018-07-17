@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "texture_buffer.h"
 
-inline void min::texture_buffer::check_extensions() const
+void min::texture_buffer::check_extensions() const
 {
     const bool fbo = GLEW_ARB_framebuffer_object;
     const bool s3tc = GLEW_EXT_texture_compression_s3tc;
@@ -270,7 +270,7 @@ GLuint min::texture_buffer::add_dds_texture(const min::dds &d, const bool srgb)
     return id[0];
 }
 
-inline void min::texture_buffer::bind(const GLuint id, const size_t layer) const
+void min::texture_buffer::bind(const GLuint id, const size_t layer) const
 {
     // Activate the texture layer
     glActiveTexture(GL_TEXTURE0 + layer);
@@ -279,7 +279,7 @@ inline void min::texture_buffer::bind(const GLuint id, const size_t layer) const
     glBindTexture(GL_TEXTURE_2D, id);
 }
 
-inline size_t min::texture_buffer::get_max_texture_size() const
+size_t min::texture_buffer::get_max_texture_size() const
 {
     // Get the maximum uniform buffer size
     GLint size;
@@ -288,7 +288,7 @@ inline size_t min::texture_buffer::get_max_texture_size() const
     return (size_t)size;
 }
 
-inline void min::texture_buffer::set_texture_uniform(const min::program &program, const std::string &name, const size_t layer) const
+void min::texture_buffer::set_texture_uniform(const min::program &program, const std::string &name, const size_t layer) const
 {
     const GLint sampler_location = glGetUniformLocation(program.id(), name.c_str());
     if (sampler_location == -1)

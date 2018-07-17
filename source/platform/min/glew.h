@@ -5,24 +5,24 @@
 ** Copyright (C) 2002-2008, Marcelo E. Magallon <mmagallo[]debian org>
 ** Copyright (C) 2002, Lev Povalahev
 ** All rights reserved.
-** 
-** Redistribution and use in source and binary forms, with or without 
+**
+** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are met:
-** 
-** * Redistributions of source code must retain the above copyright notice, 
+**
+** * Redistributions of source code must retain the above copyright notice,
 **   this list of conditions and the following disclaimer.
-** * Redistributions in binary form must reproduce the above copyright notice, 
-**   this list of conditions and the following disclaimer in the documentation 
+** * Redistributions in binary form must reproduce the above copyright notice,
+**   this list of conditions and the following disclaimer in the documentation
 **   and/or other materials provided with the distribution.
-** * The name of the author may be used to endorse or promote products 
+** * The name of the author may be used to endorse or promote products
 **   derived from this software without specific prior written permission.
 **
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
 ** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 ** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 ** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
@@ -56,7 +56,7 @@
 
 /*
 ** Copyright (c) 2007 The Khronos Group Inc.
-** 
+**
 ** Permission is hereby granted, free of charge, to any person obtaining a
 ** copy of this software and/or associated documentation files (the
 ** "Materials"), to deal in the Materials without restriction, including
@@ -64,10 +64,10 @@
 ** distribute, sublicense, and/or sell copies of the Materials, and to
 ** permit persons to whom the Materials are furnished to do so, subject to
 ** the following conditions:
-** 
+**
 ** The above copyright notice and this permission notice shall be included
 ** in all copies or substantial portions of the Materials.
-** 
+**
 ** THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 ** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 ** MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -128,7 +128,7 @@
 #  endif
 #else
 #define GLEW_APIENTRY_DEFINED
-#  if defined(__MINGW32__) || defined(__CYGWIN__) || (_MSC_VER >= 800) || defined(_STDCALL_SUPPORTED) || defined(__BORLANDC__)
+#  if defined(__MINGW32__) || defined(CYGWIN) || (_MSC_VER >= 800) || defined(_STDCALL_SUPPORTED) || defined(BORLANDC)
 #    define APIENTRY __stdcall
 #    ifndef GLAPIENTRY
 #      define GLAPIENTRY __stdcall
@@ -141,14 +141,14 @@
 #  endif
 #endif
 #ifndef GLAPI
-#  if defined(__MINGW32__) || defined(__CYGWIN__)
+#  if defined(__MINGW32__) || defined(CYGWIN)
 #    define GLAPI extern
 #  endif
 #endif
 /* <winnt.h> */
 #ifndef CALLBACK
 #define GLEW_CALLBACK_DEFINED
-#  if defined(__MINGW32__) || defined(__CYGWIN__)
+#  if defined(__MINGW32__) || defined(CYGWIN)
 #    define CALLBACK __attribute__ ((__stdcall__))
 #  elif (defined(_M_MRX000) || defined(_M_IX86) || defined(_M_ALPHA) || defined(_M_PPC)) && !defined(MIDL_PASS)
 #    define CALLBACK __stdcall
@@ -162,7 +162,7 @@
 #define WINGDIAPI __declspec(dllimport)
 #endif
 /* <ctype.h> */
-#if (defined(_MSC_VER) || defined(__BORLANDC__)) && !defined(_WCHAR_T_DEFINED)
+#if (defined(_MSC_VER) || defined(BORLANDC)) && !defined(_WCHAR_T_DEFINED)
 typedef unsigned short wchar_t;
 #  define _WCHAR_T_DEFINED
 #endif
@@ -185,7 +185,7 @@ typedef _W64 int ptrdiff_t;
 #endif
 
 #ifndef GLAPI
-#  if defined(__MINGW32__) || defined(__CYGWIN__)
+#  if defined(__MINGW32__) || defined(CYGWIN)
 #    define GLAPI extern
 #  else
 #    define GLAPI WINGDIAPI
@@ -223,7 +223,7 @@ typedef _W64 int ptrdiff_t;
 /* SGI MIPSPro doesn't like stdint.h in C++ mode          */
 /* ID: 3376260 Solaris 9 has inttypes.h, but not stdint.h */
 
-#if (defined(__sgi) || defined(__sun)) && !defined(__GNUC__)
+#if (defined(__sgi) || defined(__sun)) && !defined(GNUC)
 #include <inttypes.h>
 #else
 #include <stdint.h>
@@ -239,7 +239,7 @@ typedef _W64 int ptrdiff_t;
 #ifdef GLEW_STATIC
 #  define GLEWAPI extern
 #else
-#  if defined(__GNUC__) && __GNUC__>=4
+#  if defined(GNUC) && GNUC>=4
 #   define GLEWAPI extern __attribute__ ((visibility("default")))
 #  elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
 #   define GLEWAPI extern __global
@@ -294,11 +294,11 @@ typedef void GLvoid;
 #if defined(_MSC_VER) && _MSC_VER < 1400
 typedef __int64 GLint64EXT;
 typedef unsigned __int64 GLuint64EXT;
-#elif defined(_MSC_VER) || defined(__BORLANDC__)
+#elif defined(_MSC_VER) || defined(BORLANDC)
 typedef signed long long GLint64EXT;
 typedef unsigned long long GLuint64EXT;
 #else
-#  if defined(__MINGW32__) || defined(__CYGWIN__)
+#  if defined(__MINGW32__) || defined(CYGWIN)
 #include <inttypes.h>
 #  endif
 typedef int64_t GLint64EXT;
@@ -1189,7 +1189,7 @@ GLAPI void GLAPIENTRY glViewport (GLint x, GLint y, GLsizei width, GLsizei heigh
 /* ---------------------------------- GLU ---------------------------------- */
 
 #ifndef GLEW_NO_GLU
-#  ifdef __APPLE__
+#  ifdef APPLE
 #    include <Availability.h>
 #    if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #      define GLEW_NO_GLU
@@ -1199,7 +1199,7 @@ GLAPI void GLAPIENTRY glViewport (GLint x, GLint y, GLsizei width, GLsizei heigh
 
 #ifndef GLEW_NO_GLU
 /* this is where we can safely include GLU */
-#  if defined(__APPLE__) && defined(__MACH__)
+#  if defined(APPLE) && defined(MACH)
 #    include <OpenGL/glu.h>
 #  else
 #    include <GL/glu.h>

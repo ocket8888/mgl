@@ -16,7 +16,7 @@ limitations under the License.
 #include "mesh.h"
 
 template <typename T, typename K>
-inline void min::mesh<T,K>::calculate_normal(const size_t a, const size_t b, const size_t c)
+void min::mesh<T,K>::calculate_normal(const size_t a, const size_t b, const size_t c)
 {
     // Get references to triangle vecs
     const K ia = index[a];
@@ -38,7 +38,7 @@ inline void min::mesh<T,K>::calculate_normal(const size_t a, const size_t b, con
 }
 
 template <typename T, typename K>
-inline void min::mesh<T,K>::calculate_tangent(const size_t a, const size_t b, const size_t c)
+void min::mesh<T,K>::calculate_tangent(const size_t a, const size_t b, const size_t c)
 {
     // Get references to triangle vecs
     const K ia = index[a];
@@ -74,7 +74,7 @@ inline void min::mesh<T,K>::calculate_tangent(const size_t a, const size_t b, co
 }
 
 template <typename T, typename K>
-inline void min::mesh<T,K>::add_tangents(const std::pair<min::vec3<T>, min::vec3<T>> &tan, const size_t in)
+void min::mesh<T,K>::add_tangents(const std::pair<min::vec3<T>, min::vec3<T>> &tan, const size_t in)
 {
     // Get the normal for this vertex
     const vec3<T> &norm = normal[in];

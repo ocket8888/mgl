@@ -15,10 +15,8 @@ limitations under the License.
 
 #include "wavefront.h"
 
-using namespace min;
-
 template <typename T, typename K>
-inline void wavefront<T,K>::flush()
+void min::wavefront<T,K>::flush()
 {
     // Check if we have a mesh to load
     if (_mesh.size() > 0)
@@ -29,7 +27,7 @@ inline void wavefront<T,K>::flush()
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::load_file(const std::string _file)
+void min::wavefront<T,K>::load_file(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -59,7 +57,7 @@ inline void wavefront<T,K>::load_file(const std::string _file)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::load(const std::string &data)
+void min::wavefront<T,K>::load(const std::string &data)
 {
     // Get locations of all lines in string buffer
     auto lines = min::read_lines(data);
@@ -109,7 +107,7 @@ inline void wavefront<T,K>::load(const std::string &data)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::process_mesh(mesh<T, K> &mesh)
+void min::wavefront<T,K>::process_mesh(mesh<T, K> &mesh)
 {
     // Check attribute indices are multiple of three
     auto size = _i.size();
@@ -175,7 +173,7 @@ inline void wavefront<T,K>::process_mesh(mesh<T, K> &mesh)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::process_object(const std::string &line)
+void min::wavefront<T,K>::process_object(const std::string &line)
 {
     // Trim the mesh name
     std::string name = line.substr(2);
@@ -189,7 +187,7 @@ inline void wavefront<T,K>::process_object(const std::string &line)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::process_vertex(const std::string &line)
+void min::wavefront<T,K>::process_vertex(const std::string &line)
 {
     // Parse string to three numbers
     T x, y, z;
@@ -207,7 +205,7 @@ inline void wavefront<T,K>::process_vertex(const std::string &line)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::process_uv(const std::string &line)
+void min::wavefront<T,K>::process_uv(const std::string &line)
 {
     // Parse string to two numbers
     std::istringstream s(line.substr(2));
@@ -229,7 +227,7 @@ inline void wavefront<T,K>::process_uv(const std::string &line)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::process_normal(const std::string &line)
+void min::wavefront<T,K>::process_normal(const std::string &line)
 {
     // Parse string to three numbers
     T x, y, z;
@@ -247,7 +245,7 @@ inline void wavefront<T,K>::process_normal(const std::string &line)
 }
 
 template <typename T, typename K>
-inline void wavefront<T,K>::process_face(const std::string &line)
+void min::wavefront<T,K>::process_face(const std::string &line)
 {
     // Trim the substring
     std::string sub = line.substr(2);
@@ -280,25 +278,25 @@ inline void wavefront<T,K>::process_face(const std::string &line)
 }
 
 template <typename T, typename K>
-wavefront<T,K>::wavefront(const std::string &file, const bool invert) : _invert(invert)
+min::wavefront<T,K>::wavefront(const std::string &file, const bool invert) : _invert(invert)
 {
     load_file(file);
 }
 
 template <typename T, typename K>
-wavefront<T,K>::wavefront(const mem_file &mem, const bool invert) : _invert(invert)
+min::wavefront<T,K>::wavefront(const mem_file &mem, const bool invert) : _invert(invert)
 {
     load(mem.to_string());
 }
 
 template <typename T, typename K>
-const std::vector<mesh<T, K>> &wavefront<T,K>::get_meshes() const
+const std::vector<min::mesh<T, K>> &min::wavefront<T,K>::get_meshes() const
 {
     return _mesh;
 }
 
 template <typename T, typename K>
-std::vector<mesh<T, K>> &wavefront<T,K>::get_meshes()
+std::vector<min::mesh<T, K>> &min::wavefront<T,K>::get_meshes()
 {
     return _mesh;
 }

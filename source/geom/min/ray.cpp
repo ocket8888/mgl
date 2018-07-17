@@ -26,7 +26,7 @@ min::ray<T,vec>::ray(const vec<T> &from, const vec<T> &to) : _origin(from)
 }
 
 template <typename T, template <typename> class vec>
-inline T min::ray<T,vec>::set(const vec<T> &from, const vec<T> &to)
+T min::ray<T,vec>::set(const vec<T> &from, const vec<T> &to)
 {
     _origin = from;
 
@@ -46,25 +46,25 @@ inline T min::ray<T,vec>::set(const vec<T> &from, const vec<T> &to)
 }
 
 template <typename T, template <typename> class vec>
-inline const vec<T> &min::ray<T,vec>::get_origin() const
+const vec<T> &min::ray<T,vec>::get_origin() const
 {
 	return _origin;
 }
 
 template <typename T, template <typename> class vec>
-inline const vec<T> &min::ray<T,vec>::get_direction() const
+const vec<T> &min::ray<T,vec>::get_direction() const
 {
 	return _dir;
 }
 
 template <typename T, template <typename> class vec>
-inline const vec<T> &min::ray<T,vec>::get_inverse() const
+const vec<T> &min::ray<T,vec>::get_inverse() const
 {
 	return _inv;
 }
 
 template <typename T, template <typename> class vec>
-inline vec<T> min::ray<T,vec>::interpolate(const T t) const
+vec<T> min::ray<T,vec>::interpolate(const T t) const
 {
     // Return the point on the ray
     return _origin + _dir * t;

@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __SPHERE__
-#define __SPHERE__
+#ifndef SPHERE
+#define SPHERE
 
 #include <cmath>
 #include <cstdio>
@@ -42,20 +42,20 @@ class sphere
     sphere(const std::vector<vec<T>>&);
 
     void add(const std::vector<vec<T>>&);
-    inline vec<T> closest_point(const vec<T>&) const;
-    inline const vec<T> &get_center() const;
-    inline vec<T> get_extent() const;
-    inline vec<T> get_min() const;
-    inline vec<T> get_max() const;
-    inline T get_radius() const;
-    inline T get_square_radius() const;
-    inline std::vector<std::pair<vec<T>, T>> grid(size_t) const;
-    inline vec<T> normal(const vec<T>&, T&, const T) const;
-    inline bool point_inside(const vec<T>&) const;
-    inline void set_position(const vec<T>&);
-    inline T square_distance(const vec<T>&) const;
-    inline T square_size() const;
-    inline std::vector<std::pair<vec<T>, T>> subdivide() const;
+    vec<T> closest_point(const vec<T>&) const;
+    const vec<T> &get_center() const;
+    vec<T> get_extent() const;
+    vec<T> get_min() const;
+    vec<T> get_max() const;
+    T get_radius() const;
+    T get_square_radius() const;
+    std::vector<std::pair<vec<T>, T>> grid(size_t) const;
+    vec<T> normal(const vec<T>&, T&, const T) const;
+    bool point_inside(const vec<T>&) const;
+    void set_position(const vec<T>&);
+    T square_distance(const vec<T>&) const;
+    T square_size() const;
+    std::vector<std::pair<vec<T>, T>> subdivide() const;
 };
 }
 

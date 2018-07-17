@@ -17,13 +17,13 @@ limitations under the License.
 
 //// grid_node ////
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid_node<T,K,L,vec,cell,shape>::add_key(K key)
+void min::grid_node<T,K,L,vec,cell,shape>::add_key(K key)
 {
     _keys.push_back(key);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid_node<T,K,L,vec,cell,shape>::clear()
+void min::grid_node<T,K,L,vec,cell,shape>::clear()
 {
     // Clear out the cell data
     _keys.clear();
@@ -33,26 +33,26 @@ template <typename T, typename K, typename L, template <typename> class vec, tem
 min::grid_node<T,K,L,vec,cell,shape>::grid_node(const cell<T, vec> &c) : _cell(c) {}
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<K> &min::grid_node<T,K,L,vec,cell,shape>::get_keys() const
+const std::vector<K> &min::grid_node<T,K,L,vec,cell,shape>::get_keys() const
 {
     return _keys;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const cell<T, vec> &min::grid_node<T,K,L,vec,cell,shape>::get_cell() const
+const cell<T, vec> &min::grid_node<T,K,L,vec,cell,shape>::get_cell() const
 {
     return _cell;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline bool min::grid_node<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
+bool min::grid_node<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
 {
     // The grid_key is assumed to be a box, so can't use _root.get_cell().point_inside()!
     return point.inside(_cell.get_min(), _cell.get_max());
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline K min::grid_node<T,K,L,vec,cell,shape>::size() const
+K min::grid_node<T,K,L,vec,cell,shape>::size() const
 {
     return _keys.size();
 }
@@ -61,7 +61,7 @@ inline K min::grid_node<T,K,L,vec,cell,shape>::size() const
 //// grid ////
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::build()
+void min::grid<T,K,L,vec,cell,shape>::build()
 {
     // Clears out the entire grid cell buffer
     _cells.clear();
@@ -107,14 +107,14 @@ inline void min::grid<T,K,L,vec,cell,shape>::build()
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline size_t min::grid<T,K,L,vec,cell,shape>::get_key(const vec<T> &point) const
+size_t min::grid<T,K,L,vec,cell,shape>::get_key(const vec<T> &point) const
 {
     // This must be guaranteed to be safe by callers
     return vec<T>::grid_key(_root.get_min(), _cell_extent, _scale, point);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::get_overlap(const size_t key) const
+void min::grid<T,K,L,vec,cell,shape>::get_overlap(const size_t key) const
 {
     // Get the cell from the next key
     const grid_node<T, K, L, vec, cell, shape> &node = _cells[key];
@@ -132,7 +132,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::get_overlap(const size_t key) const
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::get_pairs(const min::grid_node<T, K, L, vec, cell, shape> &node) const
+void min::grid<T,K,L,vec,cell,shape>::get_pairs(const min::grid_node<T, K, L, vec, cell, shape> &node) const
 {
     // Perform an N^2-N intersection test for all shapes in this cell
     const std::vector<K> &keys = node.get_keys();
@@ -166,7 +166,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::get_pairs(const min::grid_node<T, K
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::get_ray_intersect(const min::grid_node<T, K, L, vec, cell, shape> &node, const min::ray<T, vec> &r) const
+void min::grid<T,K,L,vec,cell,shape>::get_ray_intersect(const min::grid_node<T, K, L, vec, cell, shape> &node, const min::ray<T, vec> &r) const
 {
     // Perform an N intersection test for all shapes in this cell against the ray
     const std::vector<K> &keys = node.get_keys();
@@ -184,7 +184,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::get_ray_intersect(const min::grid_n
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::set_scale(const std::vector<shape<T, vec>> &shapes)
+void min::grid<T,K,L,vec,cell,shape>::set_scale(const std::vector<shape<T, vec>> &shapes)
 {
     // Find the largest object in the collection
     const auto size = shapes.size();
@@ -222,7 +222,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::set_scale(const std::vector<shape<T
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::sort(const std::vector<shape<T, vec>> &shapes)
+void min::grid<T,K,L,vec,cell,shape>::sort(const std::vector<shape<T, vec>> &shapes)
 {
     // Create index vector to sort 0 to N
     const auto size = shapes.size();
@@ -260,25 +260,25 @@ min::grid<T,K,L,vec,cell,shape>::grid(const cell<T, vec> &c)
 
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline vec<T> min::grid<T,K,L,vec,cell,shape>::clamp_bounds(const vec<T> &point) const
+vec<T> min::grid<T,K,L,vec,cell,shape>::clamp_bounds(const vec<T> &point) const
 {
     return vec<T>(point).clamp(_lower_bound, _upper_bound);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const vec<T> &min::grid<T,K,L,vec,cell,shape>::get_lower_bound() const
+const vec<T> &min::grid<T,K,L,vec,cell,shape>::get_lower_bound() const
 {
     return _lower_bound;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const vec<T> &min::grid<T,K,L,vec,cell,shape>::get_upper_bound() const
+const vec<T> &min::grid<T,K,L,vec,cell,shape>::get_upper_bound() const
 {
     return _upper_bound;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const min::grid_node<T, K, L, vec, cell, shape> &min::grid<T,K,L,vec,cell,shape>::get_node(const vec<T> &point) const
+const min::grid_node<T, K, L, vec, cell, shape> &min::grid<T,K,L,vec,cell,shape>::get_node(const vec<T> &point) const
 {
     // This function computes the grid location code
     const size_t key = get_key(point);
@@ -288,7 +288,7 @@ inline const min::grid_node<T, K, L, vec, cell, shape> &min::grid<T,K,L,vec,cell
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::resize(const cell<T, vec> &c)
+void min::grid<T,K,L,vec,cell,shape>::resize(const cell<T, vec> &c)
 {
     _root = c;
     _lower_bound = _root.get_min() + var<T>::TOL_PHYS_EDGE;
@@ -296,7 +296,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::resize(const cell<T, vec> &c)
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::check_size(const std::vector<shape<T, vec>> &shapes) const
+void min::grid<T,K,L,vec,cell,shape>::check_size(const std::vector<shape<T, vec>> &shapes) const
 {
     // Check size of the number of objects to insert into grid
     if (shapes.size() > std::numeric_limits<K>::max() - 1)
@@ -306,7 +306,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::check_size(const std::vector<shape<
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_collisions() const
+const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_collisions() const
 {
     // Clear out the old collision sets and vectors
     _flags.clear();
@@ -326,7 +326,7 @@ inline const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_collisions(const vec<T> &point) const
+const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_collisions(const vec<T> &point) const
 {
     // Clear out the old collision sets and vectors
     _flags.clear();
@@ -349,7 +349,7 @@ inline const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, vec<T>>> &min::grid<T,K,L,vec,cell,shape>::get_collisions(const ray<T, vec> &r) const
+const std::vector<std::pair<K, vec<T>>> &min::grid<T,K,L,vec,cell,shape>::get_collisions(const ray<T, vec> &r) const
 {
     // Output vector
     _ray_hits.clear();
@@ -405,19 +405,19 @@ inline const std::vector<std::pair<K, vec<T>>> &min::grid<T,K,L,vec,cell,shape>:
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<K> &min::grid<T,K,L,vec,cell,shape>::get_index_map() const
+const std::vector<K> &min::grid<T,K,L,vec,cell,shape>::get_index_map() const
 {
     return _index_map;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline K min::grid<T,K,L,vec,cell,shape>::get_scale() const
+K min::grid<T,K,L,vec,cell,shape>::get_scale() const
 {
     return _scale;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_overlap(const shape<T, vec> &overlap) const
+const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_overlap(const shape<T, vec> &overlap) const
 {
     // Check if grid is not built yet
     if (_cells.size() == 0)
@@ -450,7 +450,7 @@ inline const std::vector<std::pair<K, K>> &min::grid<T,K,L,vec,cell,shape>::get_
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<shape<T, vec>> &min::grid<T,K,L,vec,cell,shape>::get_shapes()
+const std::vector<shape<T, vec>> &min::grid<T,K,L,vec,cell,shape>::get_shapes()
 {
     return _shapes;
 }
@@ -462,7 +462,7 @@ bool min::grid<T,K,L,vec,cell,shape>::inside(const vec<T> &point) const
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes)
+void min::grid<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes)
 {
     // Set the grid scale
     set_scale(shapes);
@@ -475,7 +475,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, v
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes, const K scale)
+void min::grid<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes, const K scale)
 {
     // Set the grid scale
     _scale = scale;
@@ -491,7 +491,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, v
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::grid<T,K,L,vec,cell,shape>::insert_no_sort(const std::vector<shape<T, vec>> &shapes)
+void min::grid<T,K,L,vec,cell,shape>::insert_no_sort(const std::vector<shape<T, vec>> &shapes)
 {
     // Set the grid scale
     set_scale(shapes);
@@ -505,7 +505,7 @@ inline void min::grid<T,K,L,vec,cell,shape>::insert_no_sort(const std::vector<sh
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<K> &min::grid<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
+const std::vector<K> &min::grid<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
 {
     // Clamp point into world bounds
     const vec<T> clamped = clamp_bounds(point);

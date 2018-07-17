@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "program.h"
 
-inline void min::program::check_extensions() const
+void min::program::check_extensions() const
 {
     const bool vp = GLEW_ARB_vertex_program;
     const bool fp = GLEW_ARB_fragment_program;
@@ -27,7 +27,7 @@ inline void min::program::check_extensions() const
     }
 }
 
-inline void min::program::create_program()
+void min::program::create_program()
 {
     // Create program ID
     _id = glCreateProgram();
@@ -37,7 +37,7 @@ inline void min::program::create_program()
     }
 }
 
-inline void min::program::link_program()
+void min::program::link_program()
 {
     // Link the program
     glLinkProgram(_id);
@@ -141,13 +141,13 @@ min::program::~program()
     throw_gl_error();
 }
 
-inline void min::program::use() const
+void min::program::use() const
 {
     // Enable the program for use
     glUseProgram(_id);
 }
 
-inline GLuint min::program::id() const
+GLuint min::program::id() const
 {
     return _id;
 }

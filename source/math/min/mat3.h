@@ -92,27 +92,27 @@ class mat3
     mat3(const quat<T>&);
 
 
-    inline void one(vec3<T>&);
-    inline void two(vec3<T>&);
-    inline void three(vec3<T>&);
-    inline void w(const T);
-    inline T w() const;
-    inline mat3<T> operator*(const mat3<T>&) const;
-    inline mat3<T> &operator*=(const mat3<T>&);
-    inline vec3<T> operator*(const vec3<T>&) const;
-    inline vec2<T> get_translation() const;
-    inline mat3<T> &set_translation(const vec2<T>&);
-    inline mat2<T> get_rotation() const;
-    inline mat3<T> &set_rotation(const mat2<T>&);
-    inline mat2<T> get_rotation_x() const;
-    inline mat3<T> &set_rotation_x(const mat2<T>&);
-    inline mat2<T> get_rotation_y() const;
-    inline mat3<T> &set_rotation_y(const mat2<T>&);
-    inline vec2<T> get_scale() const;
-    inline mat3<T> &set_scale(const vec2<T>&);
-    inline bool invert();
-    inline vec3<T> transform(const vec3<T>&) const;
-    inline mat3<T> &transpose();
+    void one(vec3<T>&);
+    void two(vec3<T>&);
+    void three(vec3<T>&);
+    void w(const T);
+    T w() const;
+    mat3<T> operator*(const mat3<T>&) const;
+    mat3<T> &operator*=(const mat3<T>&);
+    vec3<T> operator*(const vec3<T>&) const;
+    vec2<T> get_translation() const;
+    mat3<T> &set_translation(const vec2<T>&);
+    mat2<T> get_rotation() const;
+    mat3<T> &set_rotation(const mat2<T>&);
+    mat2<T> get_rotation_x() const;
+    mat3<T> &set_rotation_x(const mat2<T>&);
+    mat2<T> get_rotation_y() const;
+    mat3<T> &set_rotation_y(const mat2<T>&);
+    vec2<T> get_scale() const;
+    mat3<T> &set_scale(const vec2<T>&);
+    bool invert();
+    vec3<T> transform(const vec3<T>&) const;
+    mat3<T> &transpose();
 };
 }
 

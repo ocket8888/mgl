@@ -17,7 +17,7 @@ limitations under the License.
 
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline void min::md5_model<T,K,vec,bound>::check_bones()
+void min::md5_model<T,K,vec,bound>::check_bones()
 {
     // Check size of animated components
     for (const auto &m : this->_mesh)
@@ -31,7 +31,7 @@ inline void min::md5_model<T,K,vec,bound>::check_bones()
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline void min::md5_model<T,K,vec,bound>::make_bind_pose(const std::vector<min::md5_joint<T>> &joints)
+void min::md5_model<T,K,vec,bound>::make_bind_pose(const std::vector<min::md5_joint<T>> &joints)
 {
     // Allocate bone matrices
     _inverse_bp.reserve(joints.size());
@@ -77,19 +77,19 @@ min::md5_model<T,K,vec,bound>::md5_model(const min::md5_mesh<T, K> &m)
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline const std::vector<min::mat4<T>> &min::md5_model<T,K,vec,bound>::get_bones() const
+const std::vector<min::mat4<T>> &min::md5_model<T,K,vec,bound>::get_bones() const
 {
     return _bones;
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline const min::md5_anim<T> &min::md5_model<T,K,vec,bound>::get_current_animation() const
+const min::md5_anim<T> &min::md5_model<T,K,vec,bound>::get_current_animation() const
 {
     return _animations[_current];
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline bool min::md5_model<T,K,vec,bound>::is_animating() const
+bool min::md5_model<T,K,vec,bound>::is_animating() const
 {
     // If we loaded an animation file
     if (_animations.size() > 0)
@@ -102,7 +102,7 @@ inline bool min::md5_model<T,K,vec,bound>::is_animating() const
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline size_t min::md5_model<T,K,vec,bound>::load_animation(const std::string &file)
+size_t min::md5_model<T,K,vec,bound>::load_animation(const std::string &file)
 {
     // Load animation in place
     _animations.emplace_back(file);
@@ -125,7 +125,7 @@ inline size_t min::md5_model<T,K,vec,bound>::load_animation(const std::string &f
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline size_t min::md5_model<T,K,vec,bound>::load_animation(const mem_file &mem)
+size_t min::md5_model<T,K,vec,bound>::load_animation(const mem_file &mem)
 {
     // Load animation in place
     _animations.emplace_back(mem);
@@ -148,7 +148,7 @@ inline size_t min::md5_model<T,K,vec,bound>::load_animation(const mem_file &mem)
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline void min::md5_model<T,K,vec,bound>::reset_bones() const
+void min::md5_model<T,K,vec,bound>::reset_bones() const
 {
     // Reset bones to mind bose
     for (auto &b : _bones)
@@ -158,14 +158,14 @@ inline void min::md5_model<T,K,vec,bound>::reset_bones() const
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline void min::md5_model<T,K,vec,bound>::set_current_animation(const size_t animation)
+void min::md5_model<T,K,vec,bound>::set_current_animation(const size_t animation)
 {
     // Set animation with index
     _current = animation;
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline void min::md5_model<T,K,vec,bound>::step(const T time) const
+void min::md5_model<T,K,vec,bound>::step(const T time) const
 {
     // Check if we loaded an animation
     if (_animations.size() == 0)

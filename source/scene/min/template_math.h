@@ -28,39 +28,39 @@ limitations under the License.
 
 namespace min
 {
-template <typename T> inline T align(const T, const mat2<T>&);
-template <typename T> inline vec3<T> align(const vec3<T>&, const quat<T>&);
-template <typename T> inline vec4<T> align(const vec4<T>&, const quat<T>&);
-template <typename T> inline T transform(const T, const mat2<T>&);
-template <typename T> inline vec3<T> transform(const vec3<T>&, const quat<T>&);
-template <typename T> inline vec4<T> transform(const vec4<T>&, const quat<T>&);
-template <typename T> inline vec2<T> cross(const T, const vec2<T>&);
-template <typename T> inline vec3<T> cross(const vec3<T>&, const vec3<T>&);
-template <typename T> inline vec4<T> cross(const vec4<T>&, const vec4<T>&);
-template <typename T> inline T dot(const T, const T);
-template <typename T> inline T dot(const vec3<T>&, const vec3<T>&);
-template <typename T> inline T dot(const vec4<T>&, const vec4<T>&);
-template <typename T> inline T inverse(const T);
-template <typename T> inline vec3<T> inverse(const vec3<T>&);
-template <typename T> inline vec4<T> inverse(const vec4<T>&);
-template <typename T> inline T get_inertia(const aabbox<T, vec2>&, const T);
-template <typename T> inline vec3<T> get_inertia(const aabbox<T, vec3>&, const T);
-template <typename T> inline vec4<T> get_inertia(const aabbox<T, vec4>&, const T);
-template <typename T> inline T get_inertia(const oobbox<T, vec2>&, const T);
-template <typename T> inline vec3<T> get_inertia(const oobbox<T, vec3>&, const T);
-template <typename T> inline vec4<T> get_inertia(const oobbox<T, vec4>&, const T);
-template <typename T> inline T get_inertia(const sphere<T, vec2>&, const T);
-template <typename T> inline vec3<T> get_inertia(const sphere<T, vec3>&, const T);
-template <typename T> inline vec4<T> get_inertia(const sphere<T, vec4>&, const T);
-template <typename T> inline void rotate(aabbox<T, vec2>&, const mat2<T> &);
-template <typename T> inline void rotate(aabbox<T, vec3>&, const quat<T> &);
-template <typename T> inline void rotate(aabbox<T, vec4>&, const quat<T> &);
-template <typename T> inline void rotate(oobbox<T, vec2>&, const mat2<T> &);
-template <typename T> inline void rotate(oobbox<T, vec3>&, const quat<T> &);
-template <typename T> inline void rotate(oobbox<T, vec4>&, const quat<T> &);
-template <typename T> inline void rotate(sphere<T, vec2>&, const mat2<T> &);
-template <typename T> inline void rotate(sphere<T, vec3>&, const quat<T> &);
-template <typename T> inline void rotate(sphere<T, vec4>&, const quat<T> &);
+template <typename T> T align(const T, const mat2<T>&);
+template <typename T> vec3<T> align(const vec3<T>&, const quat<T>&);
+template <typename T> vec4<T> align(const vec4<T>&, const quat<T>&);
+template <typename T> T transform(const T, const mat2<T>&);
+template <typename T> vec3<T> transform(const vec3<T>&, const quat<T>&);
+template <typename T> vec4<T> transform(const vec4<T>&, const quat<T>&);
+template <typename T> vec2<T> cross(const T, const vec2<T>&);
+template <typename T> vec3<T> cross(const vec3<T>&, const vec3<T>&);
+template <typename T> vec4<T> cross(const vec4<T>&, const vec4<T>&);
+template <typename T> T dot(const T, const T);
+template <typename T> T dot(const vec3<T>&, const vec3<T>&);
+template <typename T> T dot(const vec4<T>&, const vec4<T>&);
+template <typename T> T inverse(const T);
+template <typename T> vec3<T> inverse(const vec3<T>&);
+template <typename T> vec4<T> inverse(const vec4<T>&);
+template <typename T> T get_inertia(const aabbox<T, vec2>&, const T);
+template <typename T> vec3<T> get_inertia(const aabbox<T, vec3>&, const T);
+template <typename T> vec4<T> get_inertia(const aabbox<T, vec4>&, const T);
+template <typename T> T get_inertia(const oobbox<T, vec2>&, const T);
+template <typename T> vec3<T> get_inertia(const oobbox<T, vec3>&, const T);
+template <typename T> vec4<T> get_inertia(const oobbox<T, vec4>&, const T);
+template <typename T> T get_inertia(const sphere<T, vec2>&, const T);
+template <typename T> vec3<T> get_inertia(const sphere<T, vec3>&, const T);
+template <typename T> vec4<T> get_inertia(const sphere<T, vec4>&, const T);
+template <typename T> void rotate(aabbox<T, vec2>&, const mat2<T> &);
+template <typename T> void rotate(aabbox<T, vec3>&, const quat<T> &);
+template <typename T> void rotate(aabbox<T, vec4>&, const quat<T> &);
+template <typename T> void rotate(oobbox<T, vec2>&, const mat2<T> &);
+template <typename T> void rotate(oobbox<T, vec3>&, const quat<T> &);
+template <typename T> void rotate(oobbox<T, vec4>&, const quat<T> &);
+template <typename T> void rotate(sphere<T, vec2>&, const mat2<T> &);
+template <typename T> void rotate(sphere<T, vec3>&, const quat<T> &);
+template <typename T> void rotate(sphere<T, vec4>&, const quat<T> &);
 
 }
 

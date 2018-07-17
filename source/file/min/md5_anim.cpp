@@ -134,7 +134,7 @@ void min::md5_frame<T>::reserve(size_t n)
 //// md5_anim ////
 
 template <typename T>
-inline void min::md5_anim<T>::load_file(const std::string _file)
+void min::md5_anim<T>::load_file(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -164,7 +164,7 @@ inline void min::md5_anim<T>::load_file(const std::string _file)
 }
 
 template <typename T>
-inline void min::md5_anim<T>::load(const std::string &data)
+void min::md5_anim<T>::load(const std::string &data)
 {
     // Get locations of all lines in string buffer
     const auto lines = min::read_lines(data);
@@ -276,7 +276,7 @@ inline void min::md5_anim<T>::load(const std::string &data)
 }
 
 template <typename T>
-inline void min::md5_anim<T>::interpolate_current_frame(const min::md5_frame<T> &frame0, const min::md5_frame<T> &frame1, T ratio) const
+void min::md5_anim<T>::interpolate_current_frame(const min::md5_frame<T> &frame0, const min::md5_frame<T> &frame1, T ratio) const
 {
     const size_t size = _nodes.size();
     for (size_t i = 0; i < size; i++)
@@ -297,7 +297,7 @@ inline void min::md5_anim<T>::interpolate_current_frame(const min::md5_frame<T> 
 }
 
 template <typename T>
-inline void min::md5_anim<T>::process_hierarchy(const std::vector<std::string> &lines)
+void min::md5_anim<T>::process_hierarchy(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -335,7 +335,7 @@ inline void min::md5_anim<T>::process_hierarchy(const std::vector<std::string> &
 }
 
 template <typename T>
-inline void min::md5_anim<T>::process_bounds(const std::vector<std::string> &lines)
+void min::md5_anim<T>::process_bounds(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -383,7 +383,7 @@ inline void min::md5_anim<T>::process_bounds(const std::vector<std::string> &lin
 }
 
 template <typename T>
-inline void min::md5_anim<T>::process_baseframe(const std::vector<std::string> &lines)
+void min::md5_anim<T>::process_baseframe(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -431,7 +431,7 @@ inline void min::md5_anim<T>::process_baseframe(const std::vector<std::string> &
 }
 
 template <typename T>
-inline void min::md5_anim<T>::process_frame_data(const std::vector<std::string> &lines, const unsigned frame_id, const unsigned components)
+void min::md5_anim<T>::process_frame_data(const std::vector<std::string> &lines, const unsigned frame_id, const unsigned components)
 {
     if (lines.size() > 0)
     {
@@ -485,7 +485,7 @@ inline void min::md5_anim<T>::process_frame_data(const std::vector<std::string> 
 }
 
 template <typename T>
-inline void min::md5_anim<T>::process_frame(const min::md5_frame_data<T> &frame_data)
+void min::md5_anim<T>::process_frame(const min::md5_frame_data<T> &frame_data)
 {
     if (_nodes.size() != _transforms.size())
     {
@@ -617,69 +617,69 @@ min::md5_anim<T>::md5_anim(const min::mem_file &mem) : _frame_rate(0), _loops(0)
 }
 
 template <typename T>
-inline const std::vector<min::aabbox<T, min::vec3>> &min::md5_anim<T>::get_bounds() const
+const std::vector<min::aabbox<T, min::vec3>> &min::md5_anim<T>::get_bounds() const
 {
     return _bounds;
 }
 
 template <typename T>
-inline const std::vector<min::mat4<T>> &min::md5_anim<T>::get_current_frame() const
+const std::vector<min::mat4<T>> &min::md5_anim<T>::get_current_frame() const
 {
     return _current_frame;
 }
 
 template <typename T>
-inline unsigned min::md5_anim<T>::get_frame_rate() const
+unsigned min::md5_anim<T>::get_frame_rate() const
 {
     return _frame_rate;
 }
 
 template <typename T>
-inline const std::vector<min::md5_frame_data<T>> &min::md5_anim<T>::get_frame_data() const
+const std::vector<min::md5_frame_data<T>> &min::md5_anim<T>::get_frame_data() const
 {
     return _frame_data;
 }
 
 template <typename T>
-inline const std::vector<min::md5_frame<T>> &min::md5_anim<T>::get_frames() const
+const std::vector<min::md5_frame<T>> &min::md5_anim<T>::get_frames() const
 {
     return _frames;
 }
 
 template <typename T>
-inline const std::vector<min::md5_node> &min::md5_anim<T>::get_nodes() const
+const std::vector<min::md5_node> &min::md5_anim<T>::get_nodes() const
 {
     return _nodes;
 }
 
 template <typename T>
-inline const std::vector<min::md5_transform<T>> &min::md5_anim<T>::get_transforms() const
+const std::vector<min::md5_transform<T>> &min::md5_anim<T>::get_transforms() const
 {
     return _transforms;
 }
 
 template <typename T>
-inline unsigned min::md5_anim<T>::get_loop_count() const
+unsigned min::md5_anim<T>::get_loop_count() const
 {
     return _loops;
 }
 
 template <typename T>
-inline void min::md5_anim<T>::set_loop_count(const unsigned count) const
+void min::md5_anim<T>::set_loop_count(const unsigned count) const
 {
     // Reset loop count
     _loops = count;
 }
 
 template <typename T>
-inline void min::md5_anim<T>::set_time(const T time) const
+void min::md5_anim<T>::set_time(const T time) const
 {
     // Reset the animation time
     _time = time;
 }
 
 template <typename T>
-inline void min::md5_anim<T>::step(const T step) const
+void min::md5_anim<T>::step(const T step) const
 {
     // Accumulate the time
     _time += step;

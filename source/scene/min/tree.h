@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TREE__
-#define __TREE__
+#ifndef TREE
+#define TREE
 
 #include <cmath>
 #include <numeric>
@@ -51,20 +51,20 @@ class tree_node
     cell<T, vec> _cell;
     mutable std::vector<size_t> _sub_ray_cache;
 
-    inline void add_key(K);
-    inline void clear();
-    inline std::vector<tree_node<T, K, L, vec, cell, shape>> &get_children();
-    inline std::vector<K> &get_keys();
+    void add_key(K);
+    void clear();
+    std::vector<tree_node<T, K, L, vec, cell, shape>> &get_children();
+    std::vector<K> &get_keys();
 
   public:
     tree_node(const cell<T, vec>&);
 
-    inline const std::vector<tree_node<T, K, L, vec, cell, shape>> &get_children() const;
-    inline const std::vector<K> &get_keys() const;
-    inline const cell<T, vec> &get_cell() const;
-    inline std::vector<size_t> &get_sub_ray_cache() const;
-    inline bool point_inside(const vec<T>&) const;
-    inline K size() const;
+    const std::vector<tree_node<T, K, L, vec, cell, shape>> &get_children() const;
+    const std::vector<K> &get_keys() const;
+    const cell<T, vec> &get_cell() const;
+    std::vector<size_t> &get_sub_ray_cache() const;
+    bool point_inside(const vec<T>&) const;
+    K size() const;
 };
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
@@ -88,40 +88,40 @@ class tree
     bool _depth_override;
     size_t _flag_size;
 
-    inline void build(tree_node<T, K, L, vec, cell, shape>&, const K);
-    inline void create_keys();
-    inline size_t get_sorting_key(const vec<T>&) const;
-    inline void get_overlap(const tree_node<T, K, L, vec, cell, shape>&) const;
-    inline void get_overlap(const tree_node<T, K, L, vec, cell, shape>&, const vec<T>&, const vec<T>&, const K) const;
-    inline void get_pairs(const tree_node<T, K, L, vec, cell, shape>&) const;
-    inline void get_pairs(const tree_node<T, K, L, vec, cell, shape>&, const K) const;
-    inline void get_ray_intersect(const tree_node<T, K, L, vec, cell, shape>&, const ray<T, vec>&, const K) const;
-    inline K optimize_depth(const std::vector<shape<T, vec>>&);
-    inline void sort(const std::vector<shape<T, vec>>&);
+    void build(tree_node<T, K, L, vec, cell, shape>&, const K);
+    void create_keys();
+    size_t get_sorting_key(const vec<T>&) const;
+    void get_overlap(const tree_node<T, K, L, vec, cell, shape>&) const;
+    void get_overlap(const tree_node<T, K, L, vec, cell, shape>&, const vec<T>&, const vec<T>&, const K) const;
+    void get_pairs(const tree_node<T, K, L, vec, cell, shape>&) const;
+    void get_pairs(const tree_node<T, K, L, vec, cell, shape>&, const K) const;
+    void get_ray_intersect(const tree_node<T, K, L, vec, cell, shape>&, const ray<T, vec>&, const K) const;
+    K optimize_depth(const std::vector<shape<T, vec>>&);
+    void sort(const std::vector<shape<T, vec>>&);
 
   public:
     tree(const cell<T, vec>&);
 
-    inline void resize(const cell<T, vec>&);
-    inline void check_size(const std::vector<shape<T, vec>>&) const;
-    inline vec<T> clamp_bounds(const vec<T>&) const;
-    inline const vec<T> &get_lower_bound() const;
-    inline const vec<T> &get_upper_bound() const;
-    inline const tree_node<T, K, L, vec, cell, shape> &get_node(const vec<T>&) const;
-    inline K get_scale() const;
-    inline const std::vector<shape<T, vec>> &get_shapes();
-    inline const std::vector<std::pair<K, K>> &get_collisions() const;
-    inline const std::vector<std::pair<K, K>> &get_collisions(const vec<T>&) const;
-    inline const std::vector<std::pair<K, vec<T>>> &get_collisions(const ray<T, vec>&) const;
-    inline K get_depth() const;
-    inline const std::vector<K> &get_index_map() const;
-    inline const std::vector<std::pair<K, K>> &get_overlap(const shape<T, vec>&) const;
+    void resize(const cell<T, vec>&);
+    void check_size(const std::vector<shape<T, vec>>&) const;
+    vec<T> clamp_bounds(const vec<T>&) const;
+    const vec<T> &get_lower_bound() const;
+    const vec<T> &get_upper_bound() const;
+    const tree_node<T, K, L, vec, cell, shape> &get_node(const vec<T>&) const;
+    K get_scale() const;
+    const std::vector<shape<T, vec>> &get_shapes();
+    const std::vector<std::pair<K, K>> &get_collisions() const;
+    const std::vector<std::pair<K, K>> &get_collisions(const vec<T>&) const;
+    const std::vector<std::pair<K, vec<T>>> &get_collisions(const ray<T, vec>&) const;
+    K get_depth() const;
+    const std::vector<K> &get_index_map() const;
+    const std::vector<std::pair<K, K>> &get_overlap(const shape<T, vec>&) const;
     bool inside(const vec<T>&) const;
-    inline void insert(const std::vector<shape<T, vec>>&);
-    inline void insert(const std::vector<shape<T, vec>>&, const K depth);
-    inline void insert_no_sort(const std::vector<shape<T, vec>>&);
-    inline const std::vector<K> &point_inside(const vec<T>&) const;
-    inline void set_depth(const K depth);
+    void insert(const std::vector<shape<T, vec>>&);
+    void insert(const std::vector<shape<T, vec>>&, const K depth);
+    void insert_no_sort(const std::vector<shape<T, vec>>&);
+    const std::vector<K> &point_inside(const vec<T>&) const;
+    void set_depth(const K depth);
 
 };
 }

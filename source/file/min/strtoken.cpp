@@ -16,27 +16,27 @@ limitations under the License.
 #include "strtoken.h"
 
 // trim from start
-inline std::string &min::ltrim(std::string &s)
+std::string &min::ltrim(std::string &s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
     return s;
 }
 
 // trim from end
-inline std::string &min::rtrim(std::string &s)
+std::string &min::rtrim(std::string &s)
 {
     s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
     return s;
 }
 
 // trim from both ends
-inline std::string &min::trim(std::string &s)
+std::string &min::trim(std::string &s)
 {
     return ltrim(rtrim(s));
 }
 
 // Split string on 'space' characters, 'space' is an abstract space separator define by ptr_fun
-inline std::vector<std::string> min::split(const std::string &s, const std::pointer_to_unary_function<int, int> &f, const size_t hint)
+std::vector<std::string> min::split(const std::string &s, const std::pointer_to_unary_function<int, int> &f, const size_t hint)
 {
     // Output string buffer
     std::vector<std::string> out;
@@ -79,7 +79,7 @@ inline std::vector<std::string> min::split(const std::string &s, const std::poin
     return out;
 }
 
-inline int min::isequal(int ch)
+int min::isequal(int ch)
 {
     if (ch == '=')
     {
@@ -91,7 +91,7 @@ inline int min::isequal(int ch)
     return 0;
 }
 
-inline int min::isslash(int ch)
+int min::isslash(int ch)
 {
     if (ch == '/')
     {
@@ -104,24 +104,24 @@ inline int min::isslash(int ch)
 }
 
 // This is effectively regex split on, "\\s+"
-inline std::vector<std::string> min::split_space(const std::string &s, const size_t hint)
+std::vector<std::string> min::split_space(const std::string &s, const size_t hint)
 {
     return split(s, std::ptr_fun<int, int>(std::isspace), hint);
 }
 
 // This is effectively regex split on, "\\/+"
-inline std::vector<std::string> min::split_equal(const std::string &s, const size_t hint)
+std::vector<std::string> min::split_equal(const std::string &s, const size_t hint)
 {
     return split(s, std::ptr_fun<int, int>(isequal), hint);
 }
 
 // This is effectively regex split on, "=+"
-inline std::vector<std::string> min::split_slash(const std::string &s, const size_t hint)
+std::vector<std::string> min::split_slash(const std::string &s, const size_t hint)
 {
     return split(s, std::ptr_fun<int, int>(isslash), hint);
 }
 
-inline std::vector<std::pair<size_t, size_t>> min::read_lines(const std::string &data, const size_t hint)
+std::vector<std::pair<size_t, size_t>> min::read_lines(const std::string &data, const size_t hint)
 {
     // Create output vector
     std::vector<std::pair<size_t, size_t>> out;
@@ -152,7 +152,7 @@ inline std::vector<std::pair<size_t, size_t>> min::read_lines(const std::string 
     return out;
 }
 
-inline std::vector<std::string> min::get_lines(const std::string &data, const std::vector<std::pair<size_t, size_t>> &lines, const unsigned count, size_t &i)
+std::vector<std::string> min::get_lines(const std::string &data, const std::vector<std::pair<size_t, size_t>> &lines, const unsigned count, size_t &i)
 {
     std::vector<std::string> out;
     out.reserve(count);

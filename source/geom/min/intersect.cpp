@@ -132,7 +132,7 @@ bool min::intersect(const min::oobbox<T, vec> &box, const min::ray<T, vec> &r, v
 // tests if s1 overlaps with s2 by comparing the squared distance between centers
 // with the squared sum of radiuses
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::sphere<T, vec> &s1, const min::sphere<T, vec> &s2)
+bool min::intersect(const min::sphere<T, vec> &s1, const min::sphere<T, vec> &s2)
 {
     vec<T> d = s1.get_center() - s2.get_center();
     T d2 = d.dot(d);
@@ -143,7 +143,7 @@ inline bool min::intersect(const min::sphere<T, vec> &s1, const min::sphere<T, v
 // Calculates the closest point on s2 to s1's center
 // tests if this point is inside s1
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::sphere<T, vec> &s1, const min::sphere<T, vec> &s2, vec<T> &p)
+bool min::intersect(const min::sphere<T, vec> &s1, const min::sphere<T, vec> &s2, vec<T> &p)
 {
     p = s2.closest_point(s1.get_center());
     return s1.point_inside(p);
@@ -156,7 +156,7 @@ inline bool min::intersect(const min::sphere<T, vec> &s1, const min::sphere<T, v
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::sphere<T, vec> &s, const min::aabbox<T, vec> &box)
+bool min::intersect(const min::sphere<T, vec> &s, const min::aabbox<T, vec> &box)
 {
     vec<T> p = box.closest_point(s.get_center());
     return s.point_inside(p);
@@ -165,7 +165,7 @@ inline bool min::intersect(const min::sphere<T, vec> &s, const min::aabbox<T, ve
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::aabbox<T, vec> &box, const min::sphere<T, vec> &s)
+bool min::intersect(const min::aabbox<T, vec> &box, const min::sphere<T, vec> &s)
 {
     return intersect(s, box);
 }
@@ -173,7 +173,7 @@ inline bool min::intersect(const min::aabbox<T, vec> &box, const min::sphere<T, 
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::sphere<T, vec> &s, const min::aabbox<T, vec> &box, vec<T> &p)
+bool min::intersect(const min::sphere<T, vec> &s, const min::aabbox<T, vec> &box, vec<T> &p)
 {
     p = box.closest_point(s.get_center());
     return s.point_inside(p);
@@ -182,7 +182,7 @@ inline bool min::intersect(const min::sphere<T, vec> &s, const min::aabbox<T, ve
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::aabbox<T, vec> &box, const min::sphere<T, vec> &s, vec<T> &p)
+bool min::intersect(const min::aabbox<T, vec> &box, const min::sphere<T, vec> &s, vec<T> &p)
 {
     return intersect(s, box, p);
 }
@@ -194,7 +194,7 @@ inline bool min::intersect(const min::aabbox<T, vec> &box, const min::sphere<T, 
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::sphere<T, vec> &s, const min::oobbox<T, vec> &box)
+bool min::intersect(const min::sphere<T, vec> &s, const min::oobbox<T, vec> &box)
 {
     vec<T> p = box.closest_point(s.get_center());
     return s.point_inside(p);
@@ -203,7 +203,7 @@ inline bool min::intersect(const min::sphere<T, vec> &s, const min::oobbox<T, ve
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::oobbox<T, vec> &box, const min::sphere<T, vec> &s)
+bool min::intersect(const min::oobbox<T, vec> &box, const min::sphere<T, vec> &s)
 {
     return intersect(s, box);
 }
@@ -211,7 +211,7 @@ inline bool min::intersect(const min::oobbox<T, vec> &box, const min::sphere<T, 
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::sphere<T, vec> &s, const min::oobbox<T, vec> &box, vec<T> &p)
+bool min::intersect(const min::sphere<T, vec> &s, const min::oobbox<T, vec> &box, vec<T> &p)
 {
     p = box.closest_point(s.get_center());
     return s.point_inside(p);
@@ -220,7 +220,7 @@ inline bool min::intersect(const min::sphere<T, vec> &s, const min::oobbox<T, ve
 // Calculates the closest point on box to s's center
 // tests if this point is inside s
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::oobbox<T, vec> &box, const min::sphere<T, vec> &s, vec<T> &p)
+bool min::intersect(const min::oobbox<T, vec> &box, const min::sphere<T, vec> &s, vec<T> &p)
 {
     return intersect(s, box, p);
 }
@@ -231,7 +231,7 @@ inline bool min::intersect(const min::oobbox<T, vec> &box, const min::sphere<T, 
 
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::aabbox<T, vec> &box2)
+bool min::intersect(const min::aabbox<T, vec> &box1, const min::aabbox<T, vec> &box2)
 {
     return box1.get_min() <= box2.get_max() && box1.get_max() >= box2.get_min();
 }
@@ -239,7 +239,7 @@ inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::aabbox<T,
 // Calculates the closest point on box2 to box1's center
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::aabbox<T, vec> &box2, vec<T> &p)
+bool min::intersect(const min::aabbox<T, vec> &box1, const min::aabbox<T, vec> &box2, vec<T> &p)
 {
     p = box2.closest_point(box1.get_center());
     return intersect(box1, box2);
@@ -251,7 +251,7 @@ inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::aabbox<T,
 
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::oobbox<T, vec> &box2)
+bool min::intersect(const min::oobbox<T, vec> &box1, const min::oobbox<T, vec> &box2)
 {
     // Perform separating axis test between oobb-oobb
     return vec<T>::project_sat(box1.get_axes(), box1.get_center(), box1.get_half_extent(), box2.get_axes(), box2.get_center(), box2.get_half_extent());
@@ -260,7 +260,7 @@ inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::oobbox<T,
 // Calculates the closest point on box2 to box1's center
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::oobbox<T, vec> &box2, vec<T> &p)
+bool min::intersect(const min::oobbox<T, vec> &box1, const min::oobbox<T, vec> &box2, vec<T> &p)
 {
     p = box2.closest_point(box1.get_center());
     return intersect(box1, box2);
@@ -272,7 +272,7 @@ inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::oobbox<T,
 
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::oobbox<T, vec> &box2)
+bool min::intersect(const min::aabbox<T, vec> &box1, const min::oobbox<T, vec> &box2)
 {
     // Convert AABB to OOBB and test for intersection
     const oobbox<T, vec> oobox1(box1.get_min(), box1.get_max());
@@ -281,7 +281,7 @@ inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::oobbox<T,
 
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::aabbox<T, vec> &box2)
+bool min::intersect(const min::oobbox<T, vec> &box1, const min::aabbox<T, vec> &box2)
 {
     return intersect(box2, box1);
 }
@@ -289,7 +289,7 @@ inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::aabbox<T,
 // Calculates the closest point on box2 to box1's center
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::oobbox<T, vec> &box2, vec<T> &p)
+bool min::intersect(const min::aabbox<T, vec> &box1, const min::oobbox<T, vec> &box2, vec<T> &p)
 {
     p = box2.closest_point(box1.get_center());
     return intersect(box1, box2);
@@ -298,7 +298,7 @@ inline bool min::intersect(const min::aabbox<T, vec> &box1, const min::oobbox<T,
 // Calculates the closest point on box2 to box1's center
 // tests if box1 intersects with box2
 template <typename T, template <typename> class vec>
-inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::aabbox<T, vec> &box2, vec<T> &p)
+bool min::intersect(const min::oobbox<T, vec> &box1, const min::aabbox<T, vec> &box2, vec<T> &p)
 {
     return intersect(box2, box1, p);
 }
@@ -309,7 +309,7 @@ inline bool min::intersect(const min::oobbox<T, vec> &box1, const min::aabbox<T,
 
 // Tests if the sphere intersects the frustum
 template <typename T>
-inline bool min::intersect(const min::frustum<T> &f, const min::sphere<T, vec3> &s)
+bool min::intersect(const min::frustum<T> &f, const min::sphere<T, vec3> &s)
 {
     return f.point_within(s.get_center(), s.get_radius());
 }
@@ -317,7 +317,7 @@ inline bool min::intersect(const min::frustum<T> &f, const min::sphere<T, vec3> 
 // Calculates the closest point on sphere to frustum center
 // Tests if the closest point is inside the frustum
 template <typename T>
-inline bool min::intersect(const min::frustum<T> &f, const min::sphere<T, vec3> &s, vec3<T> &p)
+bool min::intersect(const min::frustum<T> &f, const min::sphere<T, vec3> &s, vec3<T> &p)
 {
     p = s.closest_point(f.get_center());
     return f.point_inside(p);
@@ -326,7 +326,7 @@ inline bool min::intersect(const min::frustum<T> &f, const min::sphere<T, vec3> 
 // Tests if the frustum intersects the aabb
 // For each plane in frustum determine if the box axis intersects the frustum plane
 template <typename T>
-inline bool min::intersect(const min::frustum<T> &f, const min::aabbox<T, vec3> &box)
+bool min::intersect(const min::frustum<T> &f, const min::aabbox<T, vec3> &box)
 {
     const vec3<T> &min = box.get_min();
     const vec3<T> &max = box.get_max();
@@ -338,7 +338,7 @@ inline bool min::intersect(const min::frustum<T> &f, const min::aabbox<T, vec3> 
 // Tests if the frustum intersects the aabb
 // For each plane in frustum determine if the box axis intersects the frustum plane
 template <typename T>
-inline bool min::intersect(const min::frustum<T> &f, const min::aabbox<T, vec3> &box, vec3<T> &p)
+bool min::intersect(const min::frustum<T> &f, const min::aabbox<T, vec3> &box, vec3<T> &p)
 {
     p = box.closest_point(f.get_center());
     return f.point_inside(p);
@@ -349,7 +349,7 @@ inline bool min::intersect(const min::frustum<T> &f, const min::aabbox<T, vec3> 
 // Calculates the closest point on s2 to s1's center
 // returns the translation offset of s1 needed to eliminate penetration between s1 and s2
 template <typename T, template <typename> class vec>
-inline vec<T> min::resolve(const min::sphere<T, vec> &s1, const min::sphere<T, vec> &s2, vec<T> &normal, vec<T> &p, const T tolerance)
+vec<T> min::resolve(const min::sphere<T, vec> &s1, const min::sphere<T, vec> &s2, vec<T> &normal, vec<T> &p, const T tolerance)
 {
     // Calculate the collision normal vector between spheres pointing towards s1
     T length;
@@ -371,7 +371,7 @@ inline vec<T> min::resolve(const min::sphere<T, vec> &s1, const min::sphere<T, v
 // Calculates the closest point on box2 to box1's center
 // returns the translation offset of box1 needed to eliminate penetration between box1 and box2
 template <typename T, template <typename> class vec>
-inline vec<T> min::resolve(const min::aabbox<T, vec> &box1, const min::aabbox<T, vec> &box2, vec<T> &normal, vec<T> &p, const T tolerance)
+vec<T> min::resolve(const min::aabbox<T, vec> &box1, const min::aabbox<T, vec> &box2, vec<T> &normal, vec<T> &p, const T tolerance)
 {
     // Calculate the closest point on box1 to box2 center
     const vec<T> p1 = box1.closest_point(box2.get_center());
@@ -401,7 +401,7 @@ inline vec<T> min::resolve(const min::aabbox<T, vec> &box1, const min::aabbox<T,
 // Calculates the closest point on box2 to box1's center
 // returns the translation offset of box1 needed to eliminate penetration between box1 and box2
 template <typename T, template <typename> class vec>
-inline vec<T> min::resolve(const min::oobbox<T, vec> &box1, const min::oobbox<T, vec> &box2, vec<T> &normal, vec<T> &p, const T tolerance)
+vec<T> min::resolve(const min::oobbox<T, vec> &box1, const min::oobbox<T, vec> &box2, vec<T> &normal, vec<T> &p, const T tolerance)
 {
     // Calculate the closest point on box1 to box2 center
     const vec<T> p1 = box1.closest_point(box2.get_center());

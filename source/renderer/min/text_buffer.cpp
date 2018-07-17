@@ -80,14 +80,14 @@ void min::text::set_string(const std::string &str)
 
 //// text_buffer ////
 
-inline void min::text_buffer::bind_vao() const
+void min::text_buffer::bind_vao() const
 {
     // Bind the VAO for this buffer
     // Do not call this function often as it is unneeded context switching
     glBindVertexArray(_vao);
 }
 
-inline void min::text_buffer::check_extensions() const
+void min::text_buffer::check_extensions() const
 {
     const bool vao = GLEW_ARB_vertex_array_object;
     const bool vbo = GLEW_ARB_vertex_buffer_object;
@@ -266,8 +266,8 @@ void min::text_buffer::create_texture_atlas(const FT_Face &face)
 min::vec2<float> min::text_buffer::get_pixel_size(const min::text &t) const
 {
     // Get the line wrap settings in pixels
-    const float lwx = t.line_wrap().x();
-    const float lwy = t.line_wrap().y();
+    const float lwx = t.line_wrap().x;
+    const float lwy = t.line_wrap().y;
 
     // For all characters in string
     float x = 0.0;
@@ -317,14 +317,14 @@ void min::text_buffer::process_text(const min::text &t) const
 
     // Get the location of the text
     const vec2<float> &p = t.location();
-    const float lwx = t.line_wrap().x() * scale_x;
-    const float lwy = t.line_wrap().y() * scale_y;
+    const float lwx = t.line_wrap().x * scale_x;
+    const float lwy = t.line_wrap().y * scale_y;
 
     // Start from bottom left corner
     float x0 = 0.0;
     float y0 = 0.0;
-    float x = p.x();
-    float y = p.y();
+    float x = p.x;
+    float y = p.y;
 
     // For all characters in string
     for (const auto &ch : t.str())
@@ -356,8 +356,8 @@ void min::text_buffer::process_text(const min::text &t) const
         }
 
         // Reset the start position
-        x = p.x() + x0;
-        y = p.y() + y0;
+        x = p.x + x0;
+        y = p.y + y0;
 
         // Create triangles, 2 for each character, data format: (x_pos, y_pos, uv_x, uv_y)
         // We flip the y-uv coordinates here because of OpenGL (0,0) == bottom, left
@@ -377,7 +377,7 @@ void min::text_buffer::process_text(const min::text &t) const
     }
 }
 
-inline min::vec2<float> min::text_buffer::to_screen_coords(const float x, const float y) const
+min::vec2<float> min::text_buffer::to_screen_coords(const float x, const float y) const
 {
     // Convert x & y to screen coordinates
     const float sx = (2.0 / _screen_x) * x - 1.0;
@@ -387,17 +387,17 @@ inline min::vec2<float> min::text_buffer::to_screen_coords(const float x, const 
     return vec2<float>(sx, sy);
 }
 
-inline min::vec2<float> min::text_buffer::to_pixel_coords(const min::vec2<float> &p) const
+min::vec2<float> min::text_buffer::to_pixel_coords(const min::vec2<float> &p) const
 {
     // Convert x & y to pixel coordinates
-    const float px = (p.x() + 1.0) * (_screen_x / 2);
-    const float py = (p.y() + 1.0) * (_screen_y / 2);
+    const float px = (p.x + 1.0) * (_screen_x / 2);
+    const float py = (p.y + 1.0) * (_screen_y / 2);
 
     // Return the screen coordinates
     return vec2<float>(px, py);
 }
 
-inline void min::text_buffer::upload_data(const size_t buffer_index) const
+void min::text_buffer::upload_data(const size_t buffer_index) const
 {
     if (_data.size() > 0)
     {
@@ -485,7 +485,7 @@ min::text_buffer::~text_buffer()
     throw_gl_error();
 }
 
-inline size_t min::text_buffer::add_text(const std::string &str, const float x, const float y)
+size_t min::text_buffer::add_text(const std::string &str, const float x, const float y)
 {
     // Store the string
     _text.emplace_back(str, to_screen_coords(x, y), _char_count * 6);
@@ -497,7 +497,7 @@ inline size_t min::text_buffer::add_text(const std::string &str, const float x, 
     return _text.size() - 1;
 }
 
-inline void min::text_buffer::bind(const size_t layer) const
+void min::text_buffer::bind(const size_t layer) const
 {
     // Bind the VAO for this buffer
     // Do not call this function often as it is unneeded context switching
@@ -510,7 +510,7 @@ inline void min::text_buffer::bind(const size_t layer) const
     glBindTexture(GL_TEXTURE_2D, _tid);
 }
 
-inline void min::text_buffer::bind_buffer(const size_t buffer_index) const
+void min::text_buffer::bind_buffer(const size_t buffer_index) const
 {
     // Bind new buffer
     glBindBuffer(GL_ARRAY_BUFFER, _vbo[buffer_index]);
@@ -524,12 +524,12 @@ inline void min::text_buffer::bind_buffer(const size_t buffer_index) const
 #endif
 }
 
-inline void min::text_buffer::unbind() const
+void min::text_buffer::unbind() const
 {
     glBindVertexArray(0);
 }
 
-inline void min::text_buffer::clear()
+void min::text_buffer::clear()
 {
     // Clears the data in this buffer, but data will remain on GPU until next upload is called
     _data.clear();
@@ -541,7 +541,7 @@ inline void min::text_buffer::clear()
     _char_count = 0;
 }
 
-inline void min::text_buffer::draw(const size_t index) const
+void min::text_buffer::draw(const size_t index) const
 {
     // Check if we have text to draw
     if (_text.size() > 0)
@@ -554,7 +554,7 @@ inline void min::text_buffer::draw(const size_t index) const
     }
 }
 
-inline void min::text_buffer::draw_all() const
+void min::text_buffer::draw_all() const
 {
     // Check if we have text to draw
     if (_text.size() > 0)
@@ -568,13 +568,13 @@ inline void min::text_buffer::draw_all() const
     }
 }
 
-inline void min::text_buffer::draw_batch(const size_t size) const
+void min::text_buffer::draw_batch(const size_t size) const
 {
     // Draw all of the text in one pass
     glDrawArrays(GL_TRIANGLES, 0, size);
 }
 
-inline void min::text_buffer::draw(const size_t from, const size_t to) const
+void min::text_buffer::draw(const size_t from, const size_t to) const
 {
     // Draw object at index 'from' to index 'to'
     const auto &start = _text[from];
@@ -587,22 +587,22 @@ inline void min::text_buffer::draw(const size_t from, const size_t to) const
     glDrawArrays(GL_TRIANGLES, start.offset(), size);
 }
 
-inline std::pair<uint_fast16_t, uint_fast16_t> min::text_buffer::get_screen_size() const
+std::pair<uint_fast16_t, uint_fast16_t> min::text_buffer::get_screen_size() const
 {
     return std::make_pair(_screen_x, _screen_y);
 }
 
-inline const min::vec2<float> min::text_buffer::get_text_location(const size_t index) const
+const min::vec2<float> min::text_buffer::get_text_location(const size_t index) const
 {
     return to_pixel_coords(_text[index].location());
 }
 
-inline void min::text_buffer::reserve(const size_t size)
+void min::text_buffer::reserve(const size_t size)
 {
     _text.reserve(size);
 }
 
-inline void min::text_buffer::set_texture_uniform(const min::program &program, const std::string &name, const size_t layer) const
+void min::text_buffer::set_texture_uniform(const min::program &program, const std::string &name, const size_t layer) const
 {
     GLint sampler_location = glGetUniformLocation(program.id(), name.c_str());
     if (sampler_location == -1)
@@ -620,13 +620,13 @@ inline void min::text_buffer::set_texture_uniform(const min::program &program, c
     throw_gl_error();
 }
 
-inline void min::text_buffer::set_screen(const uint_fast16_t width, const uint_fast16_t height)
+void min::text_buffer::set_screen(const uint_fast16_t width, const uint_fast16_t height)
 {
     _screen_x = width;
     _screen_y = height;
 }
 
-inline void min::text_buffer::set_text(const size_t index, const std::string &str)
+void min::text_buffer::set_text(const size_t index, const std::string &str)
 {
     // Calculate the change in character count
     const long diff = (long)(str.size() - _text[index].str().size());
@@ -654,19 +654,19 @@ inline void min::text_buffer::set_text(const size_t index, const std::string &st
     }
 }
 
-inline void min::text_buffer::set_text_location(const size_t index, const float x, const float y)
+void min::text_buffer::set_text_location(const size_t index, const float x, const float y)
 {
     // Update the location
     _text[index].set_location(to_screen_coords(x, y));
 }
 
-inline void min::text_buffer::set_line_wrap(const size_t index, const float x, const float y)
+void min::text_buffer::set_line_wrap(const size_t index, const float x, const float y)
 {
     // Update the line wrap setting
     _text[index].set_line_wrap(vec2<float>(x, y));
 }
 
-inline void min::text_buffer::set_text(const size_t index, const std::string &text, const float x, const float y)
+void min::text_buffer::set_text(const size_t index, const std::string &text, const float x, const float y)
 {
     // Set the text
     set_text(index, text);
@@ -675,7 +675,7 @@ inline void min::text_buffer::set_text(const size_t index, const std::string &te
     set_text_location(index, x, y);
 }
 
-inline void min::text_buffer::set_text_center(const size_t index, const float x, const float y)
+void min::text_buffer::set_text_center(const size_t index, const float x, const float y)
 {
     // Get the pixel size of the text
     const vec2<float> &size = _text[index].pixel_size();
@@ -684,10 +684,10 @@ inline void min::text_buffer::set_text_center(const size_t index, const float x,
     const vec2<float> center = vec2<float>(x, y) - size * 0.5;
 
     // Update the location
-    _text[index].set_location(to_screen_coords(center.x(), center.y()));
+    _text[index].set_location(to_screen_coords(center.x, center.y));
 }
 
-inline void min::text_buffer::set_text_center(const size_t index, const std::string &text, const float x, const float y)
+void min::text_buffer::set_text_center(const size_t index, const std::string &text, const float x, const float y)
 {
     // Set the text
     set_text(index, text);
@@ -702,7 +702,7 @@ inline void min::text_buffer::set_text_center(const size_t index, const std::str
     set_text_center(index, x, y);
 }
 
-inline size_t min::text_buffer::size() const
+size_t min::text_buffer::size() const
 {
     return _text.size();
 }

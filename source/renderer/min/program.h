@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __PROGRAM__
-#define __PROGRAM__
+#ifndef PROGRAM
+#define PROGRAM
 
 #include <string>
 #include <vector>
@@ -28,9 +28,9 @@ class program
   private:
     GLuint _id;
 
-    inline void check_extensions() const;
-    inline void create_program();
-    inline void link_program();
+    void check_extensions() const;
+    void create_program();
+    void link_program();
     void print_errors() const;
 
 
@@ -40,8 +40,8 @@ class program
     program(const std::vector<GLuint>&);
     ~program();
 
-    inline void use() const;
-    inline GLuint id() const;
+    void use() const;
+    GLuint id() const;
 
 };
 }

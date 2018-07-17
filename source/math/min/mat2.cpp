@@ -15,8 +15,10 @@ limitations under the License.
 
 #include "mat2.h"
 
-// constructs an orthogonal 2D rotation matrix around the screen axis
+template class min::mat2<float>;
+template class min::mat2<double>;
 
+// constructs an orthogonal 2D rotation matrix around the screen axis
 template <typename T>
 min::mat2<T>::mat2(const T angle) // Angle in degrees
 {
@@ -51,7 +53,7 @@ min::mat2<T>::mat2(const T angle) // Angle in degrees
 }
 
 template <typename T>
-inline min::mat2<T> &min::mat2<T>::operator*=(const min::mat2<T> &A)
+min::mat2<T> &min::mat2<T>::operator*=(const min::mat2<T> &A)
 {
     _xc = _xc * A._xc + _xs * A._ys;
     _ys = _ys * A._xc + _yc * A._ys;
@@ -61,7 +63,7 @@ inline min::mat2<T> &min::mat2<T>::operator*=(const min::mat2<T> &A)
 }
 
 template <typename T>
-inline min::mat2<T> min::mat2<T>::operator*(const min::mat2<T> &A) const
+min::mat2<T> min::mat2<T>::operator*(const min::mat2<T> &A) const
 {
     T xc = _xc * A._xc + _xs * A._ys;
     T ys = _ys * A._xc + _yc * A._ys;
@@ -71,36 +73,36 @@ inline min::mat2<T> min::mat2<T>::operator*(const min::mat2<T> &A) const
 }
 
 template <typename T>
-inline min::vec2<T> min::mat2<T>::operator*(const min::vec2<T> &vec) const
+min::vec2<T> min::mat2<T>::operator*(const min::vec2<T> &vec) const
 {
-    T x = _xc * vec.x() + _xs * vec.y();
-    T y = _ys * vec.x() + _yc * vec.y();
+    T x = _xc * vec.x + _xs * vec.y;
+    T y = _ys * vec.x + _yc * vec.y;
     return vec2<T>(x, y);
 }
 
 template <typename T>
-inline min::mat2<T> min::mat2<T>::inverse() const
+min::mat2<T> min::mat2<T>::inverse() const
 {
     mat2<T> copy = *this;
     return copy.invert();
 }
 
 template <typename T>
-inline min::mat2<T> &min::mat2<T>::invert()
+min::mat2<T> &min::mat2<T>::invert()
 {
     // this matrix is always orthogonal; use transpose()
     return transpose();
 }
 
 template <typename T>
-inline min::vec2<T> min::mat2<T>::transform(const min::vec2<T> &v) const
+min::vec2<T> min::mat2<T>::transform(const min::vec2<T> &v) const
 {
     // This matches quat<T> API!
     return this->operator*(v);
 }
 
 template <typename T>
-inline min::mat2<T> &min::mat2<T>::transpose()
+min::mat2<T> &min::mat2<T>::transpose()
 {
     T temp = _ys;
     _ys = _xs;

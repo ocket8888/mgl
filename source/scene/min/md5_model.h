@@ -33,8 +33,8 @@ class md5_model : public model<T, K, vec, bound>
     std::vector<md5_anim<T>> _animations;
     size_t _current;
 
-    inline void check_bones();
-    inline void make_bind_pose(const std::vector<md5_joint<T>>&);
+    void check_bones();
+    void make_bind_pose(const std::vector<md5_joint<T>>&);
 
 
   public:
@@ -42,14 +42,14 @@ class md5_model : public model<T, K, vec, bound>
     md5_model(md5_mesh<T, K>&&);
     md5_model(const md5_mesh<T, K>&);
 
-    inline const std::vector<mat4<T>> &get_bones() const;
-    inline const md5_anim<T> &get_current_animation() const;
-    inline bool is_animating() const;
-    inline size_t load_animation(const std::string&);
-    inline size_t load_animation(const mem_file&);
-    inline void reset_bones() const;
-    inline void set_current_animation(const size_t);
-    inline void step(const T) const;
+    const std::vector<mat4<T>> &get_bones() const;
+    const md5_anim<T> &get_current_animation() const;
+    bool is_animating() const;
+    size_t load_animation(const std::string&);
+    size_t load_animation(const mem_file&);
+    void reset_bones() const;
+    void set_current_animation(const size_t);
+    void step(const T) const;
 
 };
 }

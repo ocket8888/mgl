@@ -34,8 +34,11 @@ std::string min::mem_file::to_string() const
     return out;
 }
 
+template unsigned int min::read_le(const min::mem_file&, size_t&);
+template unsigned short min::read_le(const min::mem_file&, size_t&);
+
 template <typename T>
-inline T min::read_le(const mem_file &stream, size_t &next)
+T min::read_le(const min::mem_file &stream, size_t &next)
 {
     // Check type is compatible
     static_assert(sizeof(long long) >= sizeof(T), "Invalid type size, sizeof(T) <= sizeof(long long)");
@@ -60,7 +63,7 @@ inline T min::read_le(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline T min::read_be(const mem_file &stream, size_t &next)
+T min::read_be(const mem_file &stream, size_t &next)
 {
     // Check type is compatible
     static_assert(sizeof(long long) >= sizeof(T), "Invalid type size, sizeof(T) <= sizeof(long long)");
@@ -85,7 +88,7 @@ inline T min::read_be(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline std::vector<T> min::read_le_vector(const mem_file &stream, size_t &next)
+std::vector<T> min::read_le_vector(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_le<uint32_t>(stream, next);
 
@@ -111,7 +114,7 @@ inline std::vector<T> min::read_le_vector(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline std::vector<T> min::read_be_vector(const mem_file &stream, size_t &next)
+std::vector<T> min::read_be_vector(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_be<uint32_t>(stream, next);
 
@@ -137,7 +140,7 @@ inline std::vector<T> min::read_be_vector(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline min::vec2<T> min::read_le_vec2(const mem_file &stream, size_t &next)
+min::vec2<T> min::read_le_vec2(const mem_file &stream, size_t &next)
 {
     const T x = read_le<T>(stream, next);
     const T y = read_le<T>(stream, next);
@@ -145,7 +148,7 @@ inline min::vec2<T> min::read_le_vec2(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline min::vec2<T> min::read_be_vec2(const mem_file &stream, size_t &next)
+min::vec2<T> min::read_be_vec2(const mem_file &stream, size_t &next)
 {
     const T x = read_be<T>(stream, next);
     const T y = read_be<T>(stream, next);
@@ -153,7 +156,7 @@ inline min::vec2<T> min::read_be_vec2(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline min::vec3<T> min::read_le_vec3(const mem_file &stream, size_t &next)
+min::vec3<T> min::read_le_vec3(const mem_file &stream, size_t &next)
 {
     const T x = read_le<T>(stream, next);
     const T y = read_le<T>(stream, next);
@@ -162,7 +165,7 @@ inline min::vec3<T> min::read_le_vec3(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline min::vec3<T> min::read_be_vec3(const mem_file &stream, size_t &next)
+min::vec3<T> min::read_be_vec3(const mem_file &stream, size_t &next)
 {
     const T x = read_be<T>(stream, next);
     const T y = read_be<T>(stream, next);
@@ -171,7 +174,7 @@ inline min::vec3<T> min::read_be_vec3(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline min::vec4<T> min::read_le_vec4(const mem_file &stream, size_t &next)
+min::vec4<T> min::read_le_vec4(const mem_file &stream, size_t &next)
 {
     const T x = read_le<T>(stream, next);
     const T y = read_le<T>(stream, next);
@@ -181,7 +184,7 @@ inline min::vec4<T> min::read_le_vec4(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline min::vec4<T> min::read_be_vec4(const mem_file &stream, size_t &next)
+min::vec4<T> min::read_be_vec4(const mem_file &stream, size_t &next)
 {
     const T x = read_be<T>(stream, next);
     const T y = read_be<T>(stream, next);
@@ -191,7 +194,7 @@ inline min::vec4<T> min::read_be_vec4(const mem_file &stream, size_t &next)
 }
 
 template <typename T>
-inline std::vector<min::vec2<T>> min::read_le_vector_vec2(const mem_file &stream, size_t &next)
+std::vector<min::vec2<T>> min::read_le_vector_vec2(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_le<uint32_t>(stream, next);
 
@@ -217,7 +220,7 @@ inline std::vector<min::vec2<T>> min::read_le_vector_vec2(const mem_file &stream
 }
 
 template <typename T>
-inline std::vector<min::vec2<T>> min::read_be_vector_vec2(const mem_file &stream, size_t &next)
+std::vector<min::vec2<T>> min::read_be_vector_vec2(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_be<uint32_t>(stream, next);
 
@@ -243,7 +246,7 @@ inline std::vector<min::vec2<T>> min::read_be_vector_vec2(const mem_file &stream
 }
 
 template <typename T>
-inline std::vector<min::vec3<T>> min::read_le_vector_vec3(const mem_file &stream, size_t &next)
+std::vector<min::vec3<T>> min::read_le_vector_vec3(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_le<uint32_t>(stream, next);
 
@@ -269,7 +272,7 @@ inline std::vector<min::vec3<T>> min::read_le_vector_vec3(const mem_file &stream
 }
 
 template <typename T>
-inline std::vector<min::vec3<T>> min::read_be_vector_vec3(const mem_file &stream, size_t &next)
+std::vector<min::vec3<T>> min::read_be_vector_vec3(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_be<uint32_t>(stream, next);
 
@@ -295,7 +298,7 @@ inline std::vector<min::vec3<T>> min::read_be_vector_vec3(const mem_file &stream
 }
 
 template <typename T>
-inline std::vector<min::vec4<T>> min::read_le_vector_vec4(const mem_file &stream, size_t &next)
+std::vector<min::vec4<T>> min::read_le_vector_vec4(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_le<uint32_t>(stream, next);
 
@@ -321,7 +324,7 @@ inline std::vector<min::vec4<T>> min::read_le_vector_vec4(const mem_file &stream
 }
 
 template <typename T>
-inline std::vector<min::vec4<T>> min::read_be_vector_vec4(const mem_file &stream, size_t &next)
+std::vector<min::vec4<T>> min::read_be_vector_vec4(const mem_file &stream, size_t &next)
 {
     const uint32_t size = read_be<uint32_t>(stream, next);
 

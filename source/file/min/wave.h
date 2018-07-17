@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __WAVE__
-#define __WAVE__
+#ifndef WAVE
+#define WAVE
 
 #include <cstring>
 #include <fstream>
@@ -21,6 +21,7 @@ limitations under the License.
 #include <vector>
 
 #include "mem_chunk.h"
+#include "serial.h"
 
 // Reads a RIFF WAV File with two subchunks, 'fmt' and 'data'
 // chunk_id (RIFF) - 4B - offset 0 == 'RIFF'
@@ -49,8 +50,8 @@ class wave
     uint32_t _bits_per_sample;
     std::vector<uint8_t> _data;
 
-    inline void load(const std::string);
-    template <class T> inline void load(const T&);
+    void load(const std::string);
+    template <class T> void load(const T&);
 
   public:
     wave(const std::string&);

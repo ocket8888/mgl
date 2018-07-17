@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __PLANE__
-#define __PLANE__
+#ifndef PLANE
+#define PLANE
 
 // This class solves the following plane equation:
 // n · (x - x0) = d = 0;
@@ -36,10 +36,10 @@ class plane
     plane(const vec<T>&, const vec<T>&);
     plane(const vec<T>&, const vec<T>&, const vec<T>&);
 
-    inline vec<T> get_closest_point(const vec<T>&) const;
-    inline T get_distance(const vec<T>&) const;
-    inline const vec<T> &get_normal() const;
-    inline vec<T> get_point(const vec<T>&, const T) const;
+    vec<T> get_closest_point(const vec<T>&) const;
+    T get_distance(const vec<T>&) const;
+    const vec<T> &get_normal() const;
+    vec<T> get_point(const vec<T>&, const T) const;
 };
 }
 

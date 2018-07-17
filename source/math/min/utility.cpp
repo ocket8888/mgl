@@ -16,33 +16,16 @@ limitations under the License.
 #include "utility.h"
 
 template <typename T>
-constexpr inline T min::rad_to_deg(const T rad)
-{
-    // Converts degrees to radians
-    return rad * (180.0 / min::var<T>::PI);
-}
-
-template <typename T>
-constexpr inline T min::deg_to_rad(const T degrees)
-{
-    // Converts degrees to radians
-    return degrees * (min::var<T>::PI / 180.0);
-}
-template <typename T>
-constexpr inline T min::deg_to_rad2(const T degrees)
-{
-    // Converts degrees to radians / 2
-    return degrees * (min::var<T>::PI / 360.0);
-}
-
-template <typename T>
 bool min::between(const T val, const T min, const T max)
 {
     return (val > min) && (val < max);
 }
 
+template void min::clamp(double&, const double, const double);
+template void min::clamp(float&, const float, const float);
+
 template <typename T>
-inline void min::clamp(T &val, const T min, const T max)
+void min::clamp(T &val, const T min, const T max)
 {
     // Clamps val between min and max
     if (val < min)
@@ -51,8 +34,11 @@ inline void min::clamp(T &val, const T min, const T max)
         val = max;
 }
 
+template double min::clamp_direction(double&, const double, const double);
+template float min::clamp_direction(float&, const float, const float);
+
 template <typename T>
-inline T min::clamp_direction(T &val, const T min, const T max)
+T min::clamp_direction(T &val, const T min, const T max)
 {
     // Clamps val between min and max
     if (val < min)
@@ -69,8 +55,11 @@ inline T min::clamp_direction(T &val, const T min, const T max)
     return 1.0;
 }
 
+template double min::clamp_value(const double, const double, const double, const double, const double);
+template float min::clamp_value(const float, const float, const float, const float, const float);
+
 template <typename T>
-inline T min::clamp_value(const T val, const T min, const T minv, const T max, const T maxv)
+T min::clamp_value(const T val, const T min, const T minv, const T max, const T maxv)
 {
     // Clamps val between min and max and assigns either minv, maxv or zero
     if (val < min)
@@ -85,8 +74,11 @@ inline T min::clamp_value(const T val, const T min, const T minv, const T max, c
     return 0.0;
 }
 
+template void min::extend(const float, float&, float&);
+template void min::extend(const double, double&, double&);
+
 template <typename T>
-inline void min::extend(const T val, T &min, T &max)
+void min::extend(const T val, T &min, T &max)
 {
     // extends min or max to val
     if (val < min)
@@ -95,13 +87,19 @@ inline void min::extend(const T val, T &min, T &max)
         max = val;
 }
 
+
+template unsigned int min::safe_inverse(const unsigned int);
+template unsigned short min::safe_inverse(const unsigned short);
+template double min::safe_inverse(const double);
+template float min::safe_inverse(const float);
+
 template <typename T>
-inline T min::safe_inverse(const T v)
+T min::safe_inverse(const T v)
 {
     T out;
 
     // Test for division by zero
-    if (std::abs(v) < min::var<T>::TOL_REL)
+    if (std::abs(int(v)) < min::var<T>::TOL_REL)
     {
         out = std::numeric_limits<T>::max();
     }
@@ -113,14 +111,20 @@ inline T min::safe_inverse(const T v)
     return out;
 }
 
+template int min::sgn(const double);
+template int min::sgn(const float);
+
 template <typename T>
-inline int min::sgn(const T val)
+int min::sgn(const T val)
 {
     return (T(0) < val) - (val < T(0));
 }
 
+template void min::swap(float&, float&);
+template void min::swap(double&, double&);
+
 template <typename T>
-inline void min::swap(T &a, T &b)
+void min::swap(T &a, T &b)
 {
     // Swaps a and b
     T _a = a;
@@ -130,7 +134,7 @@ inline void min::swap(T &a, T &b)
 
 //// bit_flag ////
 template <typename K, typename L>
-inline std::pair<L, uint_fast8_t> min::bit_flag<K,L>::get_address(const L row, const L col) const
+std::pair<L, uint_fast8_t> min::bit_flag<K,L>::get_address(const L row, const L col) const
 {
     // Divide by 8 to get into bytes
     const L position = (row * _col) + col;
@@ -151,14 +155,14 @@ template <typename K, typename L>
 min::bit_flag<K,L>::bit_flag(const L row, const L col) : _row(row), _col(col), _flags((row * col >> 3) + 1, 0) {}
 
 template <typename K, typename L>
-inline void min::bit_flag<K,L>::clear()
+void min::bit_flag<K,L>::clear()
 {
     // Zero out the bit buffer
     std::fill(_flags.begin(), _flags.end(), 0);
 }
 
 template <typename K, typename L>
-inline bool min::bit_flag<K,L>::get(const K row, const K col) const
+bool min::bit_flag<K,L>::get(const K row, const K col) const
 {
     // Get the address
     const std::pair<L, uint_fast8_t> addr = get_address(row, col);
@@ -168,7 +172,7 @@ inline bool min::bit_flag<K,L>::get(const K row, const K col) const
 }
 
 template <typename K, typename L>
-inline bool min::bit_flag<K,L>::get_set_on(const K row, const K col)
+bool min::bit_flag<K,L>::get_set_on(const K row, const K col)
 {
     // Get the address
     const std::pair<L, uint_fast8_t> addr = get_address(row, col);
@@ -186,7 +190,7 @@ inline bool min::bit_flag<K,L>::get_set_on(const K row, const K col)
 }
 
 template <typename K, typename L>
-inline void min::bit_flag<K,L>::set_on(const K row, const K col)
+void min::bit_flag<K,L>::set_on(const K row, const K col)
 {
     // Get the address
     const std::pair<L, uint_fast8_t> addr = get_address(row, col);
@@ -194,7 +198,7 @@ inline void min::bit_flag<K,L>::set_on(const K row, const K col)
 }
 
 template <typename K, typename L>
-inline void min::bit_flag<K,L>::set_off(const K row, const K col)
+void min::bit_flag<K,L>::set_off(const K row, const K col)
 {
     // Get the address
     const std::pair<L, uint_fast8_t> addr = get_address(row, col);
@@ -203,7 +207,7 @@ inline void min::bit_flag<K,L>::set_off(const K row, const K col)
 
 // radix sort for unsigned integers
 template <typename T, typename F>
-inline void min::uint_sort(std::vector<T> &uints, std::vector<T> &copy, F &&key_function)
+void min::uint_sort(std::vector<T> &uints, std::vector<T> &copy, F &&key_function)
 {
     const size_t size = uints.size();
 

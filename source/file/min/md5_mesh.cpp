@@ -14,24 +14,21 @@ limitations under the License.
 */
 #include "md5_mesh.h"
 
-using namespace min;
-
 //// md5_joint ////
-
-template<class T> md5_joint<T>::md5_joint(const std::string &name, const int id, const vec3<T> &p, const quat<T> &r)
+template<class T> min::md5_joint<T>::md5_joint(const std::string &name, const int id, const vec3<T> &p, const quat<T> &r)
     : _name(name), _id(id), _position(p), _rotation(r) {}
 
-template<class T> int md5_joint<T>::get_id() const
+template<class T> int min::md5_joint<T>::get_id() const
 {
     return _id;
 }
 
-template<class T> const vec3<T> &md5_joint<T>::get_position() const
+template<class T> const min::vec3<T> &min::md5_joint<T>::get_position() const
 {
     return _position;
 }
 
-template<class T> const quat<T> &md5_joint<T>::get_rotation() const
+template<class T> const min::quat<T> &min::md5_joint<T>::get_rotation() const
 {
     return _rotation;
 }
@@ -39,38 +36,38 @@ template<class T> const quat<T> &md5_joint<T>::get_rotation() const
 
 //// weight ////
 template<class T>
-weight<T>::weight(const unsigned id, const T bias, const vec3<T> &p)
+min::weight<T>::weight(const unsigned id, const T bias, const vec3<T> &p)
     : _id(id), _bias(bias), _position(p) {}
 
 template<class T>
-unsigned weight<T>::get_id() const
+unsigned min::weight<T>::get_id() const
 {
     return _id;
 }
 
 template<class T>
-T weight<T>::get_bias() const
+T min::weight<T>::get_bias() const
 {
     return _bias;
 }
 
 template<class T>
-const vec3<T> &weight<T>::get_position() const
+const min::vec3<T> &min::weight<T>::get_position() const
 {
     return _position;
 }
 
 
 //// vertex_weight ////
-vertex_weight::vertex_weight(const unsigned start, const unsigned count)
+min::vertex_weight::vertex_weight(const unsigned start, const unsigned count)
     : _start(start), _count(count) {}
 
-unsigned vertex_weight::get_start() const
+unsigned min::vertex_weight::get_start() const
 {
     return _start;
 }
 
-unsigned vertex_weight::get_count() const
+unsigned min::vertex_weight::get_count() const
 {
     return _count;
 }
@@ -78,7 +75,7 @@ unsigned vertex_weight::get_count() const
 
 //// md5_mesh ////
 template<typename T, typename K>
-inline void md5_mesh<T,K>::load_file(const std::string _file)
+void min::md5_mesh<T,K>::load_file(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -108,7 +105,7 @@ inline void md5_mesh<T,K>::load_file(const std::string _file)
 }
 
 template<typename T, typename K>
-inline void md5_mesh<T,K>::load(const std::string &data)
+void min::md5_mesh<T,K>::load(const std::string &data)
 {
     // Get locations of all lines in string buffer
     const auto lines = min::read_lines(data);
@@ -308,7 +305,7 @@ inline void md5_mesh<T,K>::load(const std::string &data)
 }
 
 template<typename T, typename K>
-inline void md5_mesh<T,K>::process_joints(const std::vector<std::string> &lines)
+void min::md5_mesh<T,K>::process_joints(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -368,7 +365,7 @@ inline void md5_mesh<T,K>::process_joints(const std::vector<std::string> &lines)
 }
 
 template<typename T, typename K>
-inline void md5_mesh<T,K>::process_vertices(const std::vector<std::string> &lines)
+void min::md5_mesh<T,K>::process_vertices(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -421,7 +418,7 @@ inline void md5_mesh<T,K>::process_vertices(const std::vector<std::string> &line
 }
 
 template<typename T, typename K>
-inline void md5_mesh<T,K>::process_triangles(const std::vector<std::string> &lines)
+void min::md5_mesh<T,K>::process_triangles(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -465,7 +462,7 @@ inline void md5_mesh<T,K>::process_triangles(const std::vector<std::string> &lin
 }
 
 template<typename T, typename K>
-inline void md5_mesh<T,K>::process_weights(const std::vector<std::string> &lines)
+void min::md5_mesh<T,K>::process_weights(const std::vector<std::string> &lines)
 {
     if (lines.size() > 0)
     {
@@ -512,7 +509,7 @@ inline void md5_mesh<T,K>::process_weights(const std::vector<std::string> &lines
 }
 
 template<typename T, typename K>
-inline void md5_mesh<T,K>::process_mesh()
+void min::md5_mesh<T,K>::process_mesh()
 {
     // Get a reference to the last mesh
     mesh<T, K> &m = _mesh.back();
@@ -576,31 +573,31 @@ inline void md5_mesh<T,K>::process_mesh()
 }
 
 template<typename T, typename K>
-md5_mesh<T,K>::md5_mesh(const std::string &file)
+min::md5_mesh<T,K>::md5_mesh(const std::string &file)
 {
     load_file(file);
 }
 
 template<typename T, typename K>
-md5_mesh<T,K>::md5_mesh(const mem_file &mem)
+min::md5_mesh<T,K>::md5_mesh(const mem_file &mem)
 {
     load(mem.to_string());
 }
 
 template<typename T, typename K>
-const std::vector<md5_joint<T>> &md5_mesh<T,K>::get_joints() const
+const std::vector<min::md5_joint<T>> &min::md5_mesh<T,K>::get_joints() const
 {
     return _joints;
 }
 
 template<typename T, typename K>
-const std::vector<mesh<T, K>> &md5_mesh<T,K>::get_meshes() const
+const std::vector<min::mesh<T, K>> &min::md5_mesh<T,K>::get_meshes() const
 {
     return _mesh;
 }
 
 template<typename T, typename K>
-std::vector<mesh<T, K>> &md5_mesh<T,K>::get_meshes()
+std::vector<min::mesh<T, K>> &min::md5_mesh<T,K>::get_meshes()
 {
     return _mesh;
 }

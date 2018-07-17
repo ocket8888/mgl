@@ -40,26 +40,26 @@ class shadow_buffer
     float _v_near;
     float _v_far;
 
-    inline void check_extensions() const;
-    inline void set_light_view(const vec3<float>&, const vec3<float>&, const vec3<float>&);
+    void check_extensions() const;
+    void set_light_view(const vec3<float>&, const vec3<float>&, const vec3<float>&);
 
   public:
     shadow_buffer(const size_t, const size_t);
     shadow_buffer(const shadow_buffer&) = delete;
     ~shadow_buffer();
 
-    inline void bind() const;
-    inline void bind_default(const size_t, const size_t) const;
-    inline void bind_shadow_texture(const size_t) const;
-    inline const mat4<float> &get_pv_matrix() const;
-    inline const mat4<float> &get_shadow_matrix() const;
-    inline const mat4<float> &get_v_matrix() const;
-    inline void set_light(const vec3<float>&, const vec3<float>&);
-    inline void set_view_width(const float);
-    inline void set_view_height(const float);
-    inline void set_view_near(const float);
-    inline void set_view_far(const float);
-    inline void set_texture_uniform(const program&, const std::string&, const size_t) const;
+    void bind() const;
+    void bind_default(const size_t, const size_t) const;
+    void bind_shadow_texture(const size_t) const;
+    const mat4<float> &get_pv_matrix() const;
+    const mat4<float> &get_shadow_matrix() const;
+    const mat4<float> &get_v_matrix() const;
+    void set_light(const vec3<float>&, const vec3<float>&);
+    void set_view_width(const float);
+    void set_view_height(const float);
+    void set_view_near(const float);
+    void set_view_far(const float);
+    void set_texture_uniform(const program&, const std::string&, const size_t) const;
 
 };
 }

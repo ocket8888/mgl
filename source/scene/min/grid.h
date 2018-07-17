@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __GRID__
-#define __GRID__
+#ifndef GRID
+#define GRID
 
 #include <cmath>
 #include <numeric>
@@ -49,16 +49,16 @@ class grid_node
     std::vector<K> _keys;
     cell<T, vec> _cell;
 
-    inline void add_key(K);
-    inline void clear();
+    void add_key(K);
+    void clear();
 
   public:
     grid_node(const cell<T, vec>&);
 
-    inline const std::vector<K> &get_keys() const;
-    inline const cell<T, vec> &get_cell() const;
-    inline bool point_inside(const vec<T>&) const;
-    inline K size() const;
+    const std::vector<K> &get_keys() const;
+    const cell<T, vec> &get_cell() const;
+    bool point_inside(const vec<T>&) const;
+    K size() const;
 };
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
@@ -81,35 +81,35 @@ class grid
     vec<T> _cell_extent;
     size_t _flag_size;
 
-    inline void build();
-    inline size_t get_key(const vec<T>&) const;
-    inline void get_overlap(const size_t) const;
-    inline void get_pairs(const grid_node<T, K, L, vec, cell, shape>&) const;
-    inline void get_ray_intersect(const grid_node<T, K, L, vec, cell, shape>&, const ray<T, vec>&) const;
-    inline void set_scale(const std::vector<shape<T, vec>>&);
-    inline void sort(const std::vector<shape<T, vec>>&);
+    void build();
+    size_t get_key(const vec<T>&) const;
+    void get_overlap(const size_t) const;
+    void get_pairs(const grid_node<T, K, L, vec, cell, shape>&) const;
+    void get_ray_intersect(const grid_node<T, K, L, vec, cell, shape>&, const ray<T, vec>&) const;
+    void set_scale(const std::vector<shape<T, vec>>&);
+    void sort(const std::vector<shape<T, vec>>&);
 
   public:
     grid(const cell<T, vec> &c);
 
-    inline vec<T> clamp_bounds(const vec<T>&) const;
-    inline const vec<T> &get_lower_bound() const;
-    inline const vec<T> &get_upper_bound() const;
-    inline const grid_node<T, K, L, vec, cell, shape> &get_node(const vec<T>&) const;
-    inline void resize(const cell<T, vec>&);
-    inline void check_size(const std::vector<shape<T, vec>>&) const;
-    inline const std::vector<std::pair<K, K>> &get_collisions() const;
-    inline const std::vector<std::pair<K, K>> &get_collisions(const vec<T>&) const;
-    inline const std::vector<std::pair<K, vec<T>>> &get_collisions(const ray<T, vec>&) const;
-    inline const std::vector<K> &get_index_map() const;
-    inline K get_scale() const;
-    inline const std::vector<std::pair<K, K>> &get_overlap(const shape<T, vec>&) const;
-    inline const std::vector<shape<T, vec>> &get_shapes();
+    vec<T> clamp_bounds(const vec<T>&) const;
+    const vec<T> &get_lower_bound() const;
+    const vec<T> &get_upper_bound() const;
+    const grid_node<T, K, L, vec, cell, shape> &get_node(const vec<T>&) const;
+    void resize(const cell<T, vec>&);
+    void check_size(const std::vector<shape<T, vec>>&) const;
+    const std::vector<std::pair<K, K>> &get_collisions() const;
+    const std::vector<std::pair<K, K>> &get_collisions(const vec<T>&) const;
+    const std::vector<std::pair<K, vec<T>>> &get_collisions(const ray<T, vec>&) const;
+    const std::vector<K> &get_index_map() const;
+    K get_scale() const;
+    const std::vector<std::pair<K, K>> &get_overlap(const shape<T, vec>&) const;
+    const std::vector<shape<T, vec>> &get_shapes();
     bool inside(const vec<T>&) const;
-    inline void insert(const std::vector<shape<T, vec>>&);
-    inline void insert(const std::vector<shape<T, vec>>&, const K);
-    inline void insert_no_sort(const std::vector<shape<T, vec>>&);
-    inline const std::vector<K> &point_inside(const vec<T>&) const;
+    void insert(const std::vector<shape<T, vec>>&);
+    void insert(const std::vector<shape<T, vec>>&, const K);
+    void insert_no_sort(const std::vector<shape<T, vec>>&);
+    const std::vector<K> &point_inside(const vec<T>&) const;
 
 };
 }

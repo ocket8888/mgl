@@ -15,9 +15,7 @@ limitations under the License.
 
 #include "bmp.h"
 
-using namespace min;
-
-inline void min::bmp::load(const std::string _file)
+void min::bmp::load(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -48,7 +46,7 @@ inline void min::bmp::load(const std::string _file)
 }
 
 template <class T>
-inline void bmp::load(const T &data)
+void min::bmp::load(const T &data)
 {
     // Check that nothing funky is going on with char and uint8_t
     static_assert(sizeof(char) == 1, "Size of char is not 1");
@@ -191,27 +189,27 @@ min::bmp::bmp(const mem_file &mem)
     load<mem_file>(mem);
 }
 
-inline uint32_t min::bmp::get_width() const
+uint32_t min::bmp::get_width() const
 {
     return _w;
 }
 
-inline uint32_t min::bmp::get_height() const
+uint32_t min::bmp::get_height() const
 {
     return _h;
 }
 
-inline uint32_t min::bmp::get_size() const
+uint32_t min::bmp::get_size() const
 {
     return _size;
 }
 
-inline const std::vector<uint8_t> &min::bmp::get_pixels() const
+const std::vector<uint8_t> &min::bmp::get_pixels() const
 {
     return _pixel;
 }
 
-inline uint32_t min::bmp::get_pixel_size() const
+uint32_t min::bmp::get_pixel_size() const
 {
     return _bpp;
 }

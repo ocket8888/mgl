@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TESTAABBGRID__
-#define __TESTAABBGRID__
+#ifndef TESTAABBGRID
+#define TESTAABBGRID
 
 #include <min/aabbox.h>
 #include <min/grid.h>

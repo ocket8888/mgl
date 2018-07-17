@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __STATICVERTEX__
-#define __STATICVERTEX__
+#ifndef STATICVERTEX
+#define STATICVERTEX
 
 #include <cstring>
 
@@ -49,17 +49,17 @@ class static_vertex
     static constexpr size_t width_size = width_bytes / sizeof(T);
 
   public:
-    inline static void change_bind_buffer(const GLuint);
-    inline static void create_vertex_attributes();
-    inline static void create_buffer_binding(const GLuint, const GLuint);
-    inline static void create(const GLuint);
-    inline static void check(const mesh<T, K>&);
-    inline static void copy(std::vector<T>&, const mesh<T, K>&, const size_t);
-    inline static void destroy();
-    inline static void disable_attributes();
-    inline static void enable_attributes();
-    inline static constexpr size_t width();
-    inline static constexpr GLenum buffer_type();
+    static void change_bind_buffer(const GLuint);
+    static void create_vertex_attributes();
+    static void create_buffer_binding(const GLuint, const GLuint);
+    static void create(const GLuint);
+    static void check(const mesh<T, K>&);
+    static void copy(std::vector<T>&, const mesh<T, K>&, const size_t);
+    static void destroy();
+    static void disable_attributes();
+    static void enable_attributes();
+    static constexpr size_t width(){return width_size;}
+    static constexpr GLenum buffer_type(){return GL_STATIC_DRAW;}
 
 };
 }

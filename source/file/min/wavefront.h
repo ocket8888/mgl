@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __WAVEFRONT__
-#define __WAVEFRONT__
+#ifndef WAVEFRONT
+#define WAVEFRONT
 
 #include <array>
 #include <fstream>
@@ -51,15 +51,15 @@ class wavefront
     std::vector<K> _i;
     bool _invert;
 
-    inline void flush();
-    inline void load_file(const std::string _file);
-    inline void load(const std::string&);
-    inline void process_mesh(mesh<T, K>&);
-    inline void process_object(const std::string&);
-    inline void process_vertex(const std::string&);
-    inline void process_uv(const std::string&);
-    inline void process_normal(const std::string&);
-    inline void process_face(const std::string&);
+    void flush();
+    void load_file(const std::string _file);
+    void load(const std::string&);
+    void process_mesh(mesh<T, K>&);
+    void process_object(const std::string&);
+    void process_vertex(const std::string&);
+    void process_uv(const std::string&);
+    void process_normal(const std::string&);
+    void process_face(const std::string&);
 
 
   public:

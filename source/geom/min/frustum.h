@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __FRUSTUM__
-#define __FRUSTUM__
+#ifndef FRUSTUM
+#define FRUSTUM
 
 #include <cmath>
 
@@ -43,31 +43,31 @@ class frustum
 
     // If the plane is facing in the negative direction then the excluding corner
     // is the maximum corner in the plane normal direction else use the minimum corner
-    inline bool not_between_plane(const vec3<T>&, const vec3<T> &max, const int) const;
-    inline bool outside_plane(const vec3<T>&, const int, const T) const;
-    inline void orthographic_frustum();
-    inline void perspective_frustum();
-    inline void update();
+    bool not_between_plane(const vec3<T>&, const vec3<T> &max, const int) const;
+    bool outside_plane(const vec3<T>&, const int, const T) const;
+    void orthographic_frustum();
+    void perspective_frustum();
+    void update();
 
   public:
     frustum() : _fov(45.0), _ratio(1.33), _zoom(1.0), _near(0.0, 0.0, 0.1), _far(0.0, 0.0, 200.0), _dirty(true) {}
     frustum(const T ratio, const T fov, const T near, const T far) : _fov(fov), _ratio(ratio), _zoom(1.0), _near(0.0, 0.0, near), _far(0.0, 0.0, far), _dirty(true) {}
 
-    inline bool between(const vec3<T>&, const vec3<T>&) const;
-    inline vec3<T> closest_point(const vec3<T>&) const;
-    inline const vec3<T> &get_center() const;
-    inline const vec3<T> &get_right() const;
+    bool between(const vec3<T>&, const vec3<T>&) const;
+    vec3<T> closest_point(const vec3<T>&) const;
+    const vec3<T> &get_center() const;
+    const vec3<T> &get_right() const;
     const mat4<T> &orthographic();
     const mat4<T> &perspective();
     const mat4<T> &look_at(const vec3<T>&, const vec3<T>&, vec3<T>&);
-    inline void make_dirty();
-    inline bool point_inside(const vec3<T>&) const;
-    inline bool point_within(const vec3<T>&, const T) const;
-    inline void set_aspect_ratio(const T, const T);
-    inline void set_fov(const T);
-    inline void set_near(const T);
-    inline void set_far(const T);
-    inline void zoom(const T);
+    void make_dirty();
+    bool point_inside(const vec3<T>&) const;
+    bool point_within(const vec3<T>&, const T) const;
+    void set_aspect_ratio(const T, const T);
+    void set_fov(const T);
+    void set_near(const T);
+    void set_far(const T);
+    void zoom(const T);
 };
 }
 

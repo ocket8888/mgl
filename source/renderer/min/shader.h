@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __SHADER__
-#define __SHADER__
+#ifndef SHADER
+#define SHADER
 
 #include <fstream>
 #include <string>
@@ -30,9 +30,9 @@ class shader
     GLuint _id;
     GLenum _type;
 
-    inline void check_extensions() const;
-    inline void load_file(const std::string, const GLenum);
-    inline void load(const std::string&, const GLenum);
+    void check_extensions() const;
+    void load_file(const std::string, const GLenum);
+    void load(const std::string&, const GLenum);
     void print_errors() const;
 
   public:
@@ -42,7 +42,7 @@ class shader
 
     shader(const shader&) = delete;
 
-    inline GLuint id() const;
+    GLuint id() const;
 };
 }
 

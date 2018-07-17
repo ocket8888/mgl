@@ -32,9 +32,9 @@ class mem_chunk
     std::vector<uint8_t> _file_data;
     std::unordered_map<std::string, mem_file> _files;
 
-    inline mem_file push_back_file(const std::string&);
-    inline void load_memory_file(const std::string&);
-    inline void save_memory_file(const std::string&) const;
+    mem_file push_back_file(const std::string&);
+    void load_memory_file(const std::string&);
+    void save_memory_file(const std::string&) const;
 
   public:
     mem_chunk() {}

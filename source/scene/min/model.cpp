@@ -17,7 +17,7 @@ limitations under the License.
 
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline void min::model<T,K,vec,bound>::calculate_bounds()
+void min::model<T,K,vec,bound>::calculate_bounds()
 {
     // Creating bounding volumes for all meshes
     for (auto &m : _mesh)
@@ -99,20 +99,20 @@ void min::model<T,K,vec,bound>::calculate_tangents()
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline const vec<T> &min::model<T,K,vec,bound>::get_center() const
+const vec<T> &min::model<T,K,vec,bound>::get_center() const
 {
     return _center;
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline const std::vector<min::mesh<T, K>> &min::model<T,K,vec,bound>::get_meshes() const
+const std::vector<min::mesh<T, K>> &min::model<T,K,vec,bound>::get_meshes() const
 {
     // Allows for const usage
     return _mesh;
 }
 
 template <typename T, typename K, template <typename> class vec, template <typename, template <typename> class> class bound>
-inline std::vector<min::mesh<T, K>> &min::model<T,K,vec,bound>::get_meshes()
+std::vector<min::mesh<T, K>> &min::model<T,K,vec,bound>::get_meshes()
 {
     // Allows for const usage
     return _mesh;

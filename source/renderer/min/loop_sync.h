@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __LOOPSYNC__
-#define __LOOPSYNC__
+#ifndef LOOPSYNC
+#define LOOPSYNC
 
 #include <chrono>
 #include <cmath>
@@ -47,16 +47,16 @@ class loop_sync
     double _kd;
     double _dt;
 
-    inline void calculate_control_parameters(const double);
-    inline double calculate_delay(const double) const;
-    inline double diff();
+    void calculate_control_parameters(const double);
+    double calculate_delay(const double) const;
+    double diff();
 
   public:
     loop_sync(const double, const double = 0.5, const double = 0.75, const double = 0.75);
 
-    inline double get_fps() const;
-    inline double idle() const;
-    inline void start();
+    double get_fps() const;
+    double idle() const;
+    void start();
     double sync();
 
 };

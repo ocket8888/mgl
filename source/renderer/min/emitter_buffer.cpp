@@ -16,7 +16,7 @@ limitations under the License.
 #include "emitter_buffer.h"
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::accumulate(const T dt)
+void min::emitter_buffer<T,FLOAT_TYPE>::accumulate(const T dt)
 {
     _emit_accum += dt;
 
@@ -62,7 +62,7 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::accumulate(const T dt)
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::check_extensions() const
+void min::emitter_buffer<T,FLOAT_TYPE>::check_extensions() const
 {
     const bool vao = GLEW_ARB_vertex_array_object;
     const bool vbo = GLEW_ARB_vertex_buffer_object;
@@ -75,7 +75,7 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::check_extensions() const
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline min::vec3<T> min::emitter_buffer<T,FLOAT_TYPE>::compute_force(const min::vec3<T> &position, const min::vec3<T> &speed)
+min::vec3<T> min::emitter_buffer<T,FLOAT_TYPE>::compute_force(const min::vec3<T> &position, const min::vec3<T> &speed)
 {
     vec3<T> attract;
 
@@ -94,7 +94,7 @@ inline min::vec3<T> min::emitter_buffer<T,FLOAT_TYPE>::compute_force(const min::
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::seed(const size_t start, const size_t len)
+void min::emitter_buffer<T,FLOAT_TYPE>::seed(const size_t start, const size_t len)
 {
     // Reset all particles to the start position
     const size_t size = start + len;
@@ -184,7 +184,7 @@ min::emitter_buffer<T,FLOAT_TYPE>::~emitter_buffer()
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline size_t min::emitter_buffer<T,FLOAT_TYPE>::attractor_add(const min::vec3<T> &center, const T power)
+size_t min::emitter_buffer<T,FLOAT_TYPE>::attractor_add(const min::vec3<T> &center, const T power)
 {
     // Create a new attractor
     _attractors.push_back(std::make_pair(center, power));
@@ -194,13 +194,13 @@ inline size_t min::emitter_buffer<T,FLOAT_TYPE>::attractor_add(const min::vec3<T
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::attractor_clear()
+void min::emitter_buffer<T,FLOAT_TYPE>::attractor_clear()
 {
     _attractors.clear();
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_attractor(const min::vec3<T> &center, const T power, const size_t index)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_attractor(const min::vec3<T> &center, const T power, const size_t index)
 {
     // Update attractor properties
     _attractors[index].first = center;
@@ -208,7 +208,7 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::set_attractor(const min::vec3<T> 
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::bind() const
+void min::emitter_buffer<T,FLOAT_TYPE>::bind() const
 {
     // Bind the VAO for this buffer
     // Do not call this function often as it is unneeded context switching
@@ -216,13 +216,13 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::bind() const
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::unbind() const
+void min::emitter_buffer<T,FLOAT_TYPE>::unbind() const
 {
     glBindVertexArray(0);
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::draw() const
+void min::emitter_buffer<T,FLOAT_TYPE>::draw() const
 {
     // Draw all objects in the static buffer
     if (_emit_pool_size > 0)
@@ -232,19 +232,19 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::draw() const
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline T min::emitter_buffer<T,FLOAT_TYPE>::get_accum() const
+T min::emitter_buffer<T,FLOAT_TYPE>::get_accum() const
 {
     return _emit_accum;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline const min::vec3<T> &min::emitter_buffer<T,FLOAT_TYPE>::get_position() const
+const min::vec3<T> &min::emitter_buffer<T,FLOAT_TYPE>::get_position() const
 {
     return _start_pos;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline min::vec3<T> min::emitter_buffer<T,FLOAT_TYPE>::random()
+min::vec3<T> min::emitter_buffer<T,FLOAT_TYPE>::random()
 {
     // Compute a random speed modifier for dispersion of particles
     const T randx = _dist(_rand);
@@ -256,7 +256,7 @@ inline min::vec3<T> min::emitter_buffer<T,FLOAT_TYPE>::random()
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::reset()
+void min::emitter_buffer<T,FLOAT_TYPE>::reset()
 {
     // Initialize the simulation
     seed(0, _position.size());
@@ -269,57 +269,57 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::reset()
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::reset_accum()
+void min::emitter_buffer<T,FLOAT_TYPE>::reset_accum()
 {
     _emit_accum = 0.0;
     _spawn_accum = 0.0;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::resize(const size_t n)
+void min::emitter_buffer<T,FLOAT_TYPE>::resize(const size_t n)
 {
     _position.resize(n);
     _speed.resize(n);
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_mass(const T mass)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_mass(const T mass)
 {
     _inv_mass = 1.0 / mass;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_gravity(const min::vec3<T> &grav)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_gravity(const min::vec3<T> &grav)
 {
     _grav_force = grav;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_position(const min::vec3<T> &position)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_position(const min::vec3<T> &position)
 {
     _start_pos = position;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_random(const T lower, const T upper)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_random(const T lower, const T upper)
 {
     _dist = std::uniform_real_distribution<T>(lower, upper);
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_rotation_axis(const min::vec3<T> &axis)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_rotation_axis(const min::vec3<T> &axis)
 {
     _rot_axis = axis;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_speed(const min::vec3<T> &speed)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_speed(const min::vec3<T> &speed)
 {
     _start_speed = speed;
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set_wind(const min::vec3<T> &wind)
+void min::emitter_buffer<T,FLOAT_TYPE>::set_wind(const min::vec3<T> &wind)
 {
     _wind_force = wind;
 }
@@ -353,7 +353,7 @@ void min::emitter_buffer<T,FLOAT_TYPE>::step(const T dt)
 
 template <typename T, GLenum FLOAT_TYPE>
 template <typename F>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::set(const F &f, const T dt)
+void min::emitter_buffer<T,FLOAT_TYPE>::set(const F &f, const T dt)
 {
     // Accumulate this time step
     accumulate(dt);
@@ -367,7 +367,7 @@ inline void min::emitter_buffer<T,FLOAT_TYPE>::set(const F &f, const T dt)
 }
 
 template <typename T, GLenum FLOAT_TYPE>
-inline void min::emitter_buffer<T,FLOAT_TYPE>::upload() const
+void min::emitter_buffer<T,FLOAT_TYPE>::upload() const
 {
     // Bind the buffer to hold data
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);

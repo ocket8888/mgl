@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TEXTBUFFER__
-#define __TEXTBUFFER__
+#ifndef TEXTBUFFER
+#define TEXTBUFFER
 
 
 #include <ft2build.h>
@@ -85,8 +85,8 @@ class text_buffer
     uint_fast16_t _screen_x;
     uint_fast16_t _screen_y;
 
-    inline void bind_vao() const;
-    inline void check_extensions() const;
+    void bind_vao() const;
+    void check_extensions() const;
     void create_vertex_buffer(const size_t);
     void create_texture_buffer(const unsigned, const unsigned);
     void calculate_texture_dimensions(const FT_Face&);
@@ -94,9 +94,9 @@ class text_buffer
     void create_texture_atlas(const FT_Face&);
     vec2<float> get_pixel_size(const text&) const;
     void process_text(const text&) const;
-    inline vec2<float> to_screen_coords(const float, const float) const;
-    inline vec2<float> to_pixel_coords(const vec2<float>&) const;
-    inline void upload_data(const size_t) const;
+    vec2<float> to_screen_coords(const float, const float) const;
+    vec2<float> to_pixel_coords(const vec2<float>&) const;
+    void upload_data(const size_t) const;
 
 
   public:
@@ -104,27 +104,27 @@ class text_buffer
     ~text_buffer();
     text_buffer(const text_buffer&) = delete;
 
-    inline size_t add_text(const std::string&, const float, const float);
-    inline void bind(const size_t) const;
-    inline void bind_buffer(const size_t) const;
-    inline void unbind() const;
-    inline void clear();
-    inline void draw(const size_t) const;
-    inline void draw_all() const;
-    inline void draw_batch(const size_t) const;
-    inline void draw(const size_t, const size_t) const;
-    inline std::pair<uint_fast16_t, uint_fast16_t> get_screen_size() const;
-    inline const vec2<float> get_text_location(const size_t) const;
-    inline void reserve(const size_t);
-    inline void set_texture_uniform(const program&, const std::string&, const size_t) const;
-    inline void set_screen(const uint_fast16_t, const uint_fast16_t);
-    inline void set_text(const size_t, const std::string&);
-    inline void set_text_location(const size_t, const float, const float);
-    inline void set_line_wrap(const size_t, const float, const float);
-    inline void set_text(const size_t, const std::string&, const float, const float);
-    inline void set_text_center(const size_t, const float, const float);
-    inline void set_text_center(const size_t, const std::string&, const float, const float);
-    inline size_t size() const;
+    size_t add_text(const std::string&, const float, const float);
+    void bind(const size_t) const;
+    void bind_buffer(const size_t) const;
+    void unbind() const;
+    void clear();
+    void draw(const size_t) const;
+    void draw_all() const;
+    void draw_batch(const size_t) const;
+    void draw(const size_t, const size_t) const;
+    std::pair<uint_fast16_t, uint_fast16_t> get_screen_size() const;
+    const vec2<float> get_text_location(const size_t) const;
+    void reserve(const size_t);
+    void set_texture_uniform(const program&, const std::string&, const size_t) const;
+    void set_screen(const uint_fast16_t, const uint_fast16_t);
+    void set_text(const size_t, const std::string&);
+    void set_text_location(const size_t, const float, const float);
+    void set_line_wrap(const size_t, const float, const float);
+    void set_text(const size_t, const std::string&, const float, const float);
+    void set_text_center(const size_t, const float, const float);
+    void set_text_center(const size_t, const std::string&, const float, const float);
+    size_t size() const;
     void upload(const size_t = 0) const;
     size_t upload_batch(const size_t, const std::vector<size_t>&) const;
 

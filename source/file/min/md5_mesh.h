@@ -89,13 +89,13 @@ class md5_mesh
     std::vector<weight<T>> _weights;
     std::vector<vertex_weight> _vertex_weights;
 
-    inline void load_file(const std::string);
-    inline void load(const std::string&);
-    inline void process_joints(const std::vector<std::string>&);
-    inline void process_vertices(const std::vector<std::string>&);
-    inline void process_triangles(const std::vector<std::string>&);
-    inline void process_weights(const std::vector<std::string>&);
-    inline void process_mesh();
+    void load_file(const std::string);
+    void load(const std::string&);
+    void process_joints(const std::vector<std::string>&);
+    void process_vertices(const std::vector<std::string>&);
+    void process_triangles(const std::vector<std::string>&);
+    void process_weights(const std::vector<std::string>&);
+    void process_mesh();
 
   public:
     md5_mesh(const std::string&);

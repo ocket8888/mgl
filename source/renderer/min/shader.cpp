@@ -16,7 +16,7 @@ limitations under the License.
 #include "shader.h"
 
 
-inline void min::shader::check_extensions() const
+void min::shader::check_extensions() const
 {
     // Check that we have vertex shader support
     const bool vs = GLEW_ARB_vertex_shader;
@@ -43,7 +43,7 @@ inline void min::shader::check_extensions() const
     // Might need to test for GLEW_ARB_tessellation_shader if running < 4.0 context
 }
 
-inline void min::shader::load_file(const std::string path, const GLenum type)
+void min::shader::load_file(const std::string path, const GLenum type)
 {
     std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -73,7 +73,7 @@ inline void min::shader::load_file(const std::string path, const GLenum type)
     }
 }
 
-inline void min::shader::load(const std::string &src, const GLenum type)
+void min::shader::load(const std::string &src, const GLenum type)
 {
     // Create a shader id
     _id = glCreateShader(_type);
@@ -160,7 +160,7 @@ min::shader::~shader()
     throw_gl_error();
 }
 
-inline GLuint min::shader::id() const
+GLuint min::shader::id() const
 {
     return _id;
 }

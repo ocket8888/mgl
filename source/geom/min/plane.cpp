@@ -34,7 +34,7 @@ min::plane<T,vec>::plane(const vec<T> &a, const vec<T> &b, const vec<T> &c)
 }
 
 template <typename T, template <typename> class vec>
-inline vec<T> min::plane<T,vec>::get_closest_point(const vec<T> &point) const
+vec<T> min::plane<T,vec>::get_closest_point(const vec<T> &point) const
 {
     // Calculate the distance between point and the plane
     const T d = get_distance(point);
@@ -44,7 +44,7 @@ inline vec<T> min::plane<T,vec>::get_closest_point(const vec<T> &point) const
 }
 
 template <typename T, template <typename> class vec>
-inline T min::plane<T,vec>::get_distance(const vec<T> &point) const
+T min::plane<T,vec>::get_distance(const vec<T> &point) const
 {
     // Calculate the distance from the plane
     // distance = 0 means you are on the plane
@@ -52,13 +52,13 @@ inline T min::plane<T,vec>::get_distance(const vec<T> &point) const
 }
 
 template <typename T, template <typename> class vec>
-inline const vec<T> &min::plane<T,vec>::get_normal() const
+const vec<T> &min::plane<T,vec>::get_normal() const
 {
     return _normal;
 }
 
 template <typename T, template <typename> class vec>
-inline vec<T> min::plane<T,vec>::get_point(const vec<T> &point, const T d) const
+vec<T> min::plane<T,vec>::get_point(const vec<T> &point, const T d) const
 {
     // Return the point distance d away from p
     return (point - _normal * d);

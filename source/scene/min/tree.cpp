@@ -17,13 +17,13 @@ limitations under the License.
 
 //// tree_node ////
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree_node<T,K,L,vec,cell,shape>::add_key(K key)
+void min::tree_node<T,K,L,vec,cell,shape>::add_key(K key)
 {
     _keys.push_back(key);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree_node<T,K,L,vec,cell,shape>::clear()
+void min::tree_node<T,K,L,vec,cell,shape>::clear()
 {
     // Clear out the node data
     _child.clear();
@@ -31,13 +31,13 @@ inline void min::tree_node<T,K,L,vec,cell,shape>::clear()
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline std::vector<min::tree_node<T, K, L, vec, cell, shape>> &min::tree_node<T,K,L,vec,cell,shape>::get_children()
+std::vector<min::tree_node<T, K, L, vec, cell, shape>> &min::tree_node<T,K,L,vec,cell,shape>::get_children()
 {
     return _child;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline std::vector<K> &min::tree_node<T,K,L,vec,cell,shape>::get_keys()
+std::vector<K> &min::tree_node<T,K,L,vec,cell,shape>::get_keys()
 {
     return _keys;
 }
@@ -46,38 +46,38 @@ template <typename T, typename K, typename L, template <typename> class vec, tem
 min::tree_node<T,K,L,vec,cell,shape>::tree_node(const cell<T, vec> &c) : _cell(c) {}
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<min::tree_node<T, K, L, vec, cell, shape>> &min::tree_node<T,K,L,vec,cell,shape>::get_children() const
+const std::vector<min::tree_node<T, K, L, vec, cell, shape>> &min::tree_node<T,K,L,vec,cell,shape>::get_children() const
 {
     return _child;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<K> &min::tree_node<T,K,L,vec,cell,shape>::get_keys() const
+const std::vector<K> &min::tree_node<T,K,L,vec,cell,shape>::get_keys() const
 {
     return _keys;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const cell<T, vec> &min::tree_node<T,K,L,vec,cell,shape>::get_cell() const
+const cell<T, vec> &min::tree_node<T,K,L,vec,cell,shape>::get_cell() const
 {
     return _cell;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline std::vector<size_t> &min::tree_node<T,K,L,vec,cell,shape>::get_sub_ray_cache() const
+std::vector<size_t> &min::tree_node<T,K,L,vec,cell,shape>::get_sub_ray_cache() const
 {
     return _sub_ray_cache;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline bool min::tree_node<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
+bool min::tree_node<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
 {
     // The grid_key is assumed to be a box, so can't use _root.point_inside()!
     return point.inside(_cell.get_min(), _cell.get_max());
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline K min::tree_node<T,K,L,vec,cell,shape>::size() const
+K min::tree_node<T,K,L,vec,cell,shape>::size() const
 {
     return _keys.size();
 }
@@ -85,7 +85,7 @@ inline K min::tree_node<T,K,L,vec,cell,shape>::size() const
 
 //// tree ////
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::build(min::tree_node<T, K, L, vec, cell, shape> &node, const K depth)
+void min::tree<T,K,L,vec,cell,shape>::build(min::tree_node<T, K, L, vec, cell, shape> &node, const K depth)
 {
     // We are at a leaf node and we have hit the stopping criteria
     if (depth == 0)
@@ -137,7 +137,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::build(min::tree_node<T, K, L, vec, 
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::create_keys()
+void min::tree<T,K,L,vec,cell,shape>::create_keys()
 {
     // Preallocate the key vector and collision cache
     const auto size = _shapes.size();
@@ -167,7 +167,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::create_keys()
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline size_t min::tree<T,K,L,vec,cell,shape>::get_sorting_key(const vec<T> &point) const
+size_t min::tree<T,K,L,vec,cell,shape>::get_sorting_key(const vec<T> &point) const
 {
     // This must be guaranteed to be safe by callers
     // Use grid to sort all shapes in tree since it is a global identifier
@@ -175,7 +175,7 @@ inline size_t min::tree<T,K,L,vec,cell,shape>::get_sorting_key(const vec<T> &poi
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::get_overlap(const min::tree_node<T, K, L, vec, cell, shape> &node) const
+void min::tree<T,K,L,vec,cell,shape>::get_overlap(const min::tree_node<T, K, L, vec, cell, shape> &node) const
 {
     // Get all keys in this cell
     const std::vector<K> &keys = node.get_keys();
@@ -190,7 +190,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::get_overlap(const min::tree_node<T,
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::get_overlap(const min::tree_node<T, K, L, vec, cell, shape> &node, const vec<T> &min, const vec<T> &max, const K depth) const
+void min::tree<T,K,L,vec,cell,shape>::get_overlap(const min::tree_node<T, K, L, vec, cell, shape> &node, const vec<T> &min, const vec<T> &max, const K depth) const
 {
     // Returns all overlapping keys
     // We are at a leaf node and we have hit the stopping criteria
@@ -221,7 +221,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::get_overlap(const min::tree_node<T,
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::get_pairs(const min::tree_node<T, K, L, vec, cell, shape> &node) const
+void min::tree<T,K,L,vec,cell,shape>::get_pairs(const min::tree_node<T, K, L, vec, cell, shape> &node) const
 {
     // Perform an N^2-N intersection test for all shapes in this cell
     const std::vector<K> &keys = node.get_keys();
@@ -255,7 +255,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::get_pairs(const min::tree_node<T, K
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::get_pairs(const min::tree_node<T, K, L, vec, cell, shape> &node, const K depth) const
+void min::tree<T,K,L,vec,cell,shape>::get_pairs(const min::tree_node<T, K, L, vec, cell, shape> &node, const K depth) const
 {
     // Returns all intersecting key pairs
     // We are at a leaf node and we have hit the stopping criteria
@@ -284,7 +284,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::get_pairs(const min::tree_node<T, K
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::get_ray_intersect(const min::tree_node<T, K, L, vec, cell, shape> &node, const min::ray<T, vec> &r, const K depth) const
+void min::tree<T,K,L,vec,cell,shape>::get_ray_intersect(const min::tree_node<T, K, L, vec, cell, shape> &node, const min::ray<T, vec> &r, const K depth) const
 {
     // We are at a leaf node and we have hit the stopping criteria
     if (depth == 0)
@@ -326,7 +326,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::get_ray_intersect(const min::tree_n
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline K min::tree<T,K,L,vec,cell,shape>::optimize_depth(const std::vector<shape<T, vec>> &shapes)
+K min::tree<T,K,L,vec,cell,shape>::optimize_depth(const std::vector<shape<T, vec>> &shapes)
 {
     // Find the largest object in the collection
     const auto size = shapes.size();
@@ -365,7 +365,7 @@ inline K min::tree<T,K,L,vec,cell,shape>::optimize_depth(const std::vector<shape
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::sort(const std::vector<shape<T, vec>> &shapes)
+void min::tree<T,K,L,vec,cell,shape>::sort(const std::vector<shape<T, vec>> &shapes)
 {
     // Create index vector to sort 0 to N
     const auto size = shapes.size();
@@ -402,7 +402,7 @@ min::tree<T,K,L,vec,cell,shape>::tree(const cell<T, vec> &c)
       _depth_override(false), _flag_size(0) {}
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::resize(const cell<T, vec> &c)
+void min::tree<T,K,L,vec,cell,shape>::resize(const cell<T, vec> &c)
 {
     _root = c;
     _lower_bound = _root.get_cell().get_min() + var<T>::TOL_PHYS_EDGE;
@@ -410,7 +410,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::resize(const cell<T, vec> &c)
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::check_size(const std::vector<shape<T, vec>> &shapes) const
+void min::tree<T,K,L,vec,cell,shape>::check_size(const std::vector<shape<T, vec>> &shapes) const
 {
     // Check size of the number of objects to insert into tree
     if (shapes.size() > std::numeric_limits<K>::max() - 1)
@@ -420,25 +420,25 @@ inline void min::tree<T,K,L,vec,cell,shape>::check_size(const std::vector<shape<
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline vec<T> min::tree<T,K,L,vec,cell,shape>::clamp_bounds(const vec<T> &point) const
+vec<T> min::tree<T,K,L,vec,cell,shape>::clamp_bounds(const vec<T> &point) const
 {
     return vec<T>(point).clamp(_lower_bound, _upper_bound);
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const vec<T> &min::tree<T,K,L,vec,cell,shape>::get_lower_bound() const
+const vec<T> &min::tree<T,K,L,vec,cell,shape>::get_lower_bound() const
 {
     return _lower_bound;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const vec<T> &min::tree<T,K,L,vec,cell,shape>::get_upper_bound() const
+const vec<T> &min::tree<T,K,L,vec,cell,shape>::get_upper_bound() const
 {
     return _upper_bound;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const min::tree_node<T, K, L, vec, cell, shape> &min::tree<T,K,L,vec,cell,shape>::get_node(const vec<T> &point) const
+const min::tree_node<T, K, L, vec, cell, shape> &min::tree<T,K,L,vec,cell,shape>::get_node(const vec<T> &point) const
 {
     // This function computes the octree key location code
     // for traversing the octree to the leaf nodes without needing to use recursion
@@ -483,19 +483,19 @@ inline const min::tree_node<T, K, L, vec, cell, shape> &min::tree<T,K,L,vec,cell
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline K min::tree<T,K,L,vec,cell,shape>::get_scale() const
+K min::tree<T,K,L,vec,cell,shape>::get_scale() const
 {
     return _scale;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<shape<T, vec>> &min::tree<T,K,L,vec,cell,shape>::get_shapes()
+const std::vector<shape<T, vec>> &min::tree<T,K,L,vec,cell,shape>::get_shapes()
 {
     return _shapes;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_collisions() const
+const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_collisions() const
 {
     // Clear out the old collision sets and vectors
     _flags.clear();
@@ -510,7 +510,7 @@ inline const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_collisions(const vec<T> &point) const
+const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_collisions(const vec<T> &point) const
 {
     // Clear out the old collision sets and vectors
     _flags.clear();
@@ -531,7 +531,7 @@ inline const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, vec<T>>> &min::tree<T,K,L,vec,cell,shape>::get_collisions(const min::ray<T, vec> &r) const
+const std::vector<std::pair<K, vec<T>>> &min::tree<T,K,L,vec,cell,shape>::get_collisions(const min::ray<T, vec> &r) const
 {
     // Output vector
     _ray_hits.clear();
@@ -545,19 +545,19 @@ inline const std::vector<std::pair<K, vec<T>>> &min::tree<T,K,L,vec,cell,shape>:
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline K min::tree<T,K,L,vec,cell,shape>::get_depth() const
+K min::tree<T,K,L,vec,cell,shape>::get_depth() const
 {
     return _depth;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<K> &min::tree<T,K,L,vec,cell,shape>::get_index_map() const
+const std::vector<K> &min::tree<T,K,L,vec,cell,shape>::get_index_map() const
 {
     return _index_map;
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_overlap(const shape<T, vec> &overlap) const
+const std::vector<std::pair<K, K>> &min::tree<T,K,L,vec,cell,shape>::get_overlap(const shape<T, vec> &overlap) const
 {
     // Check if tree is not built yet
     if (_root.get_children().size() == 0)
@@ -584,7 +584,7 @@ bool min::tree<T,K,L,vec,cell,shape>::inside(const vec<T> &point) const
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes)
+void min::tree<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes)
 {
     // Set the tree depth
     optimize_depth(shapes);
@@ -603,7 +603,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, v
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes, const K depth)
+void min::tree<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, vec>> &shapes, const K depth)
 {
     // Set the depth
     _depth = depth;
@@ -626,7 +626,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::insert(const std::vector<shape<T, v
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::insert_no_sort(const std::vector<shape<T, vec>> &shapes)
+void min::tree<T,K,L,vec,cell,shape>::insert_no_sort(const std::vector<shape<T, vec>> &shapes)
 {
     // Set the tree depth
     optimize_depth(shapes);
@@ -646,7 +646,7 @@ inline void min::tree<T,K,L,vec,cell,shape>::insert_no_sort(const std::vector<sh
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline const std::vector<K> &min::tree<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
+const std::vector<K> &min::tree<T,K,L,vec,cell,shape>::point_inside(const vec<T> &point) const
 {
     // Clamp point into world bounds
     const vec<T> clamped = clamp_bounds(point);
@@ -656,7 +656,7 @@ inline const std::vector<K> &min::tree<T,K,L,vec,cell,shape>::point_inside(const
 }
 
 template <typename T, typename K, typename L, template <typename> class vec, template <typename, template <typename> class> class cell, template <typename, template <typename> class> class shape>
-inline void min::tree<T,K,L,vec,cell,shape>::set_depth(const K depth)
+void min::tree<T,K,L,vec,cell,shape>::set_depth(const K depth)
 {
     // Set the depth and indicate overriding calculated depth
     _depth_override = true;

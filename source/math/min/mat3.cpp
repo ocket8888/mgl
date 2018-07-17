@@ -41,7 +41,7 @@ min::mat3<T>::mat3(const min::quat<T> &r)
 }
 
 template <typename T>
-inline void min::mat3<T>::one(min::vec3<T> &v)
+void min::mat3<T>::one(min::vec3<T> &v)
 {
     _a = v.x();
     _b = v.y();
@@ -49,7 +49,7 @@ inline void min::mat3<T>::one(min::vec3<T> &v)
 }
 
 template <typename T>
-inline void min::mat3<T>::two(min::vec3<T> &v)
+void min::mat3<T>::two(min::vec3<T> &v)
 {
     _d = v.x();
     _e = v.y();
@@ -57,7 +57,7 @@ inline void min::mat3<T>::two(min::vec3<T> &v)
 }
 
 template <typename T>
-inline void min::mat3<T>::three(min::vec3<T> &v)
+void min::mat3<T>::three(min::vec3<T> &v)
 {
     _g = v.x();
     _h = v.y();
@@ -65,20 +65,20 @@ inline void min::mat3<T>::three(min::vec3<T> &v)
 }
 
 template <typename T>
-inline void min::mat3<T>::w(const T w)
+void min::mat3<T>::w(const T w)
 {
     _i = w;
 }
 
 template <typename T>
-inline T min::mat3<T>::w() const
+T min::mat3<T>::w() const
 {
     return _i;
 }
 
 
 template <typename T>
-inline min::mat3<T> min::mat3<T>::operator*(const min::mat3<T> &A) const
+min::mat3<T> min::mat3<T>::operator*(const min::mat3<T> &A) const
 {
     mat3<T> out;
     out._a = _a * A._a + _b * A._d + _c * A._g;
@@ -95,7 +95,7 @@ inline min::mat3<T> min::mat3<T>::operator*(const min::mat3<T> &A) const
 }
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::operator*=(const min::mat3<T> &A)
+min::mat3<T> &min::mat3<T>::operator*=(const min::mat3<T> &A)
 {
     T a = _a * A._a + _b * A._d + _c * A._g;
     T b = _a * A._b + _b * A._e + _c * A._h;
@@ -121,7 +121,7 @@ inline min::mat3<T> &min::mat3<T>::operator*=(const min::mat3<T> &A)
 }
 
 template <typename T>
-inline min::vec3<T> min::mat3<T>::operator*(const min::vec3<T> &A) const
+min::vec3<T> min::mat3<T>::operator*(const min::vec3<T> &A) const
 {
     T x = _a * A.x() + _d * A.y() + _g * A.z();
     T y = _b * A.x() + _e * A.y() + _h * A.z();
@@ -131,13 +131,13 @@ inline min::vec3<T> min::mat3<T>::operator*(const min::vec3<T> &A) const
 }
 
 template <typename T>
-inline min::vec2<T> min::mat3<T>::get_translation() const
+min::vec2<T> min::mat3<T>::get_translation() const
 {
     return vec2<T>(_g, _h);
 }
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::set_translation(const min::vec2<T> &vec)
+min::mat3<T> &min::mat3<T>::set_translation(const min::vec2<T> &vec)
 {
     _g = vec.x();
     _h = vec.y();
@@ -145,14 +145,14 @@ inline min::mat3<T> &min::mat3<T>::set_translation(const min::vec2<T> &vec)
 }
 
 template <typename T>
-inline min::mat2<T> min::mat3<T>::get_rotation() const
+min::mat2<T> min::mat3<T>::get_rotation() const
 {
     return mat2<T>(_a, _b, _d, _e);
 }
 // Default rotation is about the Z axis
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::set_rotation(const min::mat2<T> &rot)
+min::mat3<T> &min::mat3<T>::set_rotation(const min::mat2<T> &rot)
 {
     _a = rot._xc;
     _b = rot._ys;
@@ -162,13 +162,13 @@ inline min::mat3<T> &min::mat3<T>::set_rotation(const min::mat2<T> &rot)
 }
 
 template <typename T>
-inline min::mat2<T> min::mat3<T>::get_rotation_x() const
+min::mat2<T> min::mat3<T>::get_rotation_x() const
 {
     return mat2<T>(_e, _f, _h, _i);
 }
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::set_rotation_x(const min::mat2<T> &rot)
+min::mat3<T> &min::mat3<T>::set_rotation_x(const min::mat2<T> &rot)
 {
     _e = rot._xc;
     _f = rot._ys;
@@ -178,13 +178,13 @@ inline min::mat3<T> &min::mat3<T>::set_rotation_x(const min::mat2<T> &rot)
 }
 
 template <typename T>
-inline min::mat2<T> min::mat3<T>::get_rotation_y() const
+min::mat2<T> min::mat3<T>::get_rotation_y() const
 {
     return mat2<T>(_a, _c, _g, _i);
 }
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::set_rotation_y(const min::mat2<T> &rot)
+min::mat3<T> &min::mat3<T>::set_rotation_y(const min::mat2<T> &rot)
 {
     _a = rot._xc;
     _c = rot._xs;
@@ -194,13 +194,13 @@ inline min::mat3<T> &min::mat3<T>::set_rotation_y(const min::mat2<T> &rot)
 }
 
 template <typename T>
-inline min::vec2<T> min::mat3<T>::get_scale() const
+min::vec2<T> min::mat3<T>::get_scale() const
 {
     return vec2<T>(_a, _e);
 }
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::set_scale(const min::vec2<T> &s)
+min::mat3<T> &min::mat3<T>::set_scale(const min::vec2<T> &s)
 {
     _a = s.x();
     _e = s.y();
@@ -208,7 +208,7 @@ inline min::mat3<T> &min::mat3<T>::set_scale(const min::vec2<T> &s)
 }
 
 template <typename T>
-inline bool min::mat3<T>::invert()
+bool min::mat3<T>::invert()
 {
     T a, b, c, d, e, f, g, h, i, det;
 
@@ -243,14 +243,14 @@ inline bool min::mat3<T>::invert()
 }
 
 template <typename T>
-inline min::vec3<T> min::mat3<T>::transform(const min::vec3<T> &v) const
+min::vec3<T> min::mat3<T>::transform(const min::vec3<T> &v) const
 {
     // This matches quat<T> API!
     return this->operator*(v);
 }
 
 template <typename T>
-inline min::mat3<T> &min::mat3<T>::transpose()
+min::mat3<T> &min::mat3<T>::transpose()
 {
     T swap = _b;
     _b = _d;

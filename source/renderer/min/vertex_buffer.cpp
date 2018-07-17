@@ -17,7 +17,7 @@ limitations under the License.
 
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::check_extensions() const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::check_extensions() const
 {
     const bool vao = GLEW_ARB_vertex_array_object;
     const bool vbo = GLEW_ARB_vertex_buffer_object;
@@ -335,7 +335,7 @@ size_t min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::add_mesh(const m
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::bind() const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::bind() const
 {
     // Bind the VAO for this buffer
     // Do not call this function often as it is unneeded context switching
@@ -343,13 +343,13 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::bind() cons
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::unbind() const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::unbind() const
 {
     glBindVertexArray(0);
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::bind_buffer(const size_t index) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::bind_buffer(const size_t index) const
 {
     // This function heavily modifies VAO state
     _index = index;
@@ -365,7 +365,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::bind_buffer
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::clear()
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::clear()
 {
     // Clears the data in this buffer, but data will remain on GPU until next upload is called
     _data[_index].clear();
@@ -379,7 +379,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::clear()
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw(const GLenum mode, const size_t index) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw(const GLenum mode, const size_t index) const
 {
     // Draw object at index 'n'
     const auto &n = _element_index[_index][index];
@@ -388,7 +388,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw(const 
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw(const GLenum mode, const size_t start, const size_t stop) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw(const GLenum mode, const size_t start, const size_t stop) const
 {
     // Draw object at index 'n'
     const auto &start_n = _element_index[_index][start];
@@ -399,7 +399,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw(const 
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_all(const GLenum mode) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_all(const GLenum mode) const
 {
     // Draw all objects in the static buffer
     const size_t draw_size = _element[_index].size();
@@ -410,7 +410,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_all(co
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_all_after(const GLenum mode, const size_t index) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_all_after(const GLenum mode, const size_t index) const
 {
     // Draw all objects after index 'n' to end
     const auto &n = _element_index[_index][index];
@@ -421,7 +421,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_all_af
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_many(const GLenum mode, const size_t index, const size_t count) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_many(const GLenum mode, const size_t index, const size_t count) const
 {
     // Intel drivers don't like zero instanced draw calls!
     if (count > 0)
@@ -434,7 +434,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::draw_many(c
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::reserve(const size_t vertex, const size_t index, const size_t meshes)
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::reserve(const size_t vertex, const size_t index, const size_t meshes)
 {
     // Get the width of the vertex structure, in floats not bytes
     const size_t width = vertex_type<T, K, FLOAT_TYPE>::width();
@@ -451,7 +451,7 @@ inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::reserve(con
 }
 
 template <typename T, typename K, template <typename, typename, GLenum> class vertex_type, GLenum FLOAT_TYPE, GLenum INT_TYPE>
-inline void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::set_buffer(const size_t index) const
+void min::vertex_buffer<T,K,vertex_type,FLOAT_TYPE,INT_TYPE>::set_buffer(const size_t index) const
 {
     // Set the active buffer
     _index = index;

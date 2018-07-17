@@ -36,15 +36,15 @@ class tran2
     tran2(const mat2<T>&);
     tran2(const vec2<T>&, const mat2<T>&);
     tran2(const vec2<T>&, const mat2<T>&, const vec2<T>&);
-    inline tran2<T> &translate(const T, const T);
-    inline tran2<T> &translate(const vec2<T>&);
-    inline tran2<T> &rotate(const mat2<T>&);
-    inline tran2<T> &scale(const T, const T);
-    inline tran2<T> &scale(const vec2<T>&);
-    inline tran2<T> &transpose();
-    inline tran2<T> &invert();
-    inline vec3<T> transform(const vec3<T>&) const;
-    inline const mat3<T> &m() const;
+    tran2<T> &translate(const T, const T);
+    tran2<T> &translate(const vec2<T>&);
+    tran2<T> &rotate(const mat2<T>&);
+    tran2<T> &scale(const T, const T);
+    tran2<T> &scale(const vec2<T>&);
+    tran2<T> &transpose();
+    tran2<T> &invert();
+    vec3<T> transform(const vec3<T>&) const;
+    const mat3<T> &m() const;
 };
 }
 

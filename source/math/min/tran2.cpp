@@ -32,13 +32,13 @@ template <typename T>
 min::tran2<T>::tran2(const min::vec2<T> &t, const min::mat2<T> &r, const min::vec2<T> &s) : _m(t, r) { scale(s); }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::translate(const T x, const T y)
+min::tran2<T> &min::tran2<T>::translate(const T x, const T y)
 {
     return translate(vec2<T>(x, y));
 }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::translate(const min::vec2<T> &t)
+min::tran2<T> &min::tran2<T>::translate(const min::vec2<T> &t)
 {
     mat3<T> translation = mat3<T>(t);
     _m *= translation;
@@ -46,7 +46,7 @@ inline min::tran2<T> &min::tran2<T>::translate(const min::vec2<T> &t)
 }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::rotate(const min::mat2<T> &r)
+min::tran2<T> &min::tran2<T>::rotate(const min::mat2<T> &r)
 {
     mat3<T> rotation = mat3<T>(r);
     _m *= rotation;
@@ -54,13 +54,13 @@ inline min::tran2<T> &min::tran2<T>::rotate(const min::mat2<T> &r)
 }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::scale(const T x, const T y)
+min::tran2<T> &min::tran2<T>::scale(const T x, const T y)
 {
     return scale(vec2<T>(x, y));
 }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::scale(const min::vec2<T> &s)
+min::tran2<T> &min::tran2<T>::scale(const min::vec2<T> &s)
 {
     mat3<T> scale = mat3<T>();
     scale.set_scale(s);
@@ -69,27 +69,27 @@ inline min::tran2<T> &min::tran2<T>::scale(const min::vec2<T> &s)
 }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::transpose()
+min::tran2<T> &min::tran2<T>::transpose()
 {
     _m.transpose();
     return *this;
 }
 
 template <typename T>
-inline min::tran2<T> &min::tran2<T>::invert()
+min::tran2<T> &min::tran2<T>::invert()
 {
     _m.invert();
     return *this;
 }
 
 template <typename T>
-inline min::vec3<T> min::tran2<T>::transform(const min::vec3<T> &v) const
+min::vec3<T> min::tran2<T>::transform(const min::vec3<T> &v) const
 {
     return _m * v;
 }
 
 template <typename T>
-inline const min::mat3<T> &min::tran2<T>::m() const
+const min::mat3<T> &min::tran2<T>::m() const
 {
     return _m;
 }

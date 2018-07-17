@@ -15,6 +15,9 @@ limitations under the License.
 
 #include "keyboard.h"
 
+template class min::key<double>;
+template class min::keyboard<unsigned int, double>;
+
 //// key ////
 template <typename K>
 min::key<K>::key() : _is_down(false),
@@ -136,7 +139,7 @@ const std::pair<T, min::key<K>> &min::keyboard<T,K>::get_key(const T code) const
     const auto &i = _keys.find(code);
     if (i != _keys.end())
     {
-        return i->second;
+        return *i;
     }
     else
     {

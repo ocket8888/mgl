@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __MESH__
-#define __MESH__
+#ifndef MESH
+#define MESH
 #include <fstream>
 #include <stdexcept>
 #include <string>
@@ -38,7 +38,7 @@ class mesh
     // n = (v1 - v0).cross(v2 - v0).normalize()
     // This is only valid for CW triangles, needs to be negated for CCW triangles
 
-    inline void calculate_normal(const size_t, const size_t, const size_t);
+    void calculate_normal(const size_t, const size_t, const size_t);
 
     // This method solves the following set of equations
     // duv1.x * T + duv1.y * B = dv1;
@@ -69,8 +69,8 @@ class mesh
     //    /
     //   Normal (y)
 
-    inline void calculate_tangent(const size_t, const size_t, const size_t);
-    inline void add_tangents(const std::pair<vec3<T>, vec3<T>>&, const size_t);
+    void calculate_tangent(const size_t, const size_t, const size_t);
+    void add_tangents(const std::pair<vec3<T>, vec3<T>>&, const size_t);
 
   public:
     mesh(const std::string &name) : _name(name) {}

@@ -15,68 +15,71 @@ limitations under the License.
 
 #include "vec4.h"
 
+template class min::vec4<float>;
+template class min::vec4<double>;
+
 template <typename T>
 min::vec4<T>::vec4() : _x(0.0), _y(0.0), _z(0.0), _w(1.0) {}
 
 template <typename T>
-min::vec4<T>::vec4(const min::vec3<T> &v) : _x(v.x()), _y(v.y()), _z(v.z()), _w(1.0) {}
+min::vec4<T>::vec4(const min::vec3<T> &v) : _x(v.x), _y(v.y), _z(v.z), _w(1.0) {}
 
 template <typename T>
-min::vec4<T>::vec4(const min::vec3<T> &v, T w) : _x(v.x()), _y(v.y()), _z(v.z()), _w(w) {}
+min::vec4<T>::vec4(const min::vec3<T> &v, T w) : _x(v.x), _y(v.y), _z(v.z), _w(w) {}
 
 template <typename T>
 min::vec4<T>::vec4(const T x, const T y, const T z, const T w) : _x(x), _y(y), _z(z), _w(w) {}
 
 template <typename T>
-inline T min::vec4<T>::x() const
+T min::vec4<T>::x() const
 {
     return _x;
 }
 
 template <typename T>
-inline T min::vec4<T>::y() const
+T min::vec4<T>::y() const
 {
     return _y;
 }
 
 template <typename T>
-inline T min::vec4<T>::z() const
+T min::vec4<T>::z() const
 {
     return _z;
 }
 
 template <typename T>
-inline T min::vec4<T>::w() const
+T min::vec4<T>::w() const
 {
     return _w;
 }
 
 template <typename T>
-inline void min::vec4<T>::x(const T x)
+void min::vec4<T>::x(const T x)
 {
     _x = x;
 }
 
 template <typename T>
-inline void min::vec4<T>::y(const T y)
+void min::vec4<T>::y(const T y)
 {
     _y = y;
 }
 
 template <typename T>
-inline void min::vec4<T>::z(const T z)
+void min::vec4<T>::z(const T z)
 {
     _z = z;
 }
 
 template <typename T>
-inline void min::vec4<T>::w(const T w)
+void min::vec4<T>::w(const T w)
 {
     _w = w;
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::set_all(const T v)
+min::vec4<T> &min::vec4<T>::set_all(const T v)
 {
     _x = v;
     _y = v;
@@ -87,14 +90,14 @@ inline min::vec4<T> &min::vec4<T>::set_all(const T v)
 }
 
 template <typename T>
-inline min::vec3<T> min::vec4<T>::xyz() const
+min::vec3<T> min::vec4<T>::xyz() const
 {
     vec3<T> temp(_x, _y, _z);
     return temp;
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::abs()
+min::vec4<T> &min::vec4<T>::abs()
 {
     _x = std::abs(_x);
     _y = std::abs(_y);
@@ -104,7 +107,7 @@ inline min::vec4<T> &min::vec4<T>::abs()
 }
 
 template <typename T>
-inline bool min::vec4<T>::any_zero_outside(const min::vec4<T> &p, const min::vec4<T> &min, const min::vec4<T> &max) const
+bool min::vec4<T>::any_zero_outside(const min::vec4<T> &p, const min::vec4<T> &min, const min::vec4<T> &max) const
 {
     // If p is zero and this is outside min and max return true else false
     if (std::abs(p.x()) <= var<T>::TOL_REL)
@@ -127,13 +130,7 @@ inline bool min::vec4<T>::any_zero_outside(const min::vec4<T> &p, const min::vec
 }
 
 template <typename T>
-inline constexpr min::coord_sys<T, min::vec4> min::vec4<T>::axes()
-{
-    return coord_sys<T, min::vec4>(vec4<T>(1.0, 0.0, 0.0, 1.0), vec4<T>(0.0, 1.0, 0.0, 1.0), vec4<T>(0.0, 0.0, 1.0, 1.0));
-}
-
-template <typename T>
-inline min::vec4<T> &min::vec4<T>::clamp(const min::vec4<T> &min, const min::vec4<T> &max)
+min::vec4<T> &min::vec4<T>::clamp(const min::vec4<T> &min, const min::vec4<T> &max)
 {
     min::clamp(_x, min.x(), max.x());
     min::clamp(_y, min.y(), max.y());
@@ -143,7 +140,7 @@ inline min::vec4<T> &min::vec4<T>::clamp(const min::vec4<T> &min, const min::vec
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::clamp_direction(const min::vec4<T> &min, const min::vec4<T> &max)
+min::vec4<T> min::vec4<T>::clamp_direction(const min::vec4<T> &min, const min::vec4<T> &max)
 {
     T x = min::clamp_direction(_x, min.x(), max.x());
     T y = min::clamp_direction(_y, min.y(), max.y());
@@ -153,7 +150,7 @@ inline min::vec4<T> min::vec4<T>::clamp_direction(const min::vec4<T> &min, const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::cross(const min::vec4<T> &A) const
+min::vec4<T> min::vec4<T>::cross(const min::vec4<T> &A) const
 {
     T x = _y * A.z() - _z * A.y();
     T y = _z * A.x() - _x * A.z();
@@ -162,43 +159,43 @@ inline min::vec4<T> min::vec4<T>::cross(const min::vec4<T> &A) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::cross_x() const
+min::vec4<T> min::vec4<T>::cross_x() const
 {
     return vec4<T>(0, _z, -_y, 1.0);
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::cross_y() const
+min::vec4<T> min::vec4<T>::cross_y() const
 {
     return vec4<T>(-_z, 0, _x, 1.0);
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::cross_z() const
+min::vec4<T> min::vec4<T>::cross_z() const
 {
     return vec4<T>(_y, -_x, 0, 1.0);
 }
 
 template <typename T>
-inline T min::vec4<T>::dot(const min::vec4<T> &A) const
+T min::vec4<T>::dot(const min::vec4<T> &A) const
 {
     return _x * A.x() + _y * A.y() + _z * A.z();
 }
 
 template <typename T>
-inline T min::vec4<T>::dot_x() const
+T min::vec4<T>::dot_x() const
 {
     return _x;
 }
 
 template <typename T>
-inline T min::vec4<T>::dot_y() const
+T min::vec4<T>::dot_y() const
 {
     return _y;
 }
 
 template <typename T>
-inline T min::vec4<T>::dot_z() const
+T min::vec4<T>::dot_z() const
 {
     return _z;
 }
@@ -212,7 +209,7 @@ inline T min::vec4<T>::dot_z() const
 //   row --->
 
 template <typename T>
-inline std::vector<std::pair<min::vec4<T>, min::vec4<T>>> min::vec4<T>::grid(const min::vec4<T> &min, const min::vec4<T> &max, const size_t scale)
+std::vector<std::pair<min::vec4<T>, min::vec4<T>>> min::vec4<T>::grid(const min::vec4<T> &min, const min::vec4<T> &max, const size_t scale)
 {
     // Create out vector
     std::vector<std::pair<vec4<T>, vec4<T>>> out;
@@ -255,7 +252,7 @@ inline std::vector<std::pair<min::vec4<T>, min::vec4<T>>> min::vec4<T>::grid(con
 }
 
 template <typename T>
-inline std::vector<std::pair<min::vec4<T>, T>> min::vec4<T>::grid_center(const min::vec4<T> &min, const min::vec4<T> &max, const size_t scale, const T size)
+std::vector<std::pair<min::vec4<T>, T>> min::vec4<T>::grid_center(const min::vec4<T> &min, const min::vec4<T> &max, const size_t scale, const T size)
 {
     // Create out vector
     std::vector<std::pair<vec4<T>, T>> out;
@@ -298,7 +295,7 @@ inline std::vector<std::pair<min::vec4<T>, T>> min::vec4<T>::grid_center(const m
 }
 
 template <typename T>
-inline std::tuple<size_t, size_t, size_t> min::vec4<T>::grid_index(const min::vec4<T> &min, const min::vec4<T> &extent, const min::vec4<T> &point)
+std::tuple<size_t, size_t, size_t> min::vec4<T>::grid_index(const min::vec4<T> &min, const min::vec4<T> &extent, const min::vec4<T> &point)
 {
     // Calculate the grid dimensions
     const T ex = extent.x();
@@ -314,7 +311,7 @@ inline std::tuple<size_t, size_t, size_t> min::vec4<T>::grid_index(const min::ve
 }
 
 template <typename T>
-inline std::tuple<size_t, size_t, size_t> min::vec4<T>::grid_index(const size_t index, const size_t scale)
+std::tuple<size_t, size_t, size_t> min::vec4<T>::grid_index(const size_t index, const size_t scale)
 {
     // Precalculate the square scale
     const size_t scale2 = scale * scale;
@@ -330,7 +327,7 @@ inline std::tuple<size_t, size_t, size_t> min::vec4<T>::grid_index(const size_t 
 }
 
 template <typename T>
-inline size_t min::vec4<T>::grid_key(const min::vec4<T> &min, const min::vec4<T> &extent, const size_t scale, const min::vec4<T> &point)
+size_t min::vec4<T>::grid_key(const min::vec4<T> &min, const min::vec4<T> &extent, const size_t scale, const min::vec4<T> &point)
 {
     // Calculate the cell location
     const std::tuple<size_t, size_t, size_t> index = grid_index(min, extent, point);
@@ -345,7 +342,7 @@ inline size_t min::vec4<T>::grid_key(const min::vec4<T> &min, const min::vec4<T>
 }
 
 template <typename T>
-inline size_t min::vec4<T>::grid_key(const std::tuple<size_t, size_t, size_t> &index, const size_t scale)
+size_t min::vec4<T>::grid_key(const std::tuple<size_t, size_t, size_t> &index, const size_t scale)
 {
     // Get the row / col of cell
     const size_t col = std::get<0>(index);
@@ -357,7 +354,7 @@ inline size_t min::vec4<T>::grid_key(const std::tuple<size_t, size_t, size_t> &i
 }
 
 template <typename T>
-inline void min::vec4<T>::grid_overlap(std::vector<size_t> &out, const min::vec4<T> &min, const min::vec4<T> &extent, const size_t scale, const min::vec4<T> &b_min, const min::vec4<T> &b_max)
+void min::vec4<T>::grid_overlap(std::vector<size_t> &out, const min::vec4<T> &min, const min::vec4<T> &extent, const size_t scale, const min::vec4<T> &b_min, const min::vec4<T> &b_max)
 {
     // Create the output vector
     out.clear();
@@ -503,7 +500,7 @@ inline void min::vec4<T>::grid_overlap(std::vector<size_t> &out, const min::vec4
 }
 
 template <typename T>
-inline std::tuple<int, T, T, int, T, T, int, T, T> min::vec4<T>::grid_ray(const min::vec4<T> &extent, const min::vec4<T> &origin, const min::vec4<T> &dir, const min::vec4<T> &inv_dir)
+std::tuple<int, T, T, int, T, T, int, T, T> min::vec4<T>::grid_ray(const min::vec4<T> &extent, const min::vec4<T> &origin, const min::vec4<T> &dir, const min::vec4<T> &inv_dir)
 {
     // Get the grid dimensions
     const T ex = extent.x();
@@ -601,7 +598,7 @@ inline std::tuple<int, T, T, int, T, T, int, T, T> min::vec4<T>::grid_ray(const 
 }
 
 template <typename T>
-inline size_t min::vec4<T>::grid_ray_next(std::tuple<size_t, size_t, size_t> &index, std::tuple<int, T, T, int, T, T, int, T, T> &grid_ray, bool &flag, const size_t scale)
+size_t min::vec4<T>::grid_ray_next(std::tuple<size_t, size_t, size_t> &index, std::tuple<int, T, T, int, T, T, int, T, T> &grid_ray, bool &flag, const size_t scale)
 {
     // Get the cell row / col
     size_t &col = std::get<0>(index);
@@ -670,7 +667,7 @@ inline size_t min::vec4<T>::grid_ray_next(std::tuple<size_t, size_t, size_t> &in
 
 template <typename T>
 template <typename F>
-inline void min::vec4<T>::grid_range(const min::vec4<T> &min, const min::vec4<T> &extent, const size_t scale,
+void min::vec4<T>::grid_range(const min::vec4<T> &min, const min::vec4<T> &extent, const size_t scale,
                               const vec4<T> &over_min, const vec4<T> &over_max,
                               const F &f)
 {
@@ -697,7 +694,7 @@ inline void min::vec4<T>::grid_range(const min::vec4<T> &min, const min::vec4<T>
 }
 
 template <typename T>
-inline std::pair<min::vec4<T>, min::vec4<T>> min::vec4<T>::extents(const std::vector<min::vec4<T>> &verts)
+std::pair<min::vec4<T>, min::vec4<T>> min::vec4<T>::extents(const std::vector<min::vec4<T>> &verts)
 {
     // Find the greatest extents in the collection of vec4<T>
     const auto size = verts.size();
@@ -726,20 +723,20 @@ inline std::pair<min::vec4<T>, min::vec4<T>> min::vec4<T>::extents(const std::ve
 }
 
 template <typename T>
-inline bool min::vec4<T>::inside(const min::vec4<T> &min, const min::vec4<T> &max) const
+bool min::vec4<T>::inside(const min::vec4<T> &min, const min::vec4<T> &max) const
 {
     // Return true if this vector is inside the min and max vector range
     return (_x > min.x() + var<T>::TOL_REL && _x < max.x() - var<T>::TOL_REL && _y > min.y() + var<T>::TOL_REL && _y < max.y() - var<T>::TOL_REL && _z > min.z() + var<T>::TOL_REL && _z < max.z() - var<T>::TOL_REL);
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::inverse() const
+min::vec4<T> min::vec4<T>::inverse() const
 {
     return vec4<T>(1.0 / _x, 1.0 / _y, 1.0 / _z, 1.0);
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::inverse_safe() const
+min::vec4<T> min::vec4<T>::inverse_safe() const
 {
     const T x = safe_inverse<T>(_x);
     const T y = safe_inverse<T>(_y);
@@ -750,37 +747,37 @@ inline min::vec4<T> min::vec4<T>::inverse_safe() const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::lerp(const min::vec4<T> &v0, const min::vec4<T> &v1, T t)
+min::vec4<T> min::vec4<T>::lerp(const min::vec4<T> &v0, const min::vec4<T> &v1, T t)
 {
     return (v0 + (v1 - v0) * (t));
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::interpolate(const min::vec4<T> &v0, const min::vec4<T> &v1, T t)
+min::vec4<T> min::vec4<T>::interpolate(const min::vec4<T> &v0, const min::vec4<T> &v1, T t)
 {
     return lerp(v0, v1, t);
 }
 
 template <typename T>
-inline T min::vec4<T>::magnitude() const
+T min::vec4<T>::magnitude() const
 {
     return sqrt(_x * _x + _y * _y + _z * _z);
 }
 
 template <typename T>
-inline T min::vec4<T>::max() const
+T min::vec4<T>::max() const
 {
     return std::max(std::max(_x, _y), _z);
 }
 
 template <typename T>
-inline T min::vec4<T>::min() const
+T min::vec4<T>::min() const
 {
     return std::min(std::min(_x, _y), _z);
 }
 
 template <typename T>
-inline std::pair<min::vec4<T>, min::vec4<T>> min::vec4<T>::most_separating(const std::vector<min::vec4<T>> &verts)
+std::pair<min::vec4<T>, min::vec4<T>> min::vec4<T>::most_separating(const std::vector<min::vec4<T>> &verts)
 {
     // Find the two most separating points in the collection of vec4<T>
     const auto size = verts.size();
@@ -837,7 +834,7 @@ inline std::pair<min::vec4<T>, min::vec4<T>> min::vec4<T>::most_separating(const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::normal(const min::vec4<T> &a, const min::vec4<T> &b, const min::vec4<T> &c)
+min::vec4<T> min::vec4<T>::normal(const min::vec4<T> &a, const min::vec4<T> &b, const min::vec4<T> &c)
 {
     // Computes normal vector to three points
     // Normal is not normalized
@@ -845,7 +842,7 @@ inline min::vec4<T> min::vec4<T>::normal(const min::vec4<T> &a, const min::vec4<
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::normalize()
+min::vec4<T> &min::vec4<T>::normalize()
 {
     const T inv_mag = 1.0 / magnitude();
     _x *= inv_mag;
@@ -856,7 +853,7 @@ inline min::vec4<T> &min::vec4<T>::normalize()
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::normalize_safe(const min::vec4<T> &safe)
+min::vec4<T> &min::vec4<T>::normalize_safe(const min::vec4<T> &safe)
 {
     const T mag = magnitude();
     if (std::abs(mag) > var<T>::TOL_ZERO)
@@ -877,7 +874,7 @@ inline min::vec4<T> &min::vec4<T>::normalize_safe(const min::vec4<T> &safe)
 }
 
 template <typename T>
-inline void min::vec4<T>::order(vec4<T> &min, min::vec4<T> &max)
+void min::vec4<T>::order(vec4<T> &min, min::vec4<T> &max)
 {
     // Order the components into min and max
     if (min._x > max._x)
@@ -895,7 +892,7 @@ inline void min::vec4<T>::order(vec4<T> &min, min::vec4<T> &max)
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::orthogonal() const
+min::vec4<T> min::vec4<T>::orthogonal() const
 {
     const T x2 = _x * _x;
     const T y2 = _y * _y;
@@ -913,7 +910,7 @@ inline min::vec4<T> min::vec4<T>::orthogonal() const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::project_point(const min::coord_sys<T, min::vec4> &axis, const min::vec4<T> &extent)
+min::vec4<T> min::vec4<T>::project_point(const min::coord_sys<T, min::vec4> &axis, const min::vec4<T> &extent)
 {
     // Project v onto local x axis
     T x = this->dot(axis.x());
@@ -938,7 +935,7 @@ inline min::vec4<T> min::vec4<T>::project_point(const min::coord_sys<T, min::vec
 }
 
 template <typename T>
-inline T min::vec4<T>::project_length(const min::coord_sys<T, min::vec4> &axis, const min::vec4<T> &extent)
+T min::vec4<T>::project_length(const min::coord_sys<T, min::vec4> &axis, const min::vec4<T> &extent)
 {
     // Project this onto local x axis
     const T x = this->dot(axis.x());
@@ -963,7 +960,7 @@ inline T min::vec4<T>::project_length(const min::coord_sys<T, min::vec4> &axis, 
 }
 
 template <typename T>
- inline bool min::vec4<T>::project_sat(const min::coord_sys<T, min::vec4> &axis1, const min::vec4<T> &center1, const min::vec4<T> &extent1, const min::coord_sys<T, min::vec4> &axis2, const min::vec4<T> &center2, const min::vec4<T> &extent2)
+ bool min::vec4<T>::project_sat(const min::coord_sys<T, min::vec4> &axis1, const min::vec4<T> &center1, const min::vec4<T> &extent1, const min::coord_sys<T, min::vec4> &axis2, const min::vec4<T> &center2, const min::vec4<T> &extent2)
 {
     // This performs the separating axis theorem for checking oobb-oobb intersections
     // For every axis test (C2-C1).dot(L) > (a.get_extent() + b.get_extent()).dot(L)
@@ -1091,7 +1088,7 @@ template <typename T>
 }
 
 template <typename T>
- inline std::pair<min::vec4<T>, T> min::vec4<T>::project_sat_penetration(
+ std::pair<min::vec4<T>, T> min::vec4<T>::project_sat_penetration(
     const min::coord_sys<T, min::vec4> &axis1, const min::vec4<T> &center1, const min::vec4<T> &extent1,
     const min::coord_sys<T, min::vec4> &axis2, const min::vec4<T> &center2, const min::vec4<T> &extent2, const T tolerance)
 {
@@ -1253,7 +1250,7 @@ template <typename T>
 }
 
 template <typename T>
- inline std::pair<min::vec4<T>, T> min::vec4<T>::project_sat_aligned_penetration(
+ std::pair<min::vec4<T>, T> min::vec4<T>::project_sat_aligned_penetration(
     const min::vec4<T> &center1, const min::vec4<T> &extent1,
     const min::vec4<T> &center2, const min::vec4<T> &extent2, const T tolerance)
 {
@@ -1359,7 +1356,7 @@ template <typename T>
 // /-----/-----/
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::ratio(const min::vec4<T> &min, const min::vec4<T> &max, const min::vec4<T> &point)
+min::vec4<T> min::vec4<T>::ratio(const min::vec4<T> &min, const min::vec4<T> &max, const min::vec4<T> &point)
 {
     // Calculates the ratio of the point between min and max [0.0, 1.0]
     const T xr = (point.x() - min.x()) / (max.x() - min.x());
@@ -1370,7 +1367,7 @@ inline min::vec4<T> min::vec4<T>::ratio(const min::vec4<T> &min, const min::vec4
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::sign() const
+min::vec4<T> min::vec4<T>::sign() const
 {
     // Get the sign of the vector
     const T x = sgn<T>(_x);
@@ -1381,7 +1378,7 @@ inline min::vec4<T> min::vec4<T>::sign() const
 }
 
 template <typename T>
-inline uint_fast8_t min::vec4<T>::subdivide_key(const T middle)
+uint_fast8_t min::vec4<T>::subdivide_key(const T middle)
 {
     T x = _x;
     T y = _y;
@@ -1421,7 +1418,7 @@ inline uint_fast8_t min::vec4<T>::subdivide_key(const T middle)
 }
 
 template <typename T>
-inline std::vector<std::pair<min::vec4<T>, min::vec4<T>>> min::vec4<T>::subdivide(const min::vec4<T> &min, const min::vec4<T> &max)
+std::vector<std::pair<min::vec4<T>, min::vec4<T>>> min::vec4<T>::subdivide(const min::vec4<T> &min, const min::vec4<T> &max)
 {
     std::vector<std::pair<vec4<T>, vec4<T>>> out;
     out.reserve(8);
@@ -1487,7 +1484,7 @@ inline std::vector<std::pair<min::vec4<T>, min::vec4<T>>> min::vec4<T>::subdivid
 }
 
 template <typename T>
-inline std::vector<std::pair<min::vec4<T>, T>> min::vec4<T>::subdivide_center(const min::vec4<T> &min, const min::vec4<T> &max, const T size)
+std::vector<std::pair<min::vec4<T>, T>> min::vec4<T>::subdivide_center(const min::vec4<T> &min, const min::vec4<T> &max, const T size)
 {
     std::vector<std::pair<vec4<T>, T>> out;
     out.reserve(8);
@@ -1553,7 +1550,7 @@ inline std::vector<std::pair<min::vec4<T>, T>> min::vec4<T>::subdivide_center(co
 // ty = (cy - ny · Py) / (ny · dy)
 
 template <typename T>
-inline void min::vec4<T>::subdivide_ray(std::vector<size_t> &out, const min::vec4<T> &min, const min::vec4<T> &max, const min::vec4<T> &origin, const min::vec4<T> &dir, const min::vec4<T> &inv_dir)
+void min::vec4<T>::subdivide_ray(std::vector<size_t> &out, const min::vec4<T> &min, const min::vec4<T> &max, const min::vec4<T> &origin, const min::vec4<T> &dir, const min::vec4<T> &inv_dir)
 {
     // Reserve space for output
     out.clear();
@@ -1982,7 +1979,7 @@ inline void min::vec4<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
 }
 
 template <typename T>
-inline void min::vec4<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min::vec4<T> &min, const min::vec4<T> &max, const min::vec4<T> &center)
+void min::vec4<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min::vec4<T> &min, const min::vec4<T> &max, const min::vec4<T> &center)
 {
     // Reserve space for output
     out.clear();
@@ -2117,32 +2114,32 @@ inline void min::vec4<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min:
 }
 
 template <typename T>
-inline constexpr T min::vec4<T>::unit_length()
+constexpr T min::vec4<T>::unit_length()
 {
     return var<T>::SQRT3;
 }
 
 template <typename T>
-inline constexpr T min::vec4<T>::inverse_unit_length()
+constexpr T min::vec4<T>::inverse_unit_length()
 {
     return var<T>::INV_SQRT3;
 }
 
 template <typename T>
-inline constexpr min::vec4<T> min::vec4<T>::up()
+constexpr min::vec4<T> min::vec4<T>::up()
 {
     return vec4<T>(0.0, 1.0, 0.0, 1.0);
 }
 
 template <typename T>
-inline bool min::vec4<T>::within(const min::vec4<T> &min, const min::vec4<T> &max) const
+bool min::vec4<T>::within(const min::vec4<T> &min, const min::vec4<T> &max) const
 {
     // Return true if this vector is within the min and max vector range
     return (_x >= min.x() + var<T>::TOL_REL && _x <= max.x() - var<T>::TOL_REL && _y >= min.y() + var<T>::TOL_REL && _y <= max.y() - var<T>::TOL_REL && _z >= min.z() + var<T>::TOL_REL && _z <= max.z() - var<T>::TOL_REL);
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator+=(const T a)
+min::vec4<T> &min::vec4<T>::operator+=(const T a)
 {
     _x += a;
     _y += a;
@@ -2151,7 +2148,7 @@ inline min::vec4<T> &min::vec4<T>::operator+=(const T a)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator+=(const min::vec4<T> &A)
+min::vec4<T> &min::vec4<T>::operator+=(const min::vec4<T> &A)
 {
     _x += A.x();
     _y += A.y();
@@ -2160,7 +2157,7 @@ inline min::vec4<T> &min::vec4<T>::operator+=(const min::vec4<T> &A)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator-=(const T a)
+min::vec4<T> &min::vec4<T>::operator-=(const T a)
 {
     _x -= a;
     _y -= a;
@@ -2169,7 +2166,7 @@ inline min::vec4<T> &min::vec4<T>::operator-=(const T a)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator-=(const min::vec4<T> &A)
+min::vec4<T> &min::vec4<T>::operator-=(const min::vec4<T> &A)
 {
     _x -= A.x();
     _y -= A.y();
@@ -2178,7 +2175,7 @@ inline min::vec4<T> &min::vec4<T>::operator-=(const min::vec4<T> &A)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator*=(const T a)
+min::vec4<T> &min::vec4<T>::operator*=(const T a)
 {
     _x *= a;
     _y *= a;
@@ -2187,7 +2184,7 @@ inline min::vec4<T> &min::vec4<T>::operator*=(const T a)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator*=(const min::vec4<T> &A)
+min::vec4<T> &min::vec4<T>::operator*=(const min::vec4<T> &A)
 {
     _x *= A.x();
     _y *= A.y();
@@ -2196,7 +2193,7 @@ inline min::vec4<T> &min::vec4<T>::operator*=(const min::vec4<T> &A)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator/=(const T a)
+min::vec4<T> &min::vec4<T>::operator/=(const T a)
 {
     _x /= a;
     _y /= a;
@@ -2205,7 +2202,7 @@ inline min::vec4<T> &min::vec4<T>::operator/=(const T a)
 }
 
 template <typename T>
-inline min::vec4<T> &min::vec4<T>::operator/=(const min::vec4<T> &A)
+min::vec4<T> &min::vec4<T>::operator/=(const min::vec4<T> &A)
 {
     _x /= A.x();
     _y /= A.y();
@@ -2214,7 +2211,7 @@ inline min::vec4<T> &min::vec4<T>::operator/=(const min::vec4<T> &A)
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator+(const T a) const
+min::vec4<T> min::vec4<T>::operator+(const T a) const
 {
     vec4<T> temp = *this;
     temp += a;
@@ -2222,7 +2219,7 @@ inline min::vec4<T> min::vec4<T>::operator+(const T a) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator+(const min::vec4<T> &A) const
+min::vec4<T> min::vec4<T>::operator+(const min::vec4<T> &A) const
 {
     vec4<T> temp = *this;
     temp += A;
@@ -2230,7 +2227,7 @@ inline min::vec4<T> min::vec4<T>::operator+(const min::vec4<T> &A) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator-(const T a) const
+min::vec4<T> min::vec4<T>::operator-(const T a) const
 {
     vec4<T> temp = *this;
     temp -= a;
@@ -2238,7 +2235,7 @@ inline min::vec4<T> min::vec4<T>::operator-(const T a) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator-(const min::vec4<T> &A) const
+min::vec4<T> min::vec4<T>::operator-(const min::vec4<T> &A) const
 {
     vec4<T> temp = *this;
     temp -= A;
@@ -2246,7 +2243,7 @@ inline min::vec4<T> min::vec4<T>::operator-(const min::vec4<T> &A) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator*(const T a) const
+min::vec4<T> min::vec4<T>::operator*(const T a) const
 {
     vec4<T> temp = *this;
     temp *= a;
@@ -2254,7 +2251,7 @@ inline min::vec4<T> min::vec4<T>::operator*(const T a) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator*(const min::vec4<T> &A) const
+min::vec4<T> min::vec4<T>::operator*(const min::vec4<T> &A) const
 {
     vec4<T> temp = *this;
     temp *= A;
@@ -2262,7 +2259,7 @@ inline min::vec4<T> min::vec4<T>::operator*(const min::vec4<T> &A) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator/(const T a) const
+min::vec4<T> min::vec4<T>::operator/(const T a) const
 {
     vec4<T> temp = *this;
     temp /= a;
@@ -2270,7 +2267,7 @@ inline min::vec4<T> min::vec4<T>::operator/(const T a) const
 }
 
 template <typename T>
-inline min::vec4<T> min::vec4<T>::operator/(const min::vec4<T> &A) const
+min::vec4<T> min::vec4<T>::operator/(const min::vec4<T> &A) const
 {
     vec4<T> temp = *this;
     temp /= A;
@@ -2278,25 +2275,25 @@ inline min::vec4<T> min::vec4<T>::operator/(const min::vec4<T> &A) const
 }
 
 template <typename T>
-inline bool min::vec4<T>::operator>(const min::vec4<T> &A) const
+bool min::vec4<T>::operator>(const min::vec4<T> &A) const
 {
     return _x > A._x && _y > A._y && _z > A._z;
 }
 
 template <typename T>
-inline bool min::vec4<T>::operator>=(const min::vec4<T> &A) const
+bool min::vec4<T>::operator>=(const min::vec4<T> &A) const
 {
     return _x >= A._x && _y >= A._y && _z >= A._z;
 }
 
 template <typename T>
-inline bool min::vec4<T>::operator<(const min::vec4<T> &A) const
+bool min::vec4<T>::operator<(const min::vec4<T> &A) const
 {
     return _x < A._x && _y < A._y && _z < A._z;
 }
 
 template <typename T>
-inline bool min::vec4<T>::operator<=(const min::vec4<T> &A) const
+bool min::vec4<T>::operator<=(const min::vec4<T> &A) const
 {
     return _x <= A._x && _y <= A._y && _z <= A._z;
 }

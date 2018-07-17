@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __COORDSYS__
-#define __COORDSYS__
+#ifndef COORDSYS
+#define COORDSYS
 
 #include "mat2.h"
 
@@ -48,8 +48,8 @@ class coord_sys_base
 
   public:
     coord_sys_base(const vec<T> &x, const vec<T> &y) : _x(x), _y(y) {}
-    inline const vec<T> &x() const;
-    inline const vec<T> &y() const;
+    const vec<T> &x() const;
+    const vec<T> &y() const;
 };
 
 // General case for vec3/vec4
@@ -64,8 +64,8 @@ class coord_sys<T, vec2> : public coord_sys_base<T, vec2>
 {
   public:
     coord_sys(const vec2<T> &x, const vec2<T> &y) : coord_sys_base<T, vec2>(x, y) {}
-    inline void rotate(const mat2<T>&);
-    inline vec2<T> align(const vec2<T>&) const;
+    void rotate(const mat2<T>&);
+    vec2<T> align(const vec2<T>&) const;
 };
 
 // Specialization for vec3
@@ -78,9 +78,9 @@ class coord_sys<T, vec3> : public coord_sys_base<T, vec3>
   public:
     coord_sys(const vec3<T> &x, const vec3<T> &y, const vec3<T> &z) : coord_sys_base<T, vec3>(x, y), _z(z) {}
 
-    inline const min::vec3<T> &z() const;
-    inline void rotate(const quat<T>&);
-    inline vec3<T> align(const vec3<T>&) const;
+    const min::vec3<T> &z() const;
+    void rotate(const quat<T>&);
+    vec3<T> align(const vec3<T>&) const;
 
 };
 
@@ -94,9 +94,9 @@ class coord_sys<T, vec4> : public coord_sys_base<T, vec4>
   public:
     coord_sys(const vec4<T> &x, const vec4<T> &y, const vec4<T> &z) : coord_sys_base<T, vec4>(x, y), _z(z) {}
 
-    inline const vec4<T> &z() const;
-    inline void rotate(const quat<T>&);
-    inline vec4<T> align(const vec4<T>&) const;
+    const vec4<T> &z() const;
+    void rotate(const quat<T>&);
+    vec4<T> align(const vec4<T>&) const;
 };
 }
 

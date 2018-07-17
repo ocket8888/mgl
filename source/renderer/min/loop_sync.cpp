@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "loop_sync.h"
 
-inline void min::loop_sync::calculate_control_parameters(const double idle_time)
+void min::loop_sync::calculate_control_parameters(const double idle_time)
 {
     // Drop off oldest record from buffer
     _begin = (_begin + 1) % _error_count;
@@ -42,7 +42,7 @@ inline void min::loop_sync::calculate_control_parameters(const double idle_time)
     _de = (_error[_end] - prev);
 }
 
-inline double min::loop_sync::calculate_delay(const double idle_time) const
+double min::loop_sync::calculate_delay(const double idle_time) const
 {
     // Calculate the delay using PID equation
     const double p = _kp * _error[_end];
@@ -60,7 +60,7 @@ inline double min::loop_sync::calculate_delay(const double idle_time) const
     return delay;
 }
 
-inline double min::loop_sync::diff()
+double min::loop_sync::diff()
 {
     // Calculate current time
     _current_time = std::chrono::high_resolution_clock::now();
@@ -75,19 +75,19 @@ min::loop_sync::loop_sync(const double fps, const double kp, const double ki, co
       _kp(kp), _ki(ki), _kd(kd), _dt(0.0) {}
 
 
-inline double min::loop_sync::get_fps() const
+double min::loop_sync::get_fps() const
 {
     // Return the average fps
     return _error_count / (_set_point * _error_count - _ie);
 }
 
-inline double min::loop_sync::idle() const
+double min::loop_sync::idle() const
 {
     // return the average idle time
     return (_idle_time * 100.0) / (_set_point * _error_count);
 }
 
-inline void min::loop_sync::start()
+void min::loop_sync::start()
 {
     _start = std::chrono::high_resolution_clock::now();
 }

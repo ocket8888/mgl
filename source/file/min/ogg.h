@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __OGG__
-#define __OGG__
+#ifndef OGG
+#define OGG
 
 #include <cstring>
 #include <vector>
@@ -50,8 +50,8 @@ class ogg
     uint32_t _bits_per_sample;
     std::vector<uint8_t> _data;
 
-    inline void load(const std::string);
-    template<class T> inline void load_little_endian_16(const T&);
+    void load(const std::string);
+    template<class T> void load_little_endian_16(const T&);
 
   public:
     ogg(const std::string&);

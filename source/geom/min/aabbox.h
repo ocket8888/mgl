@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __AABBOX__
-#define __AABBOX__
+#ifndef AABBOX
+#define AABBOX
 
 #include <cmath>
 #include <cstdio>
@@ -37,18 +37,18 @@ class aabbox
     aabbox(const vec<T> &min, const vec<T> &max) : _min(min), _max(max) {}
     aabbox(const std::vector<vec<T>>&);
 
-    inline void add(const std::vector<vec<T>>&);
-    inline vec<T> closest_point(const vec<T>&) const;
-    inline vec<T> get_center() const;
-    inline vec<T> get_extent() const;
-    inline const vec<T> &get_min() const;
-    inline const vec<T> &get_max() const;
-    inline std::vector<std::pair<vec<T>, vec<T>>> grid(size_t) const;
-    inline bool point_inside(const vec<T>&) const;
-    inline void set_position(const vec<T>&);
-    inline T square_distance(const vec<T>&) const;
-    inline T square_size() const;
-    inline std::vector<std::pair<vec<T>, vec<T>>> subdivide() const;
+    void add(const std::vector<vec<T>>&);
+    vec<T> closest_point(const vec<T>&) const;
+    vec<T> get_center() const;
+    vec<T> get_extent() const;
+    const vec<T> &get_min() const;
+    const vec<T> &get_max() const;
+    std::vector<std::pair<vec<T>, vec<T>>> grid(size_t) const;
+    bool point_inside(const vec<T>&) const;
+    void set_position(const vec<T>&);
+    T square_distance(const vec<T>&) const;
+    T square_size() const;
+    std::vector<std::pair<vec<T>, vec<T>>> subdivide() const;
 };
 }
 

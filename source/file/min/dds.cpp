@@ -14,9 +14,7 @@ limitations under the License.
 */
 #include "dds.h"
 
-using namespace min;
-
-inline uint32_t dds::calculate_size() const
+inline uint32_t min::dds::calculate_size() const
 {
     // Calculate the expected size of the pixel buffer
     unsigned int block_size = (_format == DXT1) ? 8 : 16;
@@ -38,7 +36,7 @@ inline uint32_t dds::calculate_size() const
 }
 
 
-inline void dds::check_size()
+inline void min::dds::check_size()
 {
     // Verify dds has correct size
     uint32_t expected = calculate_size();
@@ -48,7 +46,7 @@ inline void dds::check_size()
     }
 }
 
-inline void dds::load(const std::string _file)
+inline void min::dds::load(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -79,7 +77,7 @@ inline void dds::load(const std::string _file)
 }
 
 template <class T>
-inline void dds::load(const T &data)
+inline void min::dds::load(const T &data)
 {
     // Check that nothing funky is going on with char and uint8_t
     static_assert(sizeof(char) == 1, "Size of char is not 1");
@@ -149,17 +147,17 @@ inline void dds::load(const T &data)
     std::memcpy(&_pixel[0], &data[DDS_HEADER_SIZE], _size);
 }
 
-dds::dds(const std::string &file)
+min::dds::dds(const std::string &file)
 {
     load(file);
 }
 
-dds::dds(const mem_file &mem)
+min::dds::dds(const mem_file &mem)
 {
     load<mem_file>(mem);
 }
 
-dds::dds(const uint32_t w, const uint32_t h, const uint32_t mips, const uint32_t format, const std::vector<uint8_t> &pixel)
+min::dds::dds(const uint32_t w, const uint32_t h, const uint32_t mips, const uint32_t format, const std::vector<uint8_t> &pixel)
         : _w(w), _h(h), _mips(mips), _format(format), _pixel(pixel)
 {
     // Check that we have data
@@ -190,37 +188,37 @@ dds::dds(const uint32_t w, const uint32_t h, const uint32_t mips, const uint32_t
     check_size();
 }
 
-uint32_t dds::get_format() const
+uint32_t min::dds::get_format() const
 {
     return _format;
 }
 
-uint32_t dds::get_mips() const
+uint32_t min::dds::get_mips() const
 {
     return _mips;
 }
 
-uint32_t dds::get_width() const
+uint32_t min::dds::get_width() const
 {
     return _w;
 }
 
-uint32_t dds::get_height() const
+uint32_t min::dds::get_height() const
 {
     return _h;
 }
 
-uint32_t dds::get_size() const
+uint32_t min::dds::get_size() const
 {
     return _size;
 }
 
-const std::vector<uint8_t> &dds::get_pixels() const
+const std::vector<uint8_t> &min::dds::get_pixels() const
 {
     return _pixel;
 }
 
-std::vector<uint8_t> dds::to_file() const
+std::vector<uint8_t> min::dds::to_file() const
 {
     // Write out the dds file to a byte buffer for writing to file
     size_t size = DDS_HEADER_SIZE + _size;

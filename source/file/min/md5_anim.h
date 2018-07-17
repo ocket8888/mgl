@@ -127,30 +127,30 @@ class md5_anim
     mutable std::vector<mat4<T>> _current_frame;
     mutable T _time;
 
-    inline void load_file(const std::string);
-    inline void load(const std::string&);
-    inline void interpolate_current_frame(const md5_frame<T>&, const md5_frame<T>&, T) const;
-    inline void process_hierarchy(const std::vector<std::string>&);
-    inline void process_bounds(const std::vector<std::string>&);
-    inline void process_baseframe(const std::vector<std::string>&);
-    inline void process_frame_data(const std::vector<std::string>&, const unsigned, const unsigned);
-    inline void process_frame(const md5_frame_data<T>&);
+    void load_file(const std::string);
+    void load(const std::string&);
+    void interpolate_current_frame(const md5_frame<T>&, const md5_frame<T>&, T) const;
+    void process_hierarchy(const std::vector<std::string>&);
+    void process_bounds(const std::vector<std::string>&);
+    void process_baseframe(const std::vector<std::string>&);
+    void process_frame_data(const std::vector<std::string>&, const unsigned, const unsigned);
+    void process_frame(const md5_frame_data<T>&);
 
   public:
     md5_anim(const std::string&);
     md5_anim(const mem_file&);
 
-    inline const std::vector<aabbox<T, vec3>> &get_bounds() const;
-    inline const std::vector<mat4<T>> &get_current_frame() const;
-    inline unsigned get_frame_rate() const;
-    inline const std::vector<md5_frame_data<T>> &get_frame_data() const;
-    inline const std::vector<md5_frame<T>> &get_frames() const;
-    inline const std::vector<md5_node> &get_nodes() const;
-    inline const std::vector<md5_transform<T>> &get_transforms()const;
-    inline unsigned get_loop_count() const;
-    inline void set_loop_count(const unsigned) const;
-    inline void set_time(const T) const;
-    inline void step(const T) const;
+    const std::vector<aabbox<T, vec3>> &get_bounds() const;
+    const std::vector<mat4<T>> &get_current_frame() const;
+    unsigned get_frame_rate() const;
+    const std::vector<md5_frame_data<T>> &get_frame_data() const;
+    const std::vector<md5_frame<T>> &get_frames() const;
+    const std::vector<md5_node> &get_nodes() const;
+    const std::vector<md5_transform<T>> &get_transforms()const;
+    unsigned get_loop_count() const;
+    void set_loop_count(const unsigned) const;
+    void set_time(const T) const;
+    void step(const T) const;
 };
 }
 

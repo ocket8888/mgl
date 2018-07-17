@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __UTILITY__
-#define __UTILITY__
+#ifndef UTILITY
+#define UTILITY
 
 #include <algorithm>
 #include <cstdint>
@@ -43,37 +43,37 @@ class var
 };
 
 template <typename T>
-constexpr inline T rad_to_deg(const T);
+constexpr T rad_to_deg(const T rad){return rad * (180.0 / min::var<T>::PI);}
 
 template <typename T>
-constexpr inline T deg_to_rad(const T);
+constexpr T deg_to_rad(const T degrees){return degrees * (min::var<T>::PI / 180.0);}
 
 template <typename T>
-constexpr inline T deg_to_rad2(const T);
+constexpr T deg_to_rad2(const T degrees){return degrees * (min::var<T>::PI / 360.0);}
 
 template <typename T>
 bool between(const T, const T, const T);
 
 template <typename T>
-inline void clamp(T&, const T, const T);
+void clamp(T&, const T, const T);
 
 template <typename T>
-inline T clamp_direction(T&, const T, const T);
+T clamp_direction(T&, const T, const T);
 
 template <typename T>
-inline T clamp_value(const T, const T, const T, const T, const T);
+T clamp_value(const T, const T, const T, const T, const T);
 
 template <typename T>
-inline void extend(const T, T&, T&);
+void extend(const T, T&, T&);
 
 template <typename T>
-inline T safe_inverse(const T);
+T safe_inverse(const T);
 
 template <typename T>
-inline int sgn(const T);
+int sgn(const T);
 
 template <typename T>
-inline void swap(T&, T&);
+void swap(T&, T&);
 
 // Typename must be an unsigned integer type
 template <typename K, typename L>
@@ -84,22 +84,22 @@ class bit_flag
     K _col;
     std::vector<uint8_t> _flags;
 
-    inline std::pair<L, uint_fast8_t> get_address(const L, const L) const;
+    std::pair<L, uint_fast8_t> get_address(const L, const L) const;
 
   public:
     bit_flag();
     bit_flag(const L, const L);
 
-    inline void clear();
-    inline bool get(const K, const K) const;
-    inline bool get_set_on(const K, const K);
-    inline void set_on(const K, const K);
-    inline void set_off(const K, const K);
+    void clear();
+    bool get(const K, const K) const;
+    bool get_set_on(const K, const K);
+    void set_on(const K, const K);
+    void set_off(const K, const K);
 
 };
 
 template <typename T, typename F>
-inline void uint_sort(std::vector<T>&, std::vector<T>&, F&&);
+void uint_sort(std::vector<T>&, std::vector<T>&, F&&);
 
 }
 

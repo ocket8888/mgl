@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TESTTEXTURECOMPRESSOR__
-#define __TESTTEXTURECOMPRESSOR__
+#ifndef TESTTEXTURECOMPRESSOR
+#define TESTTEXTURECOMPRESSOR
 
 #include <min/bmp.h>
 #include <min/dds.h>

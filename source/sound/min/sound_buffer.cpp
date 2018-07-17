@@ -32,7 +32,7 @@ void min::throw_al_error()
 
 
 //// sound_buffer ////
-inline ALenum min::sound_buffer::al_format(const bool stereo, const unsigned depth)
+ALenum min::sound_buffer::al_format(const bool stereo, const unsigned depth)
 {
     // Select the ALenum for this data
     switch (depth)
@@ -53,7 +53,7 @@ inline ALenum min::sound_buffer::al_format(const bool stereo, const unsigned dep
         throw std::runtime_error("openal: Unsupported wave data found");
     }
 }
-inline size_t min::sound_buffer::add_pcm_data(const ALvoid *const data, const ALenum format, const ALsizei size, const ALsizei freq)
+size_t min::sound_buffer::add_pcm_data(const ALvoid *const data, const ALenum format, const ALsizei size, const ALsizei freq)
 {
     // Allocate space for a buffer
     _buffers.emplace_back();
@@ -68,7 +68,7 @@ inline size_t min::sound_buffer::add_pcm_data(const ALvoid *const data, const AL
     // Return the index for this data
     return _buffers.size() - 1;
 }
-inline void min::sound_buffer::clear_error() const
+void min::sound_buffer::clear_error() const
 {
     ALCenum error = alcGetError(_device);
     while (error != AL_NO_ERROR)
@@ -76,7 +76,7 @@ inline void min::sound_buffer::clear_error() const
         error = alcGetError(_device);
     }
 }
-inline void min::sound_buffer::create_openal_context()
+void min::sound_buffer::create_openal_context()
 {
     // Try to use OpenAL Soft renderer
     _device = alcOpenDevice("OpenAL Soft");
@@ -118,7 +118,7 @@ inline void min::sound_buffer::create_openal_context()
     // Check for any errors
     throw_internal_error();
 }
-inline void min::sound_buffer::shutdown()
+void min::sound_buffer::shutdown()
 {
     // Check for any errors
     throw_internal_error();
@@ -164,7 +164,7 @@ min::sound_buffer::~sound_buffer()
 {
     shutdown();
 }
-inline void min::sound_buffer::enumerate_devices() const
+void min::sound_buffer::enumerate_devices() const
 {
     // Enumerate available devices
     const ALboolean enum_ext = alcIsExtensionPresent(nullptr, "ALC_ENUMERATION_EXT");
@@ -194,7 +194,7 @@ inline void min::sound_buffer::enumerate_devices() const
         }
     }
 }
-inline size_t min::sound_buffer::add_source()
+size_t min::sound_buffer::add_source()
 {
     // Create a new source
     _sources.emplace_back();
@@ -206,7 +206,7 @@ inline size_t min::sound_buffer::add_source()
     // Return the index for this source
     return _sources.size() - 1;
 }
-inline size_t min::sound_buffer::add_wave_pcm(const min::wave &wave)
+size_t min::sound_buffer::add_wave_pcm(const min::wave &wave)
 {
     // Get the al_format for this data
     const bool stereo = wave.is_stereo();
@@ -221,7 +221,7 @@ inline size_t min::sound_buffer::add_wave_pcm(const min::wave &wave)
     // Add audio data
     return add_pcm_data(data, format, size, freq);
 }
-inline size_t min::sound_buffer::add_ogg_pcm(const min::ogg &ogg)
+size_t min::sound_buffer::add_ogg_pcm(const min::ogg &ogg)
 {
     // Get the al_format for this data
     const bool stereo = ogg.is_stereo();
@@ -236,12 +236,12 @@ inline size_t min::sound_buffer::add_ogg_pcm(const min::ogg &ogg)
     // Add audio data
     return add_pcm_data(data, format, size, freq);
 }
-inline void min::sound_buffer::bind(const size_t buffer, const size_t source) const
+void min::sound_buffer::bind(const size_t buffer, const size_t source) const
 {
     // Bind source to buffer
     alSourcei(_sources[source], AL_BUFFER, _buffers[buffer]);
 }
-inline bool min::sound_buffer::check_error() const
+bool min::sound_buffer::check_error() const
 {
     const ALCenum error = alcGetError(_device);
 
@@ -254,7 +254,7 @@ inline bool min::sound_buffer::check_error() const
 
     return ret;
 }
-inline void min::sound_buffer::throw_internal_error() const
+void min::sound_buffer::throw_internal_error() const
 {
     const ALCenum error = alcGetError(_device);
     if (error != AL_NO_ERROR)
@@ -262,26 +262,26 @@ inline void min::sound_buffer::throw_internal_error() const
         throw std::runtime_error("openal: Error: " + std::to_string(error));
     }
 }
-inline bool min::sound_buffer::is_playing(const size_t source) const
+bool min::sound_buffer::is_playing(const size_t source) const
 {
     ALint state;
     alGetSourcei(_sources[source], AL_SOURCE_STATE, &state);
 
     return state == AL_PLAYING;
 }
-inline void min::sound_buffer::play_async(const size_t source) const
+void min::sound_buffer::play_async(const size_t source) const
 {
     // This call is asynch!!
     const ALuint &s = _sources[source];
     alSourcePlay(s);
 }
-inline void min::sound_buffer::stop_async(const size_t source) const
+void min::sound_buffer::stop_async(const size_t source) const
 {
     // This call is asynch!!
     const ALuint &s = _sources[source];
     alSourceStop(s);
 }
-inline void min::sound_buffer::play_sync(const size_t source) const
+void min::sound_buffer::play_sync(const size_t source) const
 {
     // This call is asynch so we need to poll
     const ALuint &s = _sources[source];
@@ -294,71 +294,71 @@ inline void min::sound_buffer::play_sync(const size_t source) const
         std::this_thread::sleep_for(std::chrono::duration<double>(1.0));
     }
 }
-inline void min::sound_buffer::set_distance_model(const ALenum model) const
+void min::sound_buffer::set_distance_model(const ALenum model) const
 {
     alDistanceModel(model);
 }
-inline void min::sound_buffer::set_listener_position(const min::vec3<float> &p)
+void min::sound_buffer::set_listener_position(const min::vec3<float> &p)
 {
     // Cache the listener position
     _listener = p;
 
     // Update the listener position
-    const ALfloat pos[3] = {-p.x(), p.y(), p.z()};
+    const ALfloat pos[3] = {-p.x, p.y, p.z};
     alListenerfv(AL_POSITION, pos);
 }
-inline void min::sound_buffer::set_listener_orientation(const min::vec3<float> &at, const min::vec3<float> &up) const
+void min::sound_buffer::set_listener_orientation(const min::vec3<float> &at, const min::vec3<float> &up) const
 {
     // OpenAL is right handed so we flip the X & Z axis coordinates!
-    const ALfloat orien[6] = {-at.x(), at.y(), at.z(), -up.x(), up.y(), up.z()};
+    const ALfloat orien[6] = {-at.x, at.y, at.z, -up.x, up.y, up.z};
     alListenerfv(AL_ORIENTATION, orien);
 }
-inline void min::sound_buffer::set_listener_velocity(const min::vec3<float> &v) const
+void min::sound_buffer::set_listener_velocity(const min::vec3<float> &v) const
 {
-    const ALfloat vel[3] = {-v.x(), v.y(), v.z()};
+    const ALfloat vel[3] = {-v.x, v.y, v.z};
     alListenerfv(AL_VELOCITY, vel);
 }
-inline void min::sound_buffer::set_source_at_listener(const size_t source) const
+void min::sound_buffer::set_source_at_listener(const size_t source) const
 {
     const ALfloat *const data = reinterpret_cast<const ALfloat *const>(&_listener);
     alSourcefv(_sources[source], AL_POSITION, data);
 }
-inline void min::sound_buffer::set_source_direction(const size_t source, const min::vec3<float> &d) const
+void min::sound_buffer::set_source_direction(const size_t source, const min::vec3<float> &d) const
 {
-    const ALfloat dir[3] = {-d.x(), d.y(), d.z()};
+    const ALfloat dir[3] = {-d.x, d.y, d.z};
     alSourcefv(_sources[source], AL_DIRECTION, dir);
 }
-inline void min::sound_buffer::set_source_gain(const size_t source, const float gain) const
+void min::sound_buffer::set_source_gain(const size_t source, const float gain) const
 {
     alSourcef(_sources[source], AL_GAIN, gain);
 }
-inline void min::sound_buffer::set_source_loop(const size_t source, const bool flag) const
+void min::sound_buffer::set_source_loop(const size_t source, const bool flag) const
 {
     alSourcei(_sources[source], AL_LOOPING, flag);
 }
-inline void min::sound_buffer::set_source_position(const size_t source, const min::vec3<float> &p) const
+void min::sound_buffer::set_source_position(const size_t source, const min::vec3<float> &p) const
 {
-    const ALfloat pos[3] = {-p.x(), p.y(), p.z()};
+    const ALfloat pos[3] = {-p.x, p.y, p.z};
     alSourcefv(_sources[source], AL_POSITION, pos);
 }
-inline void min::sound_buffer::set_source_max_dist(const size_t source, const float dist) const
+void min::sound_buffer::set_source_max_dist(const size_t source, const float dist) const
 {
     alSourcef(_sources[source], AL_MAX_DISTANCE, dist);
 }
-inline void min::sound_buffer::set_source_pitch(const size_t source, const float pitch) const
+void min::sound_buffer::set_source_pitch(const size_t source, const float pitch) const
 {
     alSourcef(_sources[source], AL_PITCH, pitch);
 }
-inline void min::sound_buffer::set_source_ref_dist(const size_t source, const float dist) const
+void min::sound_buffer::set_source_ref_dist(const size_t source, const float dist) const
 {
     alSourcef(_sources[source], AL_REFERENCE_DISTANCE, dist);
 }
-inline void min::sound_buffer::set_source_rolloff(const size_t source, const float rf) const
+void min::sound_buffer::set_source_rolloff(const size_t source, const float rf) const
 {
     alSourcef(_sources[source], AL_ROLLOFF_FACTOR, rf);
 }
-inline void min::sound_buffer::set_source_velocity(const size_t source, const min::vec3<float> &v) const
+void min::sound_buffer::set_source_velocity(const size_t source, const min::vec3<float> &v) const
 {
-    const ALfloat vel[3] = {-v.x(), v.y(), v.z()};
+    const ALfloat vel[3] = {-v.x, v.y, v.z};
     alSourcefv(_sources[source], AL_VELOCITY, vel);
 }

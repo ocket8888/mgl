@@ -15,8 +15,11 @@ limitations under the License.
 
 #include "mat4.h"
 
+template class min::mat4<float>;
+template class min::mat4<double>;
+
 template <typename T>
-inline void min::mat4<T>::one(vec4<T> &v)
+void min::mat4<T>::one(vec4<T> &v)
 {
     _a = v.x();
     _b = v.y();
@@ -25,7 +28,7 @@ inline void min::mat4<T>::one(vec4<T> &v)
 }
 
 template <typename T>
-inline void min::mat4<T>::two(vec4<T> &v)
+void min::mat4<T>::two(vec4<T> &v)
 {
     _e = v.x();
     _f = v.y();
@@ -34,7 +37,7 @@ inline void min::mat4<T>::two(vec4<T> &v)
 }
 
 template <typename T>
-inline void min::mat4<T>::three(vec4<T> &v)
+void min::mat4<T>::three(vec4<T> &v)
 {
     _i = v.x();
     _j = v.y();
@@ -43,7 +46,7 @@ inline void min::mat4<T>::three(vec4<T> &v)
 }
 
 template <typename T>
-inline void min::mat4<T>::four(vec4<T> &v)
+void min::mat4<T>::four(vec4<T> &v)
 {
     _m = v.x();
     _n = v.y();
@@ -52,19 +55,19 @@ inline void min::mat4<T>::four(vec4<T> &v)
 }
 
 template <typename T>
-inline void min::mat4<T>::w(const T w)
+void min::mat4<T>::w(const T w)
 {
     _p = w;
 }
 
 template <typename T>
-inline T min::mat4<T>::w() const
+T min::mat4<T>::w() const
 {
     return _p;
 }
 
 template <typename T>
-inline min::mat4<T> min::mat4<T>::operator*(const min::mat4<T> &A) const
+min::mat4<T> min::mat4<T>::operator*(const min::mat4<T> &A) const
 {
     mat4<T> out;
     out._a = _a * A._a + _b * A._e + _c * A._i + _d * A._m;
@@ -88,7 +91,7 @@ inline min::mat4<T> min::mat4<T>::operator*(const min::mat4<T> &A) const
 }
 
 template <typename T>
-inline min::mat4<T> &min::mat4<T>::operator*=(const min::mat4<T> &A)
+min::mat4<T> &min::mat4<T>::operator*=(const min::mat4<T> &A)
 {
     T a = _a * A._a + _b * A._e + _c * A._i + _d * A._m;
     T b = _a * A._b + _b * A._f + _c * A._j + _d * A._n;
@@ -128,7 +131,7 @@ inline min::mat4<T> &min::mat4<T>::operator*=(const min::mat4<T> &A)
 }
 
 template <typename T>
-inline min::vec4<T> min::mat4<T>::operator*(const min::vec4<T> &A) const
+min::vec4<T> min::mat4<T>::operator*(const min::vec4<T> &A) const
 {
     T x = _a * A.x() + _e * A.y() + _i * A.z() + _m * A.w();
     T y = _b * A.x() + _f * A.y() + _j * A.z() + _n * A.w();
@@ -139,7 +142,7 @@ inline min::vec4<T> min::mat4<T>::operator*(const min::vec4<T> &A) const
 }
 
 template <typename T>
-inline min::vec3<T> min::mat4<T>::get_translation() const
+min::vec3<T> min::mat4<T>::get_translation() const
 {
     T x = _m;
     T y = _n;
@@ -149,17 +152,17 @@ inline min::vec3<T> min::mat4<T>::get_translation() const
 }
 
 template <typename T>
-inline min::mat4<T> &min::mat4<T>::set_translation(const min::vec3<T> &t)
+min::mat4<T> &min::mat4<T>::set_translation(const min::vec3<T> &t)
 {
-    _m = t.x();
-    _n = t.y();
-    _o = t.z();
+    _m = t.x;
+    _n = t.y;
+    _o = t.z;
 
     return *this;
 }
 
 template <typename T>
-inline min::quat<T> min::mat4<T>::get_rotation() const
+min::quat<T> min::mat4<T>::get_rotation() const
 {
     T w, x, y, z;
 
@@ -201,7 +204,7 @@ inline min::quat<T> min::mat4<T>::get_rotation() const
 }
 
 template <typename T>
-inline min::mat4<T> &min::mat4<T>::set_rotation(const min::mat3<T> &r)
+min::mat4<T> &min::mat4<T>::set_rotation(const min::mat3<T> &r)
 {
     _a = r._a;
     _b = r._b;
@@ -217,7 +220,7 @@ inline min::mat4<T> &min::mat4<T>::set_rotation(const min::mat3<T> &r)
 }
 
 template <typename T>
-inline min::vec3<T> min::mat4<T>::get_scale() const
+min::vec3<T> min::mat4<T>::get_scale() const
 {
     T x = _a;
     T y = _f;
@@ -227,17 +230,17 @@ inline min::vec3<T> min::mat4<T>::get_scale() const
 }
 
 template <typename T>
-inline min::mat4<T> &min::mat4<T>::set_scale(const min::vec3<T> &s)
+min::mat4<T> &min::mat4<T>::set_scale(const min::vec3<T> &s)
 {
-    _a = s.x();
-    _f = s.y();
-    _k = s.z();
+    _a = s.x;
+    _f = s.y;
+    _k = s.z;
 
     return *this;
 }
 
 template <typename T>
-inline bool min::mat4<T>::invert()
+bool min::mat4<T>::invert()
 {
     T a = _f * _k * _p - _f * _l * _o - _j * _g * _p + _j * _h * _o + _n * _g * _l - _n * _h * _k;
     T e = -_e * _k * _p + _e * _l * _o + _i * _g * _p - _i * _h * _o - _m * _g * _l + _m * _h * _k;
@@ -285,14 +288,14 @@ inline bool min::mat4<T>::invert()
 }
 
 template <typename T>
-inline min::vec4<T> min::mat4<T>::transform(const min::vec4<T> &v) const
+min::vec4<T> min::mat4<T>::transform(const min::vec4<T> &v) const
 {
     // This matches quat<T> API!
     return this->operator*(v);
 }
 
 template <typename T>
-inline min::mat4<T> &min::mat4<T>::transpose()
+min::mat4<T> &min::mat4<T>::transpose()
 {
     T temp = _b;
     _b = _e;
@@ -322,7 +325,7 @@ inline min::mat4<T> &min::mat4<T>::transpose()
 }
 
 template <typename T>
-inline min::mat4<T> min::mat4<T>::transpose_multiply(const min::mat4<T> &A) const
+min::mat4<T> min::mat4<T>::transpose_multiply(const min::mat4<T> &A) const
 {
     // This multiplies two matrices and returns the transpose of the product
     mat4<T> out;

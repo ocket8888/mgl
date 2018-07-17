@@ -16,7 +16,7 @@ limitations under the License.
 #include "skeletal_vertex.h"
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::change_bind_buffer(const GLuint vbo)
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::change_bind_buffer(const GLuint vbo)
 {
 #ifdef MGL_VB43
     // No offset, standard stride, binding point 0
@@ -28,7 +28,7 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::change_bind_buffer(const GLuin
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::create_vertex_attributes()
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::create_vertex_attributes()
 {
 #ifdef MGL_VB43
     // Specify the vertex attributes in location = 0, no offset
@@ -64,7 +64,7 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::create_vertex_attributes()
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::create_buffer_binding(const GLuint vbo, const GLuint bind_point)
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::create_buffer_binding(const GLuint vbo, const GLuint bind_point)
 {
 #ifdef MGL_VB43
     //  Create the buffer binding point
@@ -82,7 +82,7 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::create_buffer_binding(const GL
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::create(const GLuint vbo)
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::create(const GLuint vbo)
 {
     // Enable the attributes
     enable_attributes();
@@ -97,7 +97,7 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::create(const GLuint vbo)
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::check(const min::mesh<T, K> &m)
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::check(const min::mesh<T, K> &m)
 {
     // Verify normal, tangent and bitangent sizes
     const auto attr_size = m.vertex.size();
@@ -114,7 +114,7 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::check(const min::mesh<T, K> &m
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::copy(std::vector<T> &data, const min::mesh<T, K> &m, const size_t mesh_offset)
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::copy(std::vector<T> &data, const min::mesh<T, K> &m, const size_t mesh_offset)
 {
     const auto attr_size = m.vertex.size();
     for (size_t i = 0, j = mesh_offset; i < attr_size; i++, j += width_size)
@@ -143,14 +143,14 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::copy(std::vector<T> &data, con
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::destroy()
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::destroy()
 {
     // Disable the vertex attributes before destruction
     disable_attributes();
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::disable_attributes()
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::disable_attributes()
 {
     // Disable the vertex attributes
     glDisableVertexAttribArray(0);
@@ -163,7 +163,7 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::disable_attributes()
 }
 
 template <typename T, typename K, GLenum FLOAT_TYPE>
-inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::enable_attributes()
+void min::skeletal_vertex<T,K,FLOAT_TYPE>::enable_attributes()
 {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -172,16 +172,4 @@ inline void min::skeletal_vertex<T,K,FLOAT_TYPE>::enable_attributes()
     glEnableVertexAttribArray(4);
     glEnableVertexAttribArray(5);
     glEnableVertexAttribArray(6);
-}
-
-template <typename T, typename K, GLenum FLOAT_TYPE>
-inline constexpr size_t min::skeletal_vertex<T,K,FLOAT_TYPE>::width()
-{
-    return width_size;
-}
-
-template <typename T, typename K, GLenum FLOAT_TYPE>
-inline constexpr GLenum min::skeletal_vertex<T,K,FLOAT_TYPE>::buffer_type()
-{
-    return GL_STATIC_DRAW;
 }

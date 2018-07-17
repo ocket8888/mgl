@@ -15,67 +15,45 @@ limitations under the License.
 
 #include "vec2.h"
 
+template class min::vec2<float>;
+template class min::vec2<double>;
 
 template <typename T>
-min::vec2<T>::vec2() : _x(0.0), _y(0.0) {}
+min::vec2<T>::vec2() : x(0.0), y(0.0) {}
 
 template <typename T>
-min::vec2<T>::vec2(const T x, const T y) : _x(x), _y(y) {}
+min::vec2<T>::vec2(const T x, const T y) : x(x), y(y) {}
 
 template <typename T>
-inline T min::vec2<T>::x() const
+min::vec2<T> &min::vec2<T>::set_all(const T v)
 {
-    return _x;
-}
-
-template <typename T>
-inline T min::vec2<T>::y() const
-{
-    return _y;
-}
-
-template <typename T>
-inline void min::vec2<T>::x(const T x)
-{
-    _x = x;
-}
-
-template <typename T>
-inline void min::vec2<T>::y(const T y)
-{
-    _y = y;
-}
-
-template <typename T>
-inline min::vec2<T> &min::vec2<T>::set_all(const T v)
-{
-    _x = v;
-    _y = v;
+    x = v;
+    y = v;
 
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::abs()
+min::vec2<T> &min::vec2<T>::abs()
 {
-    _x = std::abs(_x);
-    _y = std::abs(_y);
+    x = std::abs(x);
+    y = std::abs(y);
 
     return *this;
 }
 
 template <typename T>
-inline bool min::vec2<T>::any_zero_outside(const min::vec2<T> &p, const min::vec2<T> &min, const min::vec2<T> &max) const
+bool min::vec2<T>::any_zero_outside(const min::vec2<T> &p, const min::vec2<T> &min, const min::vec2<T> &max) const
 {
     // If p is zero and this is outside min and max return true else false
-    if (std::abs(p.x()) <= var<T>::TOL_REL)
+    if (std::abs(p.x) <= var<T>::TOL_REL)
     {
-        if (_x < min.x() || _x > max.x())
+        if (x < min.x || x > max.x)
             return true;
     }
-    else if (std::abs(p.y()) <= var<T>::TOL_REL)
+    else if (std::abs(p.y) <= var<T>::TOL_REL)
     {
-        if (_y < min.y() || _y > max.y())
+        if (y < min.y || y > max.y)
             return true;
     }
 
@@ -83,58 +61,52 @@ inline bool min::vec2<T>::any_zero_outside(const min::vec2<T> &p, const min::vec
 }
 
 template <typename T>
-inline constexpr min::coord_sys<T, min::vec2> min::vec2<T>::axes()
+min::vec2<T> &min::vec2<T>::clamp(const min::vec2<T> &min, const min::vec2<T> &max)
 {
-    return min::coord_sys<T, min::vec2>(vec2<T>(1.0, 0.0), min::vec2<T>(0.0, 1.0));
-}
-
-template <typename T>
-inline min::vec2<T> &min::vec2<T>::clamp(const min::vec2<T> &min, const min::vec2<T> &max)
-{
-    min::clamp(_x, min.x(), max.x());
-    min::clamp(_y, min.y(), max.y());
+    min::clamp(x, min.x, max.x);
+    min::clamp(y, min.y, max.y);
 
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::clamp_direction(const min::vec2<T> &min, const min::vec2<T> &max)
+min::vec2<T> min::vec2<T>::clamp_direction(const min::vec2<T> &min, const min::vec2<T> &max)
 {
-    T x = min::clamp_direction(_x, min.x(), max.x());
-    T y = min::clamp_direction(_y, min.y(), max.y());
+    T x = min::clamp_direction(x, min.x, max.x);
+    T y = min::clamp_direction(y, min.y, max.y);
 
     return min::vec2<T>(x, y);
 }
 
 template <typename T>
-inline T min::vec2<T>::cross(const min::vec2<T> &A) const
+T min::vec2<T>::cross(const min::vec2<T> &A) const
 {
-    return _x * A.y() - _y * A.x();
+    return x * A.y - y * A.x;
 }
 
 template <typename T>
-inline T min::vec2<T>::dot(const min::vec2<T> &A) const
+T min::vec2<T>::dot(const min::vec2<T> &A) const
 {
-    return _x * A.x() + _y * A.y();
+    return x * A.x + y * A.y;
 }
 
 template <typename T>
-inline std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::extents(const std::vector<min::vec2<T>> &verts)
+std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::extents(const std::vector<min::vec2<T>> &verts)
 {
     // Find the greatest extents in the collection of min::vec2<T>
     const auto size = verts.size();
     if (size > 1)
     {
         const min::vec2<T> &first = verts[0];
-        T minx = first.x();
-        T miny = first.y();
-        T maxx = first.x();
-        T maxy = first.y();
+        T minx = first.x;
+        T miny = first.y;
+        T maxx = first.x;
+        T maxy = first.y;
         for (size_t i = 1; i < size; i++)
         {
             const min::vec2<T> &v = verts[i];
-            extend<T>(v.x(), minx, maxx);
-            extend<T>(v.y(), miny, maxy);
+            extend<T>(v.x, minx, maxx);
+            extend<T>(v.y, miny, maxy);
         }
 
         // Return the greatest extents
@@ -153,7 +125,7 @@ inline std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::extents(const std::ve
 //   row --->
 
 template <typename T>
-inline std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::grid(const min::vec2<T> &min, const min::vec2<T> &max, const size_t scale)
+std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::grid(const min::vec2<T> &min, const min::vec2<T> &max, const size_t scale)
 {
     // Create out min::vector
     std::vector<std::pair<min::vec2<T>, min::vec2<T>>> out;
@@ -162,23 +134,23 @@ inline std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::grid(con
     // Calculate the grid dimensions
     const min::vec2<T> size = max - min;
     const min::vec2<T> extent = size / scale;
-    const T dx = extent.x();
-    const T dy = extent.y();
+    const T dx = extent.x;
+    const T dy = extent.y;
 
     // Start at the bottom left corner
     min::vec2<T> cell;
 
     // Across the X dim
-    for (T x = min.x(); x < max.x(); x += dx)
+    for (T x = min.x; x < max.x; x += dx)
     {
         // Set the cell x value
-        cell.x(x);
+        cell.x = x;
 
         // Across the Y dim
-        for (T y = min.y(); y < max.y(); y += dy)
+        for (T y = min.y; y < max.y; y += dy)
         {
             // Set the cell y value
-            cell.y(y);
+            cell.y = y;
             out.emplace_back(std::make_pair(cell, cell + extent));
         }
     }
@@ -188,7 +160,7 @@ inline std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::grid(con
 }
 
 template <typename T>
-inline std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::grid_center(const min::vec2<T> &min, const min::vec2<T> &max, const size_t scale, const T size)
+std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::grid_center(const min::vec2<T> &min, const min::vec2<T> &max, const size_t scale, const T size)
 {
     // Create out min::vector
     std::vector<std::pair<min::vec2<T>, T>> out;
@@ -197,23 +169,23 @@ inline std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::grid_center(const m
     // Calculate the grid dimensions
     const min::vec2<T> extent = (max - min) / scale;
     const min::vec2<T> half_extent = extent * 0.5;
-    const T dx = extent.x();
-    const T dy = extent.y();
+    const T dx = extent.x;
+    const T dy = extent.y;
 
     // Start at the bottom left corner
     min::vec2<T> cell;
 
     // Across the X dim
-    for (T x = min.x(); x < max.x(); x += dx)
+    for (T x = min.x; x < max.x; x += dx)
     {
         // Set the cell x value
-        cell.x(x);
+        cell.x = x;
 
         // Across the Y dim
-        for (T y = min.y(); y < max.y(); y += dy)
+        for (T y = min.y; y < max.y; y += dy)
         {
             // Set the cell y value
-            cell.y(y);
+            cell.y = y;
             out.emplace_back(std::make_pair(cell + half_extent, size));
         }
     }
@@ -223,22 +195,22 @@ inline std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::grid_center(const m
 }
 
 template <typename T>
-inline std::pair<size_t, size_t> min::vec2<T>::grid_index(const min::vec2<T> &min, const min::vec2<T> &extent, const min::vec2<T> &point)
+std::pair<size_t, size_t> min::vec2<T>::grid_index(const min::vec2<T> &min, const min::vec2<T> &extent, const min::vec2<T> &point)
 {
     // Calculate the grid dimensions
-    const T ex = extent.x();
-    const T ey = extent.y();
+    const T ex = extent.x;
+    const T ey = extent.y;
 
     // Get the row / col of cell
-    const size_t col = (point.x() - min.x()) / ex;
-    const size_t row = (point.y() - min.y()) / ey;
+    const size_t col = (point.x - min.x) / ex;
+    const size_t row = (point.y - min.y) / ey;
 
     // Return the row / col of cell
     return std::make_pair(col, row);
 }
 
 template <typename T>
-inline std::pair<size_t, size_t> min::vec2<T>::grid_index(const size_t index, const size_t scale)
+std::pair<size_t, size_t> min::vec2<T>::grid_index(const size_t index, const size_t scale)
 {
     const size_t col = index / scale;
     const size_t row = index - (col * scale);
@@ -248,7 +220,7 @@ inline std::pair<size_t, size_t> min::vec2<T>::grid_index(const size_t index, co
 }
 
 template <typename T>
-inline size_t min::vec2<T>::grid_key(const min::vec2<T> &min, const min::vec2<T> &extent, const size_t scale, const min::vec2<T> &point)
+size_t min::vec2<T>::grid_key(const min::vec2<T> &min, const min::vec2<T> &extent, const size_t scale, const min::vec2<T> &point)
 {
     // Calculate the cell location
     const std::pair<size_t, size_t> index = grid_index(min, extent, point);
@@ -262,7 +234,7 @@ inline size_t min::vec2<T>::grid_key(const min::vec2<T> &min, const min::vec2<T>
 }
 
 template <typename T>
-inline size_t min::vec2<T>::grid_key(const std::pair<size_t, size_t> &index, const size_t scale)
+size_t min::vec2<T>::grid_key(const std::pair<size_t, size_t> &index, const size_t scale)
 {
     // Get the row / col of cell
     const size_t col = index.first;
@@ -273,15 +245,15 @@ inline size_t min::vec2<T>::grid_key(const std::pair<size_t, size_t> &index, con
 }
 
 template <typename T>
-inline void min::vec2<T>::grid_overlap(std::vector<size_t> &out, const min::vec2<T> &min, const min::vec2<T> &extent, const size_t scale, const min::vec2<T> &b_min, const min::vec2<T> &b_max)
+void min::vec2<T>::grid_overlap(std::vector<size_t> &out, const min::vec2<T> &min, const min::vec2<T> &extent, const size_t scale, const min::vec2<T> &b_min, const min::vec2<T> &b_max)
 {
     // Reserve space for output
     out.clear();
     out.reserve(9);
 
     // Calculate the grid dimensions
-    const T dx = extent.x();
-    const T dy = extent.y();
+    const T dx = extent.x;
+    const T dy = extent.y;
 
     // Calculate the center cell
     const min::vec2<T> center = (b_min + b_max) * 0.5;
@@ -292,8 +264,8 @@ inline void min::vec2<T>::grid_overlap(std::vector<size_t> &out, const min::vec2
     const size_t y = p.second;
 
     // Bounds of the center cell
-    const T minx = min.x() + dx * x;
-    const T miny = min.y() + dy * y;
+    const T minx = min.x + dx * x;
+    const T miny = min.y + dy * y;
     const T maxx = minx + dx;
     const T maxy = miny + dy;
 
@@ -308,10 +280,10 @@ inline void min::vec2<T>::grid_overlap(std::vector<size_t> &out, const min::vec2
     const bool pxg = px < (long)scale;
     const bool nyg = ny >= 0;
     const bool pyg = py < (long)scale;
-    const bool lx = b_min.x() < minx;
-    const bool ly = b_min.y() < miny;
-    const bool gx = b_max.x() >= maxx;
-    const bool gy = b_max.y() >= maxy;
+    const bool lx = b_min.x < minx;
+    const bool ly = b_min.y < miny;
+    const bool gx = b_max.x >= maxx;
+    const bool gy = b_max.y >= maxy;
     const bool tny = ly && nyg;
     const bool tgy = gy && pyg;
 
@@ -344,15 +316,15 @@ inline void min::vec2<T>::grid_overlap(std::vector<size_t> &out, const min::vec2
 }
 
 template <typename T>
-inline std::tuple<int, T, T, int, T, T> min::vec2<T>::grid_ray(const min::vec2<T> &extent, const min::vec2<T> &origin, const min::vec2<T> &dir, const min::vec2<T> &inv_dir)
+std::tuple<int, T, T, int, T, T> min::vec2<T>::grid_ray(const min::vec2<T> &extent, const min::vec2<T> &origin, const min::vec2<T> &dir, const min::vec2<T> &inv_dir)
 {
     // Get the grid dimensions
-    const T ex = extent.x();
-    const T ey = extent.y();
+    const T ex = extent.x;
+    const T ey = extent.y;
 
     // Get the origin starting points
-    const T x = origin.x();
-    const T y = origin.y();
+    const T x = origin.x;
+    const T y = origin.y;
 
     // Calculate distance to left of ray origin
     const T minx = ex * std::floor(x / ex);
@@ -364,21 +336,21 @@ inline std::tuple<int, T, T, int, T, T> min::vec2<T>::grid_ray(const min::vec2<T
     T tx = std::numeric_limits<T>::max();
     T dtx = std::numeric_limits<T>::max();
     int drx = 1;
-    if (std::abs(dir.x()) >= var<T>::TOL_ZERO)
+    if (std::abs(dir.x) >= var<T>::TOL_ZERO)
     {
         // Choose distance based on ray direction
-        if (dir.x() < 0.0)
+        if (dir.x < 0.0)
         {
             drx = -1;
-            tx = (x - minx) * std::abs(inv_dir.x());
+            tx = (x - minx) * std::abs(inv_dir.x);
         }
         else
         {
-            tx = (maxx - x) * std::abs(inv_dir.x());
+            tx = (maxx - x) * std::abs(inv_dir.x);
         }
 
         // Compute the length of the cell along the ray
-        dtx = ex * std::abs(inv_dir.x());
+        dtx = ex * std::abs(inv_dir.x);
     }
 
     // Calculate distance to below ray origin
@@ -391,21 +363,21 @@ inline std::tuple<int, T, T, int, T, T> min::vec2<T>::grid_ray(const min::vec2<T
     T ty = std::numeric_limits<T>::max();
     T dty = std::numeric_limits<T>::max();
     int dry = 1;
-    if (std::abs(dir.y()) >= var<T>::TOL_ZERO)
+    if (std::abs(dir.y) >= var<T>::TOL_ZERO)
     {
         // Choose distance based on ray direction
-        if (dir.y() < 0.0)
+        if (dir.y < 0.0)
         {
             dry = -1;
-            ty = (y - miny) * std::abs(inv_dir.y());
+            ty = (y - miny) * std::abs(inv_dir.y);
         }
         else
         {
-            ty = (maxy - y) * std::abs(inv_dir.y());
+            ty = (maxy - y) * std::abs(inv_dir.y);
         }
 
         // Compute the length of the cell along the ray
-        dty = ey * std::abs(inv_dir.y());
+        dty = ey * std::abs(inv_dir.y);
     }
 
     // return the ray tuple
@@ -413,7 +385,7 @@ inline std::tuple<int, T, T, int, T, T> min::vec2<T>::grid_ray(const min::vec2<T
 }
 
 template <typename T>
-inline size_t min::vec2<T>::grid_ray_next(std::pair<size_t, size_t> &index, std::tuple<int, T, T, int, T, T> &grid_ray, bool &flag, const size_t scale)
+size_t min::vec2<T>::grid_ray_next(std::pair<size_t, size_t> &index, std::tuple<int, T, T, int, T, T> &grid_ray, bool &flag, const size_t scale)
 {
     // Get the cell row / col
     size_t &col = index.first;
@@ -463,7 +435,7 @@ inline size_t min::vec2<T>::grid_ray_next(std::pair<size_t, size_t> &index, std:
 
 template <typename T>
 template <typename F>
-inline void min::vec2<T>::grid_range(const min::vec2<T> &min, const min::vec2<T> &extent, const size_t scale,
+void min::vec2<T>::grid_range(const min::vec2<T> &min, const min::vec2<T> &extent, const size_t scale,
                               const min::vec2<T> &over_min, const min::vec2<T> &over_max,
                               const F &f)
 {
@@ -487,60 +459,60 @@ inline void min::vec2<T>::grid_range(const min::vec2<T> &min, const min::vec2<T>
 }
 
 template <typename T>
-inline bool min::vec2<T>::inside(const min::vec2<T> &min, const min::vec2<T> &max) const
+bool min::vec2<T>::inside(const min::vec2<T> &min, const min::vec2<T> &max) const
 {
     // Return true if this min::vector is inside the min and max min::vector range
-    return (_x > min.x() + var<T>::TOL_REL && _x < max.x() - var<T>::TOL_REL && _y > min.y() + var<T>::TOL_REL && _y < max.y() - var<T>::TOL_REL);
+    return (x > min.x + var<T>::TOL_REL && x < max.x - var<T>::TOL_REL && y > min.y + var<T>::TOL_REL && y < max.y - var<T>::TOL_REL);
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::inverse() const
+min::vec2<T> min::vec2<T>::inverse() const
 {
-    return min::vec2<T>(1.0 / _x, 1.0 / _y);
+    return min::vec2<T>(1.0 / x, 1.0 / y);
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::inverse_safe() const
+min::vec2<T> min::vec2<T>::inverse_safe() const
 {
-    const T x = safe_inverse<T>(_x);
-    const T y = safe_inverse<T>(_y);
+    const T x = safe_inverse<T>(x);
+    const T y = safe_inverse<T>(y);
 
     // return inverse
     return min::vec2<T>(x, y);
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::lerp(const min::vec2<T> &v0, const min::vec2<T> &v1, T t)
+min::vec2<T> min::vec2<T>::lerp(const min::vec2<T> &v0, const min::vec2<T> &v1, T t)
 {
     return (v0 + (v1 - v0) * (t));
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::interpolate(const min::vec2<T> &v0, const min::vec2<T> &v1, T t)
+min::vec2<T> min::vec2<T>::interpolate(const min::vec2<T> &v0, const min::vec2<T> &v1, T t)
 {
     return lerp(v0, v1, t);
 }
 
 template <typename T>
-inline T min::vec2<T>::magnitude() const
+T min::vec2<T>::magnitude() const
 {
-    return std::sqrt(_x * _x + _y * _y);
+    return std::sqrt(x * x + y * y);
 }
 
 template <typename T>
-inline T min::vec2<T>::max() const
+T min::vec2<T>::max() const
 {
-    return std::max(_x, _y);
+    return std::max(x, y);
 }
 
 template <typename T>
-inline T min::vec2<T>::min() const
+T min::vec2<T>::min() const
 {
-    return std::min(_x, _y);
+    return std::min(x, y);
 }
 
 template <typename T>
-inline std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::most_separating(const std::vector<min::vec2<T>> &verts)
+std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::most_separating(const std::vector<min::vec2<T>> &verts)
 {
     // Find the two most separating points in the collection of min::vec2<T>
     const auto size = verts.size();
@@ -551,13 +523,13 @@ inline std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::most_separating(const
         for (size_t i = 0; i < size; i++)
         {
             const min::vec2<T> &v = verts[i];
-            if (v.x() > verts[maxx].x())
+            if (v.x > verts[maxx].x)
                 maxx = i;
-            if (v.x() < verts[minx].x())
+            if (v.x < verts[minx].x)
                 minx = i;
-            if (v.y() > verts[maxy].y())
+            if (v.y > verts[maxy].y)
                 maxy = i;
-            if (v.y() < verts[miny].y())
+            if (v.y < verts[miny].y)
                 miny = i;
         }
 
@@ -586,7 +558,7 @@ inline std::pair<min::vec2<T>, min::vec2<T>> min::vec2<T>::most_separating(const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::normal(const min::vec2<T> &a, const min::vec2<T> &b, const min::vec2<T> &c)
+min::vec2<T> min::vec2<T>::normal(const min::vec2<T> &a, const min::vec2<T> &b, const min::vec2<T> &c)
 {
     // Computes normal min::vector to two points, third argument is ignored
     // Normal is not normalized
@@ -594,95 +566,95 @@ inline min::vec2<T> min::vec2<T>::normal(const min::vec2<T> &a, const min::vec2<
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::normalize()
+min::vec2<T> &min::vec2<T>::normalize()
 {
     const T inv_mag = 1.0 / magnitude();
-    _x *= inv_mag;
-    _y *= inv_mag;
+    x *= inv_mag;
+    y *= inv_mag;
 
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::normalize_safe(const min::vec2<T> &safe)
+min::vec2<T> &min::vec2<T>::normalize_safe(const min::vec2<T> &safe)
 {
     const T mag = magnitude();
     if (std::abs(mag) > var<T>::TOL_ZERO)
     {
         T inv_mag = 1.0 / mag;
-        _x *= inv_mag;
-        _y *= inv_mag;
+        x *= inv_mag;
+        y *= inv_mag;
     }
     else
     {
-        _x = safe.x();
-        _y = safe.y();
+        x = safe.x;
+        y = safe.y;
     }
 
     return *this;
 }
 
 template <typename T>
-inline void min::vec2<T>::order(vec2<T> &min, min::vec2<T> &max)
+void min::vec2<T>::order(vec2<T> &min, min::vec2<T> &max)
 {
     // Order the components into min and max
-    if (min._x > max._x)
+    if (min.x > max.x)
     {
-        swap(min._x, max._x);
+        swap(min.x, max.x);
     }
-    if (min._y > max._y)
+    if (min.y > max.y)
     {
-        swap(min._y, max._y);
+        swap(min.y, max.y);
     }
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::orthogonal() const
+min::vec2<T> min::vec2<T>::orthogonal() const
 {
     // Compute the orthogonal min::vector to A
-    return min::vec2<T>(_y, -_x);
+    return min::vec2<T>(y, -x);
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::project_point(const min::coord_sys<T, min::vec2> &axis, const min::vec2<T> &extent)
+min::vec2<T> min::vec2<T>::project_point(const min::coord_sys<T, min::vec2> &axis, const min::vec2<T> &extent)
 {
     // Project this onto local x axis
     T x = this->dot(axis.x());
 
     // Clamp x onto the box half extent, else x
-    min::clamp<T>(x, -extent.x(), extent.x());
+    min::clamp<T>(x, -extent.x, extent.x);
 
     // Project this onto local y axis
     T y = this->dot(axis.y());
 
     // Clamp y onto the box half extent, else y
-    min::clamp<T>(y, -extent.y(), extent.y());
+    min::clamp<T>(y, -extent.y, extent.y);
 
     // Compute the point along this axis
     return (axis.x() * x) + (axis.y() * y);
 }
 
 template <typename T>
-inline T min::vec2<T>::project_length(const min::coord_sys<T, min::vec2> &axis, const min::vec2<T> &extent)
+T min::vec2<T>::project_length(const min::coord_sys<T, min::vec2> &axis, const min::vec2<T> &extent)
 {
     // Project this onto local x axis
     const T x = this->dot(axis.x());
 
     // Clamp x onto the box half extent, else zero
-    const T dx = clamp_value<T>(x, -extent.x(), x + extent.x(), extent.x(), x - extent.x());
+    const T dx = clamp_value<T>(x, -extent.x, x + extent.x, extent.x, x - extent.x);
 
     // Project this onto local y axis
     const T y = this->dot(axis.y());
 
     // Clamp y onto the box half extent, else 0
-    const T dy = clamp_value<T>(y, -extent.y(), y + extent.y(), extent.y(), y - extent.y());
+    const T dy = clamp_value<T>(y, -extent.y, y + extent.y, extent.y, y - extent.y);
 
     // Compute the square distance from this point
     return (dx * dx) + (dy * dy);
 }
 
 template <typename T>
-inline bool min::vec2<T>::project_sat(const min::coord_sys<T, min::vec2> &axis1, const min::vec2<T> &center1, const min::vec2<T> &extent1, const min::coord_sys<T, min::vec2> &axis2, const min::vec2<T> &center2, const min::vec2<T> &extent2)
+bool min::vec2<T>::project_sat(const min::coord_sys<T, min::vec2> &axis1, const min::vec2<T> &center1, const min::vec2<T> &extent1, const min::coord_sys<T, min::vec2> &axis2, const min::vec2<T> &center2, const min::vec2<T> &extent2)
 {
     // This performs the separating axis theorem for checking oobb-oobb intersections
     // For every axis test (C2-C1).dot(L) > (a.get_extent() + b.get_extent()).dot(L)
@@ -697,37 +669,37 @@ inline bool min::vec2<T>::project_sat(const min::coord_sys<T, min::vec2> &axis1,
     const T y1x2 = axis1.y().dot(axis2.x());
     const T y1y2 = axis1.y().dot(axis2.y());
 
-    const T abs_x1x2 = std::abs(x1x2) + var<T>::TOL_REL;
-    const T abs_x1y2 = std::abs(x1y2) + var<T>::TOL_REL;
-    const T abs_y1x2 = std::abs(y1x2) + var<T>::TOL_REL;
-    const T abs_y1y2 = std::abs(y1y2) + var<T>::TOL_REL;
+    const T absx1x2 = std::abs(x1x2) + var<T>::TOL_REL;
+    const T absx1y2 = std::abs(x1y2) + var<T>::TOL_REL;
+    const T absy1x2 = std::abs(y1x2) + var<T>::TOL_REL;
+    const T absy1y2 = std::abs(y1y2) + var<T>::TOL_REL;
 
     // Bring translation into A1's coordinate frame
     const min::vec2<T> d = center2 - center1;
     const min::vec2<T> t = min::vec2<T>(d.dot(axis1.x()), d.dot(axis1.y()));
 
-    // Test L = A1.x(); d1 and d2 is the length of extents along L
-    T dL1 = extent1.x();
-    T dL2 = extent2.x() * abs_x1x2 + extent2.y() * abs_x1y2;
-    if (std::abs(t.x()) > dL1 + dL2)
+    // Test L = A1.x; d1 and d2 is the length of extents along L
+    T dL1 = extent1.x;
+    T dL2 = extent2.x * absx1x2 + extent2.y * absx1y2;
+    if (std::abs(t.x) > dL1 + dL2)
         return false;
 
-    // Test L = A1.y(); d1 and d2 is the length of extents along L
-    dL1 = extent1.y();
-    dL2 = extent2.x() * abs_y1x2 + extent2.y() * abs_y1y2;
-    if (std::abs(t.y()) > dL1 + dL2)
+    // Test L = A1.y; d1 and d2 is the length of extents along L
+    dL1 = extent1.y;
+    dL2 = extent2.x * absy1x2 + extent2.y * absy1y2;
+    if (std::abs(t.y) > dL1 + dL2)
         return false;
 
-    // Test L = A2.x(); d1 and d2 is the length of extents along L
-    dL1 = extent1.x() * abs_x1x2 + extent1.y() * abs_y1x2;
-    dL2 = extent2.x();
-    if (std::abs(t.x() * x1x2 + t.y() * y1x2) > dL1 + dL2)
+    // Test L = A2.x; d1 and d2 is the length of extents along L
+    dL1 = extent1.x * absx1x2 + extent1.y * absy1x2;
+    dL2 = extent2.x;
+    if (std::abs(t.x * x1x2 + t.y * y1x2) > dL1 + dL2)
         return false;
 
-    // Test L = A2.y(); d1 and d2 is the length of extents along L
-    dL1 = extent1.x() * abs_x1y2 + extent1.y() * abs_y1y2;
-    dL2 = extent2.y();
-    if (std::abs(t.x() * x1y2 + t.y() * y1y2) > dL1 + dL2)
+    // Test L = A2.y; d1 and d2 is the length of extents along L
+    dL1 = extent1.x * absx1y2 + extent1.y * absy1y2;
+    dL2 = extent2.y;
+    if (std::abs(t.x * x1y2 + t.y * y1y2) > dL1 + dL2)
         return false;
 
     return true;
@@ -735,7 +707,7 @@ inline bool min::vec2<T>::project_sat(const min::coord_sys<T, min::vec2> &axis1,
 
 
 template <typename T>
-inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_penetration(
+std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_penetration(
     const min::coord_sys<T, min::vec2> &axis1, const min::vec2<T> &center1, const min::vec2<T> &extent1,
     const min::coord_sys<T, min::vec2> &axis2, const min::vec2<T> &center2, const min::vec2<T> &extent2, const T tolerance)
 {
@@ -752,10 +724,10 @@ inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_penetration(
     const T y1x2 = axis1.y().dot(axis2.x());
     const T y1y2 = axis1.y().dot(axis2.y());
 
-    const T abs_x1x2 = std::abs(x1x2) + tolerance;
-    const T abs_x1y2 = std::abs(x1y2) + tolerance;
-    const T abs_y1x2 = std::abs(y1x2) + tolerance;
-    const T abs_y1y2 = std::abs(y1y2) + tolerance;
+    const T absx1x2 = std::abs(x1x2) + tolerance;
+    const T absx1y2 = std::abs(x1y2) + tolerance;
+    const T absy1x2 = std::abs(y1x2) + tolerance;
+    const T absy1y2 = std::abs(y1y2) + tolerance;
 
     // Bring translation into A1's coordinate frame
     const vec2<T> d = center2 - center1;
@@ -765,29 +737,29 @@ inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_penetration(
     vec2<T> axes[4];
     T penetration[4];
 
-    // Test L = A1.x(); d1 and d2 is the length of extents along L
-    T dL1 = extent1.x();
-    T dL2 = extent2.x() * abs_x1x2 + extent2.y() * abs_x1y2;
+    // Test L = A1.x; d1 and d2 is the length of extents along L
+    T dL1 = extent1.x;
+    T dL2 = extent2.x * absx1x2 + extent2.y * absx1y2;
     axes[0] = axis1.x();
-    penetration[0] = (dL1 + dL2) - std::abs(t.x());
+    penetration[0] = (dL1 + dL2) - std::abs(t.x);
 
-    // Test L = A1.y(); d1 and d2 is the length of extents along L
-    dL1 = extent1.y();
-    dL2 = extent2.x() * abs_y1x2 + extent2.y() * abs_y1y2;
+    // Test L = A1.y; d1 and d2 is the length of extents along L
+    dL1 = extent1.y;
+    dL2 = extent2.x * absy1x2 + extent2.y * absy1y2;
     axes[1] = axis1.y();
-    penetration[1] = (dL1 + dL2) - std::abs(t.y());
+    penetration[1] = (dL1 + dL2) - std::abs(t.y);
 
-    // Test L = A2.x(); d1 and d2 is the length of extents along L
-    dL1 = extent1.x() * abs_x1x2 + extent1.y() * abs_y1x2;
-    dL2 = extent2.x();
+    // Test L = A2.x; d1 and d2 is the length of extents along L
+    dL1 = extent1.x * absx1x2 + extent1.y * absy1x2;
+    dL2 = extent2.x;
     axes[2] = axis2.x();
-    penetration[2] = (dL1 + dL2) - std::abs(t.x() * x1x2 + t.y() * y1x2);
+    penetration[2] = (dL1 + dL2) - std::abs(t.x * x1x2 + t.y * y1x2);
 
-    // Test L = A2.y(); d1 and d2 is the length of extents along L
-    dL1 = extent1.x() * abs_x1y2 + extent1.y() * abs_y1y2;
-    dL2 = extent2.y();
+    // Test L = A2.y; d1 and d2 is the length of extents along L
+    dL1 = extent1.x * absx1y2 + extent1.y * absy1y2;
+    dL2 = extent2.y;
     axes[3] = axis2.y();
-    penetration[3] = (dL1 + dL2) - std::abs(t.x() * x1y2 + t.y() * y1y2);
+    penetration[3] = (dL1 + dL2) - std::abs(t.x * x1y2 + t.y * y1y2);
 
     // normal default up vector return and zero penetration
     vec2<T> normal = vec2<T>::up();
@@ -821,7 +793,7 @@ inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_penetration(
 }
 
 template <typename T>
-inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_aligned_penetration(
+std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_aligned_penetration(
     const min::vec2<T> &center1, const min::vec2<T> &extent1,
     const min::vec2<T> &center2, const min::vec2<T> &extent2, const T tolerance)
 {
@@ -835,13 +807,13 @@ inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_aligned_penetration(
     const min::vec2<T> d = center1 - center2;
     const min::vec2<T> t = min::vec2<T>(d).abs();
 
-    // Test L = A1.x() = A2.x(); d1 and d2 is the length of extents along L
-    // Test L = A1.y() = A2.y(); d1 and d2 is the length of extents along L
+    // Test L = A1.x = A2.x; d1 and d2 is the length of extents along L
+    // Test L = A1.y = A2.y; d1 and d2 is the length of extents along L
     const min::vec2<T> dL = (extent1 + extent2 + tolerance) - t;
 
     // Store axis and penetration depths
     const min::vec2<T> axes[2] = {vec2<T>(1.0, 0.0), min::vec2<T>(0.0, 1.0)};
-    const T penetration[2] = {dL.x(), dL.y()};
+    const T penetration[2] = {dL.x, dL.y};
 
     // normal default up min::vector return and zero penetration
     min::vec2<T> normal = min::vec2<T>::up();
@@ -893,29 +865,29 @@ inline std::pair<min::vec2<T>, T> min::vec2<T>::project_sat_aligned_penetration(
 // /-----/-----/
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::ratio(const min::vec2<T> &min, const min::vec2<T> &max, const min::vec2<T> &point)
+min::vec2<T> min::vec2<T>::ratio(const min::vec2<T> &min, const min::vec2<T> &max, const min::vec2<T> &point)
 {
-    const T xr = (point.x() - min.x()) / (max.x() - min.x());
-    const T yr = (point.y() - min.y()) / (max.y() - min.y());
+    const T xr = (point.x - min.x) / (max.x - min.x);
+    const T yr = (point.y - min.y) / (max.y - min.y);
 
     return min::vec2<T>(xr, yr);
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::sign() const
+min::vec2<T> min::vec2<T>::sign() const
 {
     // Get the sign of the min::vector
-    const T x = sgn<T>(_x);
-    const T y = sgn<T>(_y);
+    const T x = sgn<T>(x);
+    const T y = sgn<T>(y);
 
     return min::vec2<T>(x, y);
 }
 
 template <typename T>
-inline uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
+uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
 {
-    T x = _x;
-    T y = _y;
+    T x = x;
+    T y = y;
 
     // Get the x portion of key
     uint_fast8_t key = 0;
@@ -924,7 +896,7 @@ inline uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
         // Set the least significant bit
         key |= 0x1;
         x -= middle;
-        _x = x;
+        x = x;
     }
 
     // Get the y portion of key
@@ -934,14 +906,14 @@ inline uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
         // Set the least significant bit
         key |= 0x1;
         y -= middle;
-        _y = y;
+        y = y;
     }
 
     return key;
 }
 
 template <typename T>
-inline std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::subdivide(const min::vec2<T> &min, const min::vec2<T> &max)
+std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::subdivide(const min::vec2<T> &min, const min::vec2<T> &max)
 {
     std::vector<std::pair<min::vec2<T>, min::vec2<T>>> out;
     out.reserve(4);
@@ -953,26 +925,26 @@ inline std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::subdivid
     const min::vec2<T> c = (max + min) * 0.5;
 
     // Positions
-    const T cx_hx = c.x() - h.x();
-    const T cy_hy = c.y() - h.y();
+    const T cx_hx = c.x - h.x;
+    const T cy_hy = c.y - h.y;
 
-    const T cxhx = c.x() + h.x();
-    const T cyhy = c.y() + h.y();
+    const T cxhx = c.x + h.x;
+    const T cyhy = c.y + h.y;
 
     // Octant 0
     const min::vec2<T> min0 = min::vec2<T>(cx_hx, cy_hy);
-    const min::vec2<T> max0 = min::vec2<T>(c.x(), c.y());
+    const min::vec2<T> max0 = min::vec2<T>(c.x, c.y);
 
     // Octant 1
-    const min::vec2<T> min1 = min::vec2<T>(cx_hx, c.y());
-    const min::vec2<T> max1 = min::vec2<T>(c.x(), cyhy);
+    const min::vec2<T> min1 = min::vec2<T>(cx_hx, c.y);
+    const min::vec2<T> max1 = min::vec2<T>(c.x, cyhy);
 
     // Octant 2
-    const min::vec2<T> min2 = min::vec2<T>(c.x(), cy_hy);
-    const min::vec2<T> max2 = min::vec2<T>(cxhx, c.y());
+    const min::vec2<T> min2 = min::vec2<T>(c.x, cy_hy);
+    const min::vec2<T> max2 = min::vec2<T>(cxhx, c.y);
 
     // Octant 3
-    const min::vec2<T> min3 = min::vec2<T>(c.x(), c.y());
+    const min::vec2<T> min3 = min::vec2<T>(c.x, c.y);
     const min::vec2<T> max3 = min::vec2<T>(cxhx, cyhy);
 
     // Add sub spaces to out min::vector
@@ -985,7 +957,7 @@ inline std::vector<std::pair<min::vec2<T>, min::vec2<T>>> min::vec2<T>::subdivid
 }
 
 template <typename T>
-inline std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::subdivide_center(const min::vec2<T> &min, const min::vec2<T> &max, const T size)
+std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::subdivide_center(const min::vec2<T> &min, const min::vec2<T> &max, const T size)
 {
     std::vector<std::pair<min::vec2<T>, T>> out;
     out.reserve(4);
@@ -997,11 +969,11 @@ inline std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::subdivide_center(co
     const min::vec2<T> c = (max + min) * 0.5;
 
     // Positions
-    const T cx_hx = c.x() - h.x();
-    const T cy_hy = c.y() - h.y();
+    const T cx_hx = c.x - h.x;
+    const T cy_hy = c.y - h.y;
 
-    const T cxhx = c.x() + h.x();
-    const T cyhy = c.y() + h.y();
+    const T cxhx = c.x + h.x;
+    const T cyhy = c.y + h.y;
 
     // Octant 0
     const min::vec2<T> c0 = min::vec2<T>(cx_hx, cy_hy);
@@ -1033,7 +1005,7 @@ inline std::vector<std::pair<min::vec2<T>, T>> min::vec2<T>::subdivide_center(co
 // ty = (cy - ny · Py) / (ny · dy)
 
 template <typename T>
-inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec2<T> &min, const min::vec2<T> &max, const min::vec2<T> &origin, const min::vec2<T> &dir, const min::vec2<T> &inv_dir)
+void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec2<T> &min, const min::vec2<T> &max, const min::vec2<T> &origin, const min::vec2<T> &dir, const min::vec2<T> &inv_dir)
 {
     // Reserve space for output
     out.clear();
@@ -1058,19 +1030,19 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
         flag = false;
 
         // Check that we are not parallel to y-axis
-        if (t.x() >= 0.0 && std::abs(dir.x()) >= var<T>::TOL_ZERO)
+        if (t.x >= 0.0 && std::abs(dir.x) >= var<T>::TOL_ZERO)
         {
             // Calculate octant ranges
-            const T cy_hy = c.y() - h.y();
-            const T cyhy = c.y() + h.y();
+            const T cy_hy = c.y - h.y;
+            const T cyhy = c.y + h.y;
 
-            // Find y value at c.x() of intersection
-            const T py = origin.y() + t.x() * dir.y();
+            // Find y value at c.x of intersection
+            const T py = origin.y + t.x * dir.y;
 
             // Check if we are crossing between 0-2 along y-axis
-            if (py > cy_hy && py < c.y())
+            if (py > cy_hy && py < c.y)
             {
-                if (dir.x() < 0.0)
+                if (dir.x < 0.0)
                 {
                     f = 2;
                     s = 0;
@@ -1084,9 +1056,9 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
                 }
             }
             // Check if we are crossing between 1-3 along y-axis
-            else if (py >= c.y() && py < cyhy)
+            else if (py >= c.y && py < cyhy)
             {
-                if (dir.x() < 0.0)
+                if (dir.x < 0.0)
                 {
                     f = 3;
                     s = 1;
@@ -1107,19 +1079,19 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
         flag = false;
 
         // Check that we are not parallel to x-axis
-        if (t.y() >= 0.0 && std::abs(dir.y()) >= var<T>::TOL_ZERO)
+        if (t.y >= 0.0 && std::abs(dir.y) >= var<T>::TOL_ZERO)
         {
             // Calculate octant ranges
-            const T cx_hx = c.x() - h.x();
-            const T cxhx = c.x() + h.x();
+            const T cx_hx = c.x - h.x;
+            const T cxhx = c.x + h.x;
 
-            // Find x value at c.y() of intersection
-            const T px = origin.x() + t.y() * dir.x();
+            // Find x value at c.y of intersection
+            const T px = origin.x + t.y * dir.x;
 
             // Check if we are crossing between 0-1 along x-axis
-            if (px > cx_hx && px < c.x())
+            if (px > cx_hx && px < c.x)
             {
-                if (dir.y() < 0.0)
+                if (dir.y < 0.0)
                 {
                     f = 1;
                     s = 0;
@@ -1133,9 +1105,9 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
                 }
             }
             // Check if we are crossing between 2-3 along x-axis
-            else if (px >= c.x() && px < cxhx)
+            else if (px >= c.x && px < cxhx)
             {
-                if (dir.y() < 0.0)
+                if (dir.y < 0.0)
                 {
                     f = 3;
                     s = 2;
@@ -1152,7 +1124,7 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
     };
 
     // x is before y on ray
-    if (t_abs.x() < t_abs.y())
+    if (t_abs.x < t_abs.y)
     {
         x_lamda();
         if (flag)
@@ -1162,7 +1134,7 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
         }
     }
     // y is before x on ray
-    else if (t_abs.y() < t_abs.x())
+    else if (t_abs.y < t_abs.x)
     {
         y_lamda();
         if (flag)
@@ -1173,7 +1145,7 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
     }
 
     // x is after y on ray
-    if (t_abs.x() > t_abs.y())
+    if (t_abs.x > t_abs.y)
     {
         x_lamda();
         if (flag)
@@ -1182,7 +1154,7 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
         }
     }
     // y is after x on ray
-    else if (t_abs.y() > t_abs.x())
+    else if (t_abs.y > t_abs.x)
     {
         y_lamda();
         if (flag)
@@ -1190,8 +1162,8 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
             out.push_back(s);
         }
     }
-    // t.x() == t.y() == 0.0
-    else if (t_abs.x() < var<T>::TOL_ZERO && t_abs.y() < var<T>::TOL_ZERO)
+    // t.x == t.y == 0.0
+    else if (t_abs.x < var<T>::TOL_ZERO && t_abs.y < var<T>::TOL_ZERO)
     {
         out = {0, 1, 2, 3};
     }
@@ -1212,16 +1184,16 @@ inline void min::vec2<T>::subdivide_ray(std::vector<size_t> &out, const min::vec
 }
 
 template <typename T>
-inline void min::vec2<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min::vec2<T> &min, const min::vec2<T> &max, const min::vec2<T> &center)
+void min::vec2<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min::vec2<T> &min, const min::vec2<T> &max, const min::vec2<T> &center)
 {
     // Reserve space for output
     out.clear();
     out.reserve(4);
 
-    const bool minx = min.x() <= center.x();
-    const bool miny = min.y() <= center.y();
-    const bool maxx = max.x() >= center.x();
-    const bool maxy = max.y() >= center.y();
+    const bool minx = min.x <= center.x;
+    const bool miny = min.y <= center.y;
+    const bool maxx = max.x >= center.x;
+    const bool maxy = max.y >= center.y;
 
     // If overlapping 0-1 cells
     if (minx)
@@ -1265,96 +1237,96 @@ inline void min::vec2<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min:
 }
 
 template <typename T>
-inline constexpr T min::vec2<T>::unit_length()
+constexpr T min::vec2<T>::unit_length()
 {
     return var<T>::SQRT2;
 }
 
 template <typename T>
-inline constexpr T min::vec2<T>::inverse_unit_length()
+constexpr T min::vec2<T>::inverse_unit_length()
 {
     return var<T>::INV_SQRT2;
 }
 
 template <typename T>
-inline constexpr min::vec2<T> min::vec2<T>::up()
+constexpr min::vec2<T> min::vec2<T>::up()
 {
     return min::vec2<T>(0.0, 1.0);
 }
 
 template <typename T>
-inline bool min::vec2<T>::within(const min::vec2<T> &min, const min::vec2<T> &max) const
+bool min::vec2<T>::within(const min::vec2<T> &min, const min::vec2<T> &max) const
 {
     // Return true if this min::vector is within the min and max min::vector range
-    return (_x >= min.x() + var<T>::TOL_REL && _x <= max.x() - var<T>::TOL_REL && _y >= min.y() + var<T>::TOL_REL && _y <= max.y() - var<T>::TOL_REL);
+    return (x >= min.x + var<T>::TOL_REL && x <= max.x - var<T>::TOL_REL && y >= min.y + var<T>::TOL_REL && y <= max.y - var<T>::TOL_REL);
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator+=(const T a)
+min::vec2<T> &min::vec2<T>::operator+=(const T a)
 {
-    _x += a;
-    _y += a;
+    x += a;
+    y += a;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator+=(const min::vec2<T> &A)
+min::vec2<T> &min::vec2<T>::operator+=(const min::vec2<T> &A)
 {
-    _x += A.x();
-    _y += A.y();
+    x += A.x;
+    y += A.y;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator-=(const T a)
+min::vec2<T> &min::vec2<T>::operator-=(const T a)
 {
-    _x -= a;
-    _y -= a;
+    x -= a;
+    y -= a;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator-=(const min::vec2<T> &A)
+min::vec2<T> &min::vec2<T>::operator-=(const min::vec2<T> &A)
 {
-    _x -= A.x();
-    _y -= A.y();
+    x -= A.x;
+    y -= A.y;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator*=(const T a)
+min::vec2<T> &min::vec2<T>::operator*=(const T a)
 {
-    _x *= a;
-    _y *= a;
+    x *= a;
+    y *= a;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator*=(const min::vec2<T> &A)
+min::vec2<T> &min::vec2<T>::operator*=(const min::vec2<T> &A)
 {
-    _x *= A.x();
-    _y *= A.y();
+    x *= A.x;
+    y *= A.y;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator/=(const T a)
+min::vec2<T> &min::vec2<T>::operator/=(const T a)
 {
-    _x /= a;
-    _y /= a;
+    x /= a;
+    y /= a;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> &min::vec2<T>::operator/=(const min::vec2<T> &A)
+min::vec2<T> &min::vec2<T>::operator/=(const min::vec2<T> &A)
 {
-    _x /= A.x();
-    _y /= A.y();
+    x /= A.x;
+    y /= A.y;
     return *this;
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator+(const T a) const
+min::vec2<T> min::vec2<T>::operator+(const T a) const
 {
     min::vec2<T> temp = *this;
     temp += a;
@@ -1362,7 +1334,7 @@ inline min::vec2<T> min::vec2<T>::operator+(const T a) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator+(const min::vec2<T> &A) const
+min::vec2<T> min::vec2<T>::operator+(const min::vec2<T> &A) const
 {
     min::vec2<T> temp = *this;
     temp += A;
@@ -1370,7 +1342,7 @@ inline min::vec2<T> min::vec2<T>::operator+(const min::vec2<T> &A) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator-(const T a) const
+min::vec2<T> min::vec2<T>::operator-(const T a) const
 {
     min::vec2<T> temp = *this;
     temp -= a;
@@ -1378,7 +1350,7 @@ inline min::vec2<T> min::vec2<T>::operator-(const T a) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator-(const min::vec2<T> &A) const
+min::vec2<T> min::vec2<T>::operator-(const min::vec2<T> &A) const
 {
     min::vec2<T> temp = *this;
     temp -= A;
@@ -1386,7 +1358,7 @@ inline min::vec2<T> min::vec2<T>::operator-(const min::vec2<T> &A) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator*(const T a) const
+min::vec2<T> min::vec2<T>::operator*(const T a) const
 {
     min::vec2<T> temp = *this;
     temp *= a;
@@ -1394,7 +1366,7 @@ inline min::vec2<T> min::vec2<T>::operator*(const T a) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator*(const min::vec2<T> &A) const
+min::vec2<T> min::vec2<T>::operator*(const min::vec2<T> &A) const
 {
     min::vec2<T> temp = *this;
     temp *= A;
@@ -1402,7 +1374,7 @@ inline min::vec2<T> min::vec2<T>::operator*(const min::vec2<T> &A) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator/(const T a) const
+min::vec2<T> min::vec2<T>::operator/(const T a) const
 {
     min::vec2<T> temp = *this;
     temp /= a;
@@ -1410,7 +1382,7 @@ inline min::vec2<T> min::vec2<T>::operator/(const T a) const
 }
 
 template <typename T>
-inline min::vec2<T> min::vec2<T>::operator/(const min::vec2<T> &A) const
+min::vec2<T> min::vec2<T>::operator/(const min::vec2<T> &A) const
 {
     min::vec2<T> temp = *this;
     temp /= A;
@@ -1418,25 +1390,25 @@ inline min::vec2<T> min::vec2<T>::operator/(const min::vec2<T> &A) const
 }
 
 template <typename T>
-inline bool min::vec2<T>::operator>(const min::vec2<T> &A) const
+bool min::vec2<T>::operator>(const min::vec2<T> &A) const
 {
-    return _x > A._x && _y > A._y;
+    return x > A.x && y > A.y;
 }
 
 template <typename T>
-inline bool min::vec2<T>::operator>=(const min::vec2<T> &A) const
+bool min::vec2<T>::operator>=(const min::vec2<T> &A) const
 {
-    return _x >= A._x && _y >= A._y;
+    return x >= A.x && y >= A.y;
 }
 
 template <typename T>
-inline bool min::vec2<T>::operator<(const min::vec2<T> &A) const
+bool min::vec2<T>::operator<(const min::vec2<T> &A) const
 {
-    return _x < A._x && _y < A._y;
+    return x < A.x && y < A.y;
 }
 
 template <typename T>
-inline bool min::vec2<T>::operator<=(const min::vec2<T> &A) const
+bool min::vec2<T>::operator<=(const min::vec2<T> &A) const
 {
-    return _x <= A._x && _y <= A._y;
+    return x <= A.x && y <= A.y;
 }

@@ -16,7 +16,7 @@ limitations under the License.
 #include "frustum.h"
 
 template <class T>
-inline bool min::frustum<T>::not_between_plane(const min::vec3<T> &min, const min::vec3<T> &max, const int i) const
+bool min::frustum<T>::not_between_plane(const min::vec3<T> &min, const min::vec3<T> &max, const int i) const
 {
     // Use min corner for positive axis
     vec3<T> p = min;
@@ -42,7 +42,7 @@ inline bool min::frustum<T>::not_between_plane(const min::vec3<T> &min, const mi
 }
 
 template <class T>
-inline bool min::frustum<T>::outside_plane(const min::vec3<T> &p, const int i, const T d) const
+bool min::frustum<T>::outside_plane(const min::vec3<T> &p, const int i, const T d) const
 {
     // distances are positive because planes point outward
     // a positive distance from plane means it is outside the half space
@@ -50,7 +50,7 @@ inline bool min::frustum<T>::outside_plane(const min::vec3<T> &p, const int i, c
 }
 
 template <class T>
-inline void min::frustum<T>::orthographic_frustum()
+void min::frustum<T>::orthographic_frustum()
 {
     // This frustum is symmetric and thus is simplified from the generic equations
     const T r = _near.x();
@@ -63,7 +63,7 @@ inline void min::frustum<T>::orthographic_frustum()
 }
 
 template <class T>
-inline void min::frustum<T>::perspective_frustum()
+void min::frustum<T>::perspective_frustum()
 {
     // This frustum is symmetric and thus is simplified from the generic equations
     const T r = _near.x();
@@ -94,7 +94,7 @@ inline void min::frustum<T>::perspective_frustum()
 }
 
 template <class T>
-inline void min::frustum<T>::update()
+void min::frustum<T>::update()
 {
     // tan(fov / 2) = top / near
     const T tang = std::tan(deg_to_rad2(_fov)) * _zoom;
@@ -116,7 +116,7 @@ inline void min::frustum<T>::update()
 
 
 template <class T>
-inline bool min::frustum<T>::between(const min::vec3<T> &min, const min::vec3<T> &max) const
+bool min::frustum<T>::between(const min::vec3<T> &min, const min::vec3<T> &max) const
 {
     if (not_between_plane(min, max, 0))
         return false;
@@ -135,7 +135,7 @@ inline bool min::frustum<T>::between(const min::vec3<T> &min, const min::vec3<T>
 }
 
 template <class T>
-inline min::vec3<T> min::frustum<T>::closest_point(const min::vec3<T> &p) const
+min::vec3<T> min::frustum<T>::closest_point(const min::vec3<T> &p) const
 {
     // Returns the closest point on the frustum to p
 
@@ -180,13 +180,13 @@ inline min::vec3<T> min::frustum<T>::closest_point(const min::vec3<T> &p) const
 }
 
 template <class T>
-inline const min::vec3<T> &min::frustum<T>::get_center() const
+const min::vec3<T> &min::frustum<T>::get_center() const
 {
     return _center;
 }
 
 template <class T>
-inline const min::vec3<T> &min::frustum<T>::get_right() const
+const min::vec3<T> &min::frustum<T>::get_right() const
 {
     return _right;
 }
@@ -277,19 +277,19 @@ const min::mat4<T> &min::frustum<T>::look_at(const min::vec3<T> &eye, const min:
 }
 
 template <class T>
-inline void min::frustum<T>::make_dirty()
+void min::frustum<T>::make_dirty()
 {
     _dirty = true;
 }
 
 template <class T>
-inline bool min::frustum<T>::point_inside(const min::vec3<T> &p) const
+bool min::frustum<T>::point_inside(const min::vec3<T> &p) const
 {
     return point_within(p, 0.0);
 }
 
 template <class T>
-inline bool min::frustum<T>::point_within(const min::vec3<T> &p, const T d) const
+bool min::frustum<T>::point_within(const min::vec3<T> &p, const T d) const
 {
     if (outside_plane(p, 0, d))
         return false;
@@ -308,35 +308,35 @@ inline bool min::frustum<T>::point_within(const min::vec3<T> &p, const T d) cons
 }
 
 template <class T>
-inline void min::frustum<T>::set_aspect_ratio(const T x, const T y)
+void min::frustum<T>::set_aspect_ratio(const T x, const T y)
 {
     _ratio = x / y;
     _dirty = true;
 }
 
 template <class T>
-inline void min::frustum<T>::set_fov(const T fov)
+void min::frustum<T>::set_fov(const T fov)
 {
     _fov = fov;
     _dirty = true;
 }
 
 template <class T>
-inline void min::frustum<T>::set_near(const T near)
+void min::frustum<T>::set_near(const T near)
 {
     _near.z(near);
     _dirty = true;
 }
 
 template <class T>
-inline void min::frustum<T>::set_far(const T far)
+void min::frustum<T>::set_far(const T far)
 {
     _far.z(far);
     _dirty = true;
 }
 
 template <class T>
-inline void min::frustum<T>::zoom(const T zoom)
+void min::frustum<T>::zoom(const T zoom)
 {
     _zoom = 1.0 / zoom;
     _dirty = true;

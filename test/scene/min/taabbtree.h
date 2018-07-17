@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TESTAABBTREE__
-#define __TESTAABBTREE__
+#ifndef TESTAABBTREE
+#define TESTAABBTREE
 
 #include <min/aabbox.h>
 #include <min/test.h>

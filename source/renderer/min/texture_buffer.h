@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TEXTUREBUFFER__
-#define __TEXTUREBUFFER__
+#ifndef TEXTUREBUFFER
+#define TEXTUREBUFFER
 
 #include <algorithm>
 #include <cstdint>
@@ -33,7 +33,7 @@ class texture_buffer
     std::vector<GLuint> _ids;
     size_t _max_size;
 
-    inline void check_extensions() const;
+    void check_extensions() const;
     void check_texture_size(const uint32_t, const uint32_t);
     std::vector<GLuint> generate_texture(const size_t, const size_t);
 
@@ -44,9 +44,9 @@ class texture_buffer
 
     GLuint add_bmp_texture(const bmp&, const bool= false);
     GLuint add_dds_texture(const dds&, const bool = false);
-    inline void bind(const GLuint, const size_t) const;
-    inline size_t get_max_texture_size() const;
-    inline void set_texture_uniform(const program&, const std::string&, const size_t) const;
+    void bind(const GLuint, const size_t) const;
+    size_t get_max_texture_size() const;
+    void set_texture_uniform(const program&, const std::string&, const size_t) const;
 
 };
 }

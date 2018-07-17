@@ -14,15 +14,28 @@ limitations under the License.
 */
 #include "coord_sys.h"
 
+template class min::coord_sys_base<double, min::vec2>;
+template class min::coord_sys_base<float, min::vec2>;
+template class min::coord_sys<double, min::vec2>;
+template class min::coord_sys<float, min::vec2>;
+template class min::coord_sys_base<double, min::vec3>;
+template class min::coord_sys_base<float, min::vec3>;
+template class min::coord_sys<double, min::vec3>;
+template class min::coord_sys<float, min::vec3>;
+template class min::coord_sys_base<double, min::vec4>;
+template class min::coord_sys_base<float, min::vec4>;
+template class min::coord_sys<double, min::vec4>;
+template class min::coord_sys<float, min::vec4>;
+
 //// coord_sys_base ////
 template <typename T, template <typename> class vec>
-inline const vec<T> &min::coord_sys_base<T,vec>::x() const
+const vec<T> &min::coord_sys_base<T,vec>::x() const
 {
 	return _x;
 }
 
 template <typename T, template <typename> class vec>
-inline const vec<T> &min::coord_sys_base<T,vec>::y() const
+const vec<T> &min::coord_sys_base<T,vec>::y() const
 {
 	return _y;
 }
@@ -30,14 +43,14 @@ inline const vec<T> &min::coord_sys_base<T,vec>::y() const
 
 //// coord_sys for vec2 ////
 template <typename T>
-inline void min::coord_sys<T, min::vec2>::rotate(const min::mat2<T> &r)
+void min::coord_sys<T, min::vec2>::rotate(const min::mat2<T> &r)
 {
 	this->_x = r.transform(this->_x);
 	this->_y = r.transform(this->_y);
 }
 
 template <typename T>
-inline min::vec2<T> min::coord_sys<T, min::vec2>::align( const min::vec2<T> &v) const
+min::vec2<T> min::coord_sys<T, min::vec2>::align( const min::vec2<T> &v) const
 {
 	return min::vec2<T>(v.dot(this->_x), v.dot(this->_y));
 }
@@ -45,13 +58,13 @@ inline min::vec2<T> min::coord_sys<T, min::vec2>::align( const min::vec2<T> &v) 
 
 //// coord_sys for vec3 ////
 template <typename T>
-inline const min::vec3<T> &min::coord_sys<T, min::vec3>::z() const
+const min::vec3<T> &min::coord_sys<T, min::vec3>::z() const
 {
     return _z;
 }
 
 template <typename T>
-inline void min::coord_sys<T, min::vec3>::rotate(const min::quat<T> &r)
+void min::coord_sys<T, min::vec3>::rotate(const min::quat<T> &r)
 {
     this->_x = r.transform(this->_x);
     this->_y = r.transform(this->_y);
@@ -59,7 +72,7 @@ inline void min::coord_sys<T, min::vec3>::rotate(const min::quat<T> &r)
 }
 
 template <typename T>
-inline min::vec3<T> min::coord_sys<T, min::vec3>::align(const min::vec3<T> &v) const
+min::vec3<T> min::coord_sys<T, min::vec3>::align(const min::vec3<T> &v) const
 {
     return vec3<T>(v.dot(this->_x), v.dot(this->_y), v.dot(this->_z));
 }
@@ -67,13 +80,13 @@ inline min::vec3<T> min::coord_sys<T, min::vec3>::align(const min::vec3<T> &v) c
 //// coord_sys for vec4 ////
 
 template <typename T>
-inline const min::vec4<T> &min::coord_sys<T, min::vec4>::z() const
+const min::vec4<T> &min::coord_sys<T, min::vec4>::z() const
 {
     return _z;
 }
 
 template <typename T>
-inline void min::coord_sys<T, min::vec4>::rotate(const min::quat<T> &r)
+void min::coord_sys<T, min::vec4>::rotate(const min::quat<T> &r)
 {
     this->_x = r.transform(this->_x);
     this->_y = r.transform(this->_y);
@@ -81,7 +94,7 @@ inline void min::coord_sys<T, min::vec4>::rotate(const min::quat<T> &r)
 }
 
 template <typename T>
-inline min::vec4<T> min::coord_sys<T, min::vec4>::align(const min::vec4<T> &v) const
+min::vec4<T> min::coord_sys<T, min::vec4>::align(const min::vec4<T> &v) const
 {
     return vec4<T>(v.dot(this->_x), v.dot(this->_y), v.dot(this->_z), 1.0);
 }

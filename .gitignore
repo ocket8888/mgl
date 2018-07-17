@@ -5,4 +5,5 @@ test/*.o
 .vscode/
 *.a
 *.o
+*.so
 

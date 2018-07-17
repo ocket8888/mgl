@@ -14,9 +14,7 @@ limitations under the License.
 */
 #include "wave.h"
 
-using namespace min;
-
-inline void wave::load(const std::string _file)
+void min::wave::load(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -47,7 +45,7 @@ inline void wave::load(const std::string _file)
 }
 
 template <class T>
-inline void wave::load(const T &data)
+void min::wave::load(const T &data)
 {
     // Check that nothing funky is going on with char and uint8_t
     static_assert(sizeof(char) == 1, "Size of char is not 1");
@@ -165,17 +163,17 @@ inline void wave::load(const T &data)
     std::memcpy(&_data[0], &data[offset], subchunk2_size);
 }
 
-wave::wave(const std::string &file)
+min::wave::wave(const std::string &file)
 {
     load(file);
 }
 
-wave::wave(const mem_file &mem)
+min::wave::wave(const mem_file &mem)
 {
     load<mem_file>(mem);
 }
 
-void wave::clear()
+void min::wave::clear()
 {
     // Delete WAV data and reset WAV
     _data.clear();
@@ -186,33 +184,33 @@ void wave::clear()
     _bits_per_sample = 0;
 }
 
-bool wave::is_mono() const
+bool min::wave::is_mono() const
 {
     return _num_channels == 1;
 }
 
-bool wave::is_stereo() const
+bool min::wave::is_stereo() const
 {
     return _num_channels > 1;
 }
 
-const std::vector<uint8_t> &wave::data() const
+const std::vector<uint8_t> &min::wave::data() const
 {
     return _data;
 }
 
-uint32_t wave::get_bits_per_sample() const
+uint32_t min::wave::get_bits_per_sample() const
 {
     return _bits_per_sample;
 }
 
-size_t wave::get_data_samples() const
+size_t min::wave::get_data_samples() const
 {
     // Calculate number of samples in data buffer
     return (_data.size() * 8) / _bits_per_sample;
 }
 
-uint32_t wave::get_sample_rate() const
+uint32_t min::wave::get_sample_rate() const
 {
     return _sample_rate;
 }

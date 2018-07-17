@@ -12,12 +12,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __TESTOGG__
-#define __TESTOGG__
+#ifndef TESTOGG
+#define TESTOGG
 
-#include <min/ogg.h>
-#include <min/test.h>
 #include <stdexcept>
+
+#include "file/min/ogg.h"
+#include "platform/min/test.h"
 
 bool test_ogg()
 {

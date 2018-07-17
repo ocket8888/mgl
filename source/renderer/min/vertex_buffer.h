@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __VERTEXBUFFER__
-#define __VERTEXBUFFER__
+#ifndef VERTEXBUFFER
+#define VERTEXBUFFER
 
 #include <cstdint>
 #include <stdexcept>
@@ -40,7 +40,7 @@ class vertex_buffer
     std::vector<GLuint> _ibo;
     mutable size_t _index;
 
-    inline void check_extensions() const;
+    void check_extensions() const;
     void push_back_mesh(const mesh<T, K>&);
     void swap_mesh(const mesh<T, K>&, const size_t);
     bool reallocate_buffer() const;
@@ -54,17 +54,17 @@ class vertex_buffer
     vertex_buffer(const vertex_buffer &sb) = delete;
 
     size_t add_mesh(const mesh<T, K>&);
-    inline void bind() const;
-    inline void unbind() const;
-    inline void bind_buffer(const size_t) const;
-    inline void clear();
-    inline void draw(const GLenum, const size_t) const;
-    inline void draw(const GLenum, const size_t, const size_t) const;
-    inline void draw_all(const GLenum) const;
-    inline void draw_all_after(const GLenum, const size_t) const;
-    inline void draw_many(const GLenum, const size_t, const size_t) const;
-    inline void reserve(const size_t, const size_t, const size_t);
-    inline void set_buffer(const size_t) const;
+    void bind() const;
+    void unbind() const;
+    void bind_buffer(const size_t) const;
+    void clear();
+    void draw(const GLenum, const size_t) const;
+    void draw(const GLenum, const size_t, const size_t) const;
+    void draw_all(const GLenum) const;
+    void draw_all_after(const GLenum, const size_t) const;
+    void draw_many(const GLenum, const size_t, const size_t) const;
+    void reserve(const size_t, const size_t, const size_t);
+    void set_buffer(const size_t) const;
     void upload() const;
     void upload_mesh(const mesh<T, K>&);
     void upload_mesh(const mesh<T, K>&, const size_t);

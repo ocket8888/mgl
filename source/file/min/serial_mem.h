@@ -39,22 +39,22 @@ class mem_file
     std::string to_string() const;
 };
 
-template <typename T> inline T read_le(const mem_file&, size_t&);
-template <typename T> inline T read_be(const mem_file&, size_t&);
-template <typename T> inline std::vector<T> read_le_vector(const mem_file&, size_t&);
-template <typename T> inline std::vector<T> read_be_vector(const mem_file&, size_t&);
-template <typename T> inline min::vec2<T> read_le_vec2(const mem_file&, size_t&);
-template <typename T> inline min::vec2<T> read_be_vec2(const mem_file&, size_t&);
-template <typename T> inline min::vec3<T> read_le_vec3(const mem_file&, size_t&);
-template <typename T> inline min::vec3<T> read_be_vec3(const mem_file&, size_t&);
-template <typename T> inline min::vec4<T> read_le_vec4(const mem_file&, size_t&);
-template <typename T> inline min::vec4<T> read_be_vec4(const mem_file&, size_t&);
-template <typename T> inline std::vector<min::vec2<T>> read_le_vector_vec2(const mem_file&, size_t&);
-template <typename T> inline std::vector<min::vec2<T>> read_be_vector_vec2(const mem_file&, size_t&);
-template <typename T> inline std::vector<min::vec3<T>> read_le_vector_vec3(const mem_file&, size_t&);
-template <typename T> inline std::vector<min::vec3<T>> read_be_vector_vec3(const mem_file&, size_t&);
-template <typename T> inline std::vector<min::vec4<T>> read_le_vector_vec4(const mem_file&, size_t&);
-template <typename T> inline std::vector<min::vec4<T>> read_be_vector_vec4(const mem_file&, size_t&);
+template <typename T> T read_le(const mem_file&, size_t&);
+template <typename T> T read_be(const mem_file&, size_t&);
+template <typename T> std::vector<T> read_le_vector(const mem_file&, size_t&);
+template <typename T> std::vector<T> read_be_vector(const mem_file&, size_t&);
+template <typename T> min::vec2<T> read_le_vec2(const mem_file&, size_t&);
+template <typename T> min::vec2<T> read_be_vec2(const mem_file&, size_t&);
+template <typename T> min::vec3<T> read_le_vec3(const mem_file&, size_t&);
+template <typename T> min::vec3<T> read_be_vec3(const mem_file&, size_t&);
+template <typename T> min::vec4<T> read_le_vec4(const mem_file&, size_t&);
+template <typename T> min::vec4<T> read_be_vec4(const mem_file&, size_t&);
+template <typename T> std::vector<min::vec2<T>> read_le_vector_vec2(const mem_file&, size_t&);
+template <typename T> std::vector<min::vec2<T>> read_be_vector_vec2(const mem_file&, size_t&);
+template <typename T> std::vector<min::vec3<T>> read_le_vector_vec3(const mem_file&, size_t&);
+template <typename T> std::vector<min::vec3<T>> read_be_vector_vec3(const mem_file&, size_t&);
+template <typename T> std::vector<min::vec4<T>> read_le_vector_vec4(const mem_file&, size_t&);
+template <typename T> std::vector<min::vec4<T>> read_be_vector_vec4(const mem_file&, size_t&);
 
 }
 #endif

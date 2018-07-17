@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "mem_chunk.h"
 
-inline min::mem_file min::mem_chunk::push_back_file(const std::string &file_name)
+min::mem_file min::mem_chunk::push_back_file(const std::string &file_name)
 {
     // Read bytes from file
     std::ifstream file(file_name, std::ios::in | std::ios::binary | std::ios::ate);
@@ -45,7 +45,7 @@ inline min::mem_file min::mem_chunk::push_back_file(const std::string &file_name
     }
 }
 
-inline void min::mem_chunk::load_memory_file(const std::string &file_name)
+void min::mem_chunk::load_memory_file(const std::string &file_name)
 {
     // Check that nothing funky is going on with char and uint8_t
     static_assert(sizeof(char) == 1, "Size of char is not 1");
@@ -141,7 +141,7 @@ inline void min::mem_chunk::load_memory_file(const std::string &file_name)
     }
 }
 
-inline void min::mem_chunk::save_memory_file(const std::string &file_name) const
+void min::mem_chunk::save_memory_file(const std::string &file_name) const
 {
     // Check that nothing funky is going on with char and uint8_t
     static_assert(sizeof(char) == 1, "Size of char is not 1");

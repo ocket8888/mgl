@@ -14,9 +14,3 @@ limitations under the License.
 */
 
 #include "dynamic_vertex.h"
-
-template <typename T, typename K, GLenum FLOAT_TYPE>
-inline constexpr GLenum min::dynamic_vertex<T,K,FLOAT_TYPE>::buffer_type()
-{
-    return GL_DYNAMIC_DRAW;
-}

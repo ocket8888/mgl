@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "shadow_buffer.h"
 
-inline void min::shadow_buffer::check_extensions() const
+void min::shadow_buffer::check_extensions() const
 {
     const bool fbo = GLEW_ARB_framebuffer_object;
 
@@ -26,7 +26,7 @@ inline void min::shadow_buffer::check_extensions() const
     }
 }
 
-inline void min::shadow_buffer::set_light_view(const min::vec3<float> &eye, const min::vec3<float> &look, const min::vec3<float> &up)
+void min::shadow_buffer::set_light_view(const min::vec3<float> &eye, const min::vec3<float> &look, const min::vec3<float> &up)
 {
     // forward: look - eye
     const vec3<float> forward = (look - eye).normalize();
@@ -130,7 +130,7 @@ min::shadow_buffer::~shadow_buffer()
     throw_gl_error();
 }
 
-inline void min::shadow_buffer::bind() const
+void min::shadow_buffer::bind() const
 {
     // Bind framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, _id);
@@ -139,7 +139,7 @@ inline void min::shadow_buffer::bind() const
     glViewport(0, 0, _width, _height);
 }
 
-inline void min::shadow_buffer::bind_default(const size_t width, const size_t height) const
+void min::shadow_buffer::bind_default(const size_t width, const size_t height) const
 {
     // Bind default framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -148,7 +148,7 @@ inline void min::shadow_buffer::bind_default(const size_t width, const size_t he
     glViewport(0, 0, width, height);
 }
 
-inline void min::shadow_buffer::bind_shadow_texture(const size_t layer) const
+void min::shadow_buffer::bind_shadow_texture(const size_t layer) const
 {
     // Activate the texture layer
     glActiveTexture(GL_TEXTURE0 + layer);
@@ -157,50 +157,50 @@ inline void min::shadow_buffer::bind_shadow_texture(const size_t layer) const
     glBindTexture(GL_TEXTURE_2D, _depth);
 }
 
-inline const min::mat4<float> &min::shadow_buffer::get_pv_matrix() const
+const min::mat4<float> &min::shadow_buffer::get_pv_matrix() const
 {
     // Return the proj-view matrix in opengl format
     return _pv;
 }
 
-inline const min::mat4<float> &min::shadow_buffer::get_shadow_matrix() const
+const min::mat4<float> &min::shadow_buffer::get_shadow_matrix() const
 {
     return _shadow;
 }
 
-inline const min::mat4<float> &min::shadow_buffer::get_v_matrix() const
+const min::mat4<float> &min::shadow_buffer::get_v_matrix() const
 {
     // Return the view matrix in opengl format
     return _v;
 }
 
-inline void min::shadow_buffer::set_light(const min::vec3<float> &light_position, const min::vec3<float> &light_look)
+void min::shadow_buffer::set_light(const min::vec3<float> &light_position, const min::vec3<float> &light_look)
 {
     // Set the view matrix for this light
     set_light_view(light_position, light_look, vec3<float>::up());
 }
 
-inline void min::shadow_buffer::set_view_width(const float width)
+void min::shadow_buffer::set_view_width(const float width)
 {
     _v_width = width;
 }
 
-inline void min::shadow_buffer::set_view_height(const float height)
+void min::shadow_buffer::set_view_height(const float height)
 {
     _v_height = height;
 }
 
-inline void min::shadow_buffer::set_view_near(const float near)
+void min::shadow_buffer::set_view_near(const float near)
 {
     _v_near = near;
 }
 
-inline void min::shadow_buffer::set_view_far(const float far)
+void min::shadow_buffer::set_view_far(const float far)
 {
     _v_far = far;
 }
 
-inline void min::shadow_buffer::set_texture_uniform(const min::program &program, const std::string &name, const size_t layer) const
+void min::shadow_buffer::set_texture_uniform(const min::program &program, const std::string &name, const size_t layer) const
 {
     const GLint sampler_location = glGetUniformLocation(program.id(), name.c_str());
     if (sampler_location == -1)

@@ -67,13 +67,13 @@ class mat2
     mat2(const T);
 
 
-    inline mat2<T> &operator*=(const mat2<T>&);
-    inline mat2<T> operator*(const mat2<T>&) const;
-    inline vec2<T> operator*(const vec2<T>&) const;
-    inline mat2<T> inverse() const;
-    inline mat2<T> &invert();
-    inline vec2<T> transform(const vec2<T>&) const;
-    inline mat2<T> &transpose();
+    mat2<T> &operator*=(const mat2<T>&);
+    mat2<T> operator*(const mat2<T>&) const;
+    vec2<T> operator*(const vec2<T>&) const;
+    mat2<T> inverse() const;
+    mat2<T> &invert();
+    vec2<T> transform(const vec2<T>&) const;
+    mat2<T> &transpose();
 };
 }
 

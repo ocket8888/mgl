@@ -15,9 +15,7 @@ limitations under the License.
 
 #include "ogg.h"
 
-using namespace min;
-
-size_t fake_read_ogg(void *const dest, const size_t byte_size, const size_t size_to_read, void *const fake)
+size_t min::fake_read_ogg(void *const dest, const size_t byte_size, const size_t size_to_read, void *const fake)
 {
     // Get the fake_file handle
     fake_file *const ff = reinterpret_cast<fake_file *const>(fake);
@@ -41,7 +39,7 @@ size_t fake_read_ogg(void *const dest, const size_t byte_size, const size_t size
     return length;
 }
 
-int fake_seek_ogg(void *const fake, const ogg_int64_t to, const int type)
+int min::fake_seek_ogg(void *const fake, const ogg_int64_t to, const int type)
 {
     // Get the fake_file handle
     fake_file *const ff = reinterpret_cast<fake_file *const>(fake);
@@ -77,13 +75,13 @@ int fake_seek_ogg(void *const fake, const ogg_int64_t to, const int type)
     return 0;
 }
 
-int fake_close_ogg(void *const fake)
+int min::fake_close_ogg(void *const fake)
 {
     // THE FILE IS FAKE!
     return 0;
 }
 
-long fake_tell_ogg(void *const fake)
+long min::fake_tell_ogg(void *const fake)
 {
     // Get the fake_file handle
     fake_file *const ff = reinterpret_cast<fake_file *const>(fake);
@@ -94,7 +92,7 @@ long fake_tell_ogg(void *const fake)
 
 
 // ogg member functions
-inline void ogg::load(const std::string _file)
+void min::ogg::load(const std::string _file)
 {
     std::ifstream file(_file, std::ios::in | std::ios::binary | std::ios::ate);
     if (file.is_open())
@@ -125,7 +123,7 @@ inline void ogg::load(const std::string _file)
 }
 
 template <class T>
-inline void ogg::load_little_endian_16(const T &data)
+void min::ogg::load_little_endian_16(const T &data)
 {
     // Check that nothing funky is going on with char and uint8_t
     static_assert(sizeof(char) == 1, "Size of char is not 1");
@@ -191,17 +189,17 @@ inline void ogg::load_little_endian_16(const T &data)
     ov_clear(&ov_file);
 }
 
-ogg::ogg(const std::string &file)
+min::ogg::ogg(const std::string &file)
 {
     load(file);
 }
 
-ogg::ogg(const mem_file &mem)
+min::ogg::ogg(const mem_file &mem)
 {
     load_little_endian_16<mem_file>(mem);
 }
 
-void ogg::clear()
+void min::ogg::clear()
 {
     // Delete WAV data and reset WAV
     _data.clear();
@@ -212,33 +210,33 @@ void ogg::clear()
     _bits_per_sample = 0;
 }
 
-bool ogg::is_mono() const
+bool min::ogg::is_mono() const
 {
     return _num_channels == 1;
 }
 
-bool ogg::is_stereo() const
+bool min::ogg::is_stereo() const
 {
     return _num_channels > 1;
 }
 
-const std::vector<uint8_t> &ogg::data() const
+const std::vector<uint8_t> &min::ogg::data() const
 {
     return _data;
 }
 
-uint32_t ogg::get_bits_per_sample() const
+uint32_t min::ogg::get_bits_per_sample() const
 {
     return _bits_per_sample;
 }
 
-size_t ogg::get_data_samples() const
+size_t min::ogg::get_data_samples() const
 {
     // Calculate number of samples in data buffer
     return (_data.size() * 8) / _bits_per_sample;
 }
 
-uint32_t ogg::get_sample_rate() const
+uint32_t min::ogg::get_sample_rate() const
 {
     return _sample_rate;
 }

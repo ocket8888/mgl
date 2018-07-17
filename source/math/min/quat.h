@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __QUATERNION__
-#define __QUATERNION__
+#ifndef QUATERNION
+#define QUATERNION
 
 namespace min
 {
@@ -38,9 +38,9 @@ class quat
     T _y;
     T _z;
 
-    inline quat<T> operator+(const quat<T>&) const;
-    inline quat<T> operator*(const T) const;
-    inline quat<T> &operator-=(const quat<T>&);
+    quat<T> operator+(const quat<T>&) const;
+    quat<T> operator*(const T) const;
+    quat<T> &operator-=(const quat<T>&);
 
   public:
     quat() : _w(1.0), _x(0.0), _y(0.0), _z(0.0) {}
@@ -50,26 +50,26 @@ class quat
     quat(const vec3<T>&, const T);
     quat(const vec3<T>&, const vec3<T>&);
 
-    inline static quat<T> from_x_axis(const T, const vec3<T>&);
-    inline void calculate_w();
-    inline quat<T> conjugate() const;
-    inline T dot(const quat<T>&) const;
-    inline quat<T> inverse() const;
-    inline static quat<T> lerp(const quat<T>&, const quat<T>&, const T);
-    inline static quat<T> interpolate(const quat<T>&, const quat<T>&, const T);
-    inline T magnitude() const;
-    inline quat<T> &normalize();
-    inline static quat<T> slerp(const quat<T>&, const quat<T>&, const T);
-    inline vec3<T> transform(const vec3<T>&) const;
-    inline quat<T> operator*(const quat<T>&) const;
-    inline quat<T> &operator*=(const quat<T>&);
-    inline T w() const;
-    inline T x() const;
-    inline void x(const T);
-    inline T y() const;
-    inline void y(const T);
-    inline T z() const;
-    inline void z(const T);
+    static quat<T> from_x_axis(const T, const vec3<T>&);
+    void calculate_w();
+    quat<T> conjugate() const;
+    T dot(const quat<T>&) const;
+    quat<T> inverse() const;
+    static quat<T> lerp(const quat<T>&, const quat<T>&, const T);
+    static quat<T> interpolate(const quat<T>&, const quat<T>&, const T);
+    T magnitude() const;
+    quat<T> &normalize();
+    static quat<T> slerp(const quat<T>&, const quat<T>&, const T);
+    vec3<T> transform(const vec3<T>&) const;
+    quat<T> operator*(const quat<T>&) const;
+    quat<T> &operator*=(const quat<T>&);
+    T w() const;
+    T x() const;
+    void x(const T);
+    T y() const;
+    void y(const T);
+    T z() const;
+    void z(const T);
 };
 }
 

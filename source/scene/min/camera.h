@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __CAMERA__
-#define __CAMERA__
+#ifndef CAMERA
+#define CAMERA
 
 #include <cmath>
 
@@ -44,25 +44,25 @@ class camera
   public:
     camera();
 
-    inline void force_update();
-    inline const vec3<T> &get_forward() const;
-    inline const vec3<T> &get_right() const;
-    inline const vec3<T> &get_up() const;
-    inline frustum<T> &get_frustum();
-    inline const frustum<T> &get_frustum() const;
-    inline const vec3<T> &get_look_at() const;
-    inline const mat4<T> &get_pv_matrix();
-    inline const mat4<T> &get_v_matrix();
-    inline const vec3<T> &get_position() const;
-    inline void make_dirty();
-    inline quat<T> move_look_at(const T, const T);
+    void force_update();
+    const vec3<T> &get_forward() const;
+    const vec3<T> &get_right() const;
+    const vec3<T> &get_up() const;
+    frustum<T> &get_frustum();
+    const frustum<T> &get_frustum() const;
+    const vec3<T> &get_look_at() const;
+    const mat4<T> &get_pv_matrix();
+    const mat4<T> &get_v_matrix();
+    const vec3<T> &get_position() const;
+    void make_dirty();
+    quat<T> move_look_at(const T, const T);
     vec3<T> project_point(const T s) const;
-    inline void set_look_at(const vec3<T>&);
-    inline void set_orthographic();
-    inline void set_perspective();
-    inline void set_position(const vec3<T>&);
-    inline void set(const vec3<T>&, const vec3<T>&);
-    inline void set(const vec3<T>&, const vec3<T>&, const vec3<T>&);
+    void set_look_at(const vec3<T>&);
+    void set_orthographic();
+    void set_perspective();
+    void set_position(const vec3<T>&);
+    void set(const vec3<T>&, const vec3<T>&);
+    void set(const vec3<T>&, const vec3<T>&, const vec3<T>&);
 
 };
 }

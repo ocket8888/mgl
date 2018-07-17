@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __EMITTERBUFFER__
-#define __EMITTERBUFFER__
+#ifndef EMITTERBUFFER
+#define EMITTERBUFFER
 
 #include <cmath>
 #include <random>
@@ -64,38 +64,38 @@ class emitter_buffer
     std::vector<vec3<T>> _speed;
     std::vector<std::pair<vec3<T>, T>> _attractors;
 
-    inline void accumulate(const T);
-    inline void check_extensions() const;
-    inline vec3<T> compute_force(const vec3<T>&, const vec3<T>&);
-    inline void seed(const size_t, const size_t);
+    void accumulate(const T);
+    void check_extensions() const;
+    vec3<T> compute_force(const vec3<T>&, const vec3<T>&);
+    void seed(const size_t, const size_t);
 
   public:
     emitter_buffer(const vec3<T>&, const size_t, const size_t, const T, const T, const T);
     ~emitter_buffer();
     emitter_buffer(const emitter_buffer&) = delete;
 
-    inline size_t attractor_add(const vec3<T>&, const T);
-    inline void attractor_clear();
-    inline void set_attractor(const vec3<T>&, const T, const size_t);
-    inline void bind() const;
-    inline void unbind() const;
-    inline void draw() const;
-    inline T get_accum() const;
-    inline const vec3<T> &get_position() const;
-    inline vec3<T> random();
-    inline void reset();
-    inline void reset_accum();
-    inline void resize(const size_t);
-    inline void set_mass(const T);
-    inline void set_gravity(const vec3<T>&);
-    inline void set_position(const vec3<T>&);
-    inline void set_random(const T, const T);
-    inline void set_rotation_axis(const min::vec3<T>&);
-    inline void set_speed(const vec3<T>&);
-    inline void set_wind(const vec3<T>&);
+    size_t attractor_add(const vec3<T>&, const T);
+    void attractor_clear();
+    void set_attractor(const vec3<T>&, const T, const size_t);
+    void bind() const;
+    void unbind() const;
+    void draw() const;
+    T get_accum() const;
+    const vec3<T> &get_position() const;
+    vec3<T> random();
+    void reset();
+    void reset_accum();
+    void resize(const size_t);
+    void set_mass(const T);
+    void set_gravity(const vec3<T>&);
+    void set_position(const vec3<T>&);
+    void set_random(const T, const T);
+    void set_rotation_axis(const min::vec3<T>&);
+    void set_speed(const vec3<T>&);
+    void set_wind(const vec3<T>&);
     void step(const T);
-    template <typename F> inline void set(const F&, const T);
-    inline void upload() const;
+    template <typename F> void set(const F&, const T);
+    void upload() const;
 };
 }
 

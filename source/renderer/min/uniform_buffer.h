@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __UNIFORMBUFFER__
-#define __UNIFORMBUFFER__
+#ifndef UNIFORMBUFFER
+#define UNIFORMBUFFER
 
 #include <cstdint>
 #include <cstring>
@@ -59,10 +59,10 @@ class uniform_buffer
     GLint _matrix_offsets[2];
     GLint _vector_offsets[2];
 
-    inline void check_extensions() const;
-    inline size_t get_light_bytes() const;
-    inline size_t get_matrix_bytes() const;
-    inline size_t get_vector_bytes() const;
+    void check_extensions() const;
+    size_t get_light_bytes() const;
+    size_t get_matrix_bytes() const;
+    size_t get_vector_bytes() const;
     void set_lights(const program&) const;
     void set_matrix(const program&) const;
     void set_vector(const program&) const;
@@ -78,33 +78,33 @@ class uniform_buffer
 
     void defer_construct(const unsigned, const unsigned, const unsigned);
     void load_buffers();
-    inline size_t add_light(const light<T>&);
-    inline size_t add_matrix(const mat4<T>&);
-    inline size_t add_vector(const vec4<T>&);
-    inline void bind() const;
-    inline void clear_lights();
-    inline void clear_matrix();
-    inline void clear_vector();
-    inline static size_t get_max_buffer_size();
-    inline void insert_light(const std::vector<light<T>>&);
-    inline void insert_matrix(const std::vector<mat4<T>>&);
-    inline void insert_vector(const std::vector<vec4<T>>&);
-    inline size_t light_size() const;
-    inline size_t matrix_size() const;
-    inline size_t vector_size() const;
-    inline void reserve_lights(const size_t);
-    inline void reserve_matrix(const size_t);
-    inline void reserve_vector(const size_t);
-    inline void set_light(const light<T>&, const size_t);
-    inline void set_matrix(const mat4<T>&, const size_t);
-    inline void set_vector(const vec4<T>&, const size_t);
-    inline void set_program_lights(const program&) const;
-    inline void set_program_matrix(const program&) const;
-    inline void set_program_vector(const program&) const;
-    inline void update() const;
-    inline void update_lights() const;
-    inline void update_matrix() const;
-    inline void update_vector() const;
+    size_t add_light(const light<T>&);
+    size_t add_matrix(const mat4<T>&);
+    size_t add_vector(const vec4<T>&);
+    void bind() const;
+    void clear_lights();
+    void clear_matrix();
+    void clear_vector();
+    static size_t get_max_buffer_size();
+    void insert_light(const std::vector<light<T>>&);
+    void insert_matrix(const std::vector<mat4<T>>&);
+    void insert_vector(const std::vector<vec4<T>>&);
+    size_t light_size() const;
+    size_t matrix_size() const;
+    size_t vector_size() const;
+    void reserve_lights(const size_t);
+    void reserve_matrix(const size_t);
+    void reserve_vector(const size_t);
+    void set_light(const light<T>&, const size_t);
+    void set_matrix(const mat4<T>&, const size_t);
+    void set_vector(const vec4<T>&, const size_t);
+    void set_program_lights(const program&) const;
+    void set_program_matrix(const program&) const;
+    void set_program_vector(const program&) const;
+    void update() const;
+    void update_lights() const;
+    void update_matrix() const;
+    void update_vector() const;
 
 };
 }

@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __OOBBOX__
-#define __OOBBOX__
+#ifndef OOBBOX
+#define OOBBOX
 
 #include <cmath>
 #include <vector>
@@ -33,9 +33,9 @@ class oobbox_base
     vec<T> _half_extent;
     rot<T> _rotation;
 
-    inline void add(const std::vector<vec<T>>&);
-    inline const vec<T> get_local_min() const;
-    inline const vec<T> get_local_max() const;
+    void add(const std::vector<vec<T>>&);
+    const vec<T> get_local_min() const;
+    const vec<T> get_local_max() const;
 
   public:
     oobbox_base() : _axes(vec<T>::axes()) {}
@@ -43,22 +43,22 @@ class oobbox_base
         : _axes(vec<T>::axes()), _center((max + min) * 0.5), _half_extent((max - min) * 0.5) {}
     oobbox_base(const std::vector<vec<T>>&);
 
-    inline vec<T> align(const vec<T>&) const;
-    inline vec<T> closest_point(const vec<T>&) const;
-    inline const coord_sys<T, vec> &get_axes() const;
-    inline const vec<T> &get_center() const;
-    inline const vec<T> &get_half_extent() const;
-    inline vec<T> get_extent() const;
-    inline const vec<T> get_min() const;
-    inline const vec<T> get_max() const;
-    inline const rot<T> &get_rotation() const;
-    inline std::vector<std::pair<vec<T>, vec<T>>> grid(size_t) const;
-    inline bool point_inside(const vec<T>&) const;
-    inline void set_position(const vec<T>&);
-    inline void set_rotation(const rot<T>&);
-    inline T square_distance(const vec<T>&) const;
-    inline T square_size() const;
-    inline std::vector<std::pair<vec<T>, vec<T>>> subdivide() const;
+    vec<T> align(const vec<T>&) const;
+    vec<T> closest_point(const vec<T>&) const;
+    const coord_sys<T, vec> &get_axes() const;
+    const vec<T> &get_center() const;
+    const vec<T> &get_half_extent() const;
+    vec<T> get_extent() const;
+    const vec<T> get_min() const;
+    const vec<T> get_max() const;
+    const rot<T> &get_rotation() const;
+    std::vector<std::pair<vec<T>, vec<T>>> grid(size_t) const;
+    bool point_inside(const vec<T>&) const;
+    void set_position(const vec<T>&);
+    void set_rotation(const rot<T>&);
+    T square_distance(const vec<T>&) const;
+    T square_size() const;
+    std::vector<std::pair<vec<T>, vec<T>>> subdivide() const;
 
 };
 

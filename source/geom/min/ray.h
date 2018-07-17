@@ -12,8 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-#ifndef __RAY__
-#define __RAY__
+#ifndef RAY
+#define RAY
 
 #include "math/min/utility.h"
 
@@ -32,11 +32,11 @@ class ray
     ray() : _origin(), _dir(), _inv() {}
     ray(const vec<T>&, const vec<T>&);
 
-    inline T set(const vec<T>&, const vec<T>&);
-    inline const vec<T> &get_origin() const;
-    inline const vec<T> &get_direction() const;
-    inline const vec<T> &get_inverse() const;
-    inline vec<T> interpolate(const T) const;
+    T set(const vec<T>&, const vec<T>&);
+    const vec<T> &get_origin() const;
+    const vec<T> &get_direction() const;
+    const vec<T> &get_inverse() const;
+    vec<T> interpolate(const T) const;
 };
 }
 

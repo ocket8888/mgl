@@ -44,50 +44,50 @@ template <typename T>
 min::camera<T>::camera() : _look(0.0, 0.0, 1.0), _forward(0.0, 0.0, 1.0), _up(0.0, 1.0, 0.0), _dirty(true), _proj_ortho(true) {}
 
 template <typename T>
-inline void min::camera<T>::force_update()
+void min::camera<T>::force_update()
 {
     // If the camera needs to be updated
     update();
 }
 
 template <typename T>
-inline const min::vec3<T> &min::camera<T>::get_forward() const
+const min::vec3<T> &min::camera<T>::get_forward() const
 {
     return _forward;
 }
 
 template <typename T>
-inline const min::vec3<T> &min::camera<T>::get_right() const
+const min::vec3<T> &min::camera<T>::get_right() const
 {
     return _f.get_right();
 }
 
 template <typename T>
-inline const min::vec3<T> &min::camera<T>::get_up() const
+const min::vec3<T> &min::camera<T>::get_up() const
 {
     return _up;
 }
 
 template <typename T>
-inline min::frustum<T> &min::camera<T>::get_frustum()
+min::frustum<T> &min::camera<T>::get_frustum()
 {
     return _f;
 }
 
 template <typename T>
-inline const min::frustum<T> &min::camera<T>::get_frustum() const
+const min::frustum<T> &min::camera<T>::get_frustum() const
 {
     return _f;
 }
 
 template <typename T>
-inline const min::vec3<T> &min::camera<T>::get_look_at() const
+const min::vec3<T> &min::camera<T>::get_look_at() const
 {
     return _look;
 }
 
 template <typename T>
-inline const min::mat4<T> &min::camera<T>::get_pv_matrix()
+const min::mat4<T> &min::camera<T>::get_pv_matrix()
 {
     // If the camera needs to be updated
     update();
@@ -97,7 +97,7 @@ inline const min::mat4<T> &min::camera<T>::get_pv_matrix()
 }
 
 template <typename T>
-inline const min::mat4<T> &min::camera<T>::get_v_matrix()
+const min::mat4<T> &min::camera<T>::get_v_matrix()
 {
     // If the camera needs to be updated
     update();
@@ -107,19 +107,19 @@ inline const min::mat4<T> &min::camera<T>::get_v_matrix()
 }
 
 template <typename T>
-inline const min::vec3<T> &min::camera<T>::get_position() const
+const min::vec3<T> &min::camera<T>::get_position() const
 {
     return _p;
 }
 
 template <typename T>
-inline void min::camera<T>::make_dirty()
+void min::camera<T>::make_dirty()
 {
     _dirty = true;
 }
 
 template <typename T>
-inline min::quat<T> min::camera<T>::move_look_at(const T x, const T y)
+min::quat<T> min::camera<T>::move_look_at(const T x, const T y)
 {
     // Calculate the direction camera is facing, centered at origin
     vec3<T> direction = _look - _p;
@@ -159,7 +159,7 @@ min::vec3<T> min::camera<T>::project_point(const T s) const
 }
 
 template <typename T>
-inline void min::camera<T>::set_look_at(const min::vec3<T> &look)
+void min::camera<T>::set_look_at(const min::vec3<T> &look)
 {
     // Compute new forward vector
     const vec3<T> forward = (look - _p).normalize();
@@ -181,7 +181,7 @@ inline void min::camera<T>::set_look_at(const min::vec3<T> &look)
 }
 
 template <typename T>
-inline void min::camera<T>::set_orthographic()
+void min::camera<T>::set_orthographic()
 {
     _proj_ortho = true;
 
@@ -193,7 +193,7 @@ inline void min::camera<T>::set_orthographic()
 }
 
 template <typename T>
-inline void min::camera<T>::set_perspective()
+void min::camera<T>::set_perspective()
 {
     _proj_ortho = false;
 
@@ -205,7 +205,7 @@ inline void min::camera<T>::set_perspective()
 }
 
 template <typename T>
-inline void min::camera<T>::set_position(const min::vec3<T> &p)
+void min::camera<T>::set_position(const min::vec3<T> &p)
 {
     // Change lookat based on updated position
     _look += (p - _p);
@@ -218,7 +218,7 @@ inline void min::camera<T>::set_position(const min::vec3<T> &p)
 }
 
 template <typename T>
-inline void min::camera<T>::set(const min::vec3<T> &p, const min::vec3<T> &look)
+void min::camera<T>::set(const min::vec3<T> &p, const min::vec3<T> &look)
 {
     // Compute new forward vector
     const vec3<T> forward = (look - p).normalize();
@@ -243,7 +243,7 @@ inline void min::camera<T>::set(const min::vec3<T> &p, const min::vec3<T> &look)
 }
 
 template <typename T>
-inline void min::camera<T>::set(const min::vec3<T> &p, const min::vec3<T> &look, const min::vec3<T> &up)
+void min::camera<T>::set(const min::vec3<T> &p, const min::vec3<T> &look, const min::vec3<T> &up)
 {
     // Update position
     _p = p;

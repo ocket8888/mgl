@@ -77,7 +77,7 @@ class mat4
 
     // constructs a translation matrix
     mat4(const vec3<T> &t)
-        : _a(1.0), _b(0.0), _c(0.0), _d(0.0), _e(0.0), _f(1.0), _g(0.0), _h(0.0), _i(0.0), _j(0.0), _k(1.0), _l(0.0), _m(t.x()), _n(t.y()), _o(t.z()), _p(1.0) {}
+        : _a(1.0), _b(0.0), _c(0.0), _d(0.0), _e(0.0), _f(1.0), _g(0.0), _h(0.0), _i(0.0), _j(0.0), _k(1.0), _l(0.0), _m(t.x), _n(t.y), _o(t.z), _p(1.0) {}
 
     // constructs a 3D rotation matrix
     mat4(const mat3<T> &r)
@@ -85,36 +85,36 @@ class mat4
 
     // constructs a matrix that first rotates then translates in 3D
     mat4(const vec3<T> &t, const mat3<T> &r)
-        : _a(r._a), _b(r._b), _c(r._c), _d(0.0), _e(r._d), _f(r._e), _g(r._f), _h(0.0), _i(r._g), _j(r._h), _k(r._i), _l(0.0), _m(t.x()), _n(t.y()), _o(t.z()), _p(1.0) {}
+        : _a(r._a), _b(r._b), _c(r._c), _d(0.0), _e(r._d), _f(r._e), _g(r._f), _h(0.0), _i(r._g), _j(r._h), _k(r._i), _l(0.0), _m(t.x), _n(t.y), _o(t.z), _p(1.0) {}
 
     // constructs a lookat matrix from 4 vectors: right(x), up(y), forward(z), and eye
     mat4(const vec3<T> &x, const vec3<T> &y, const vec3<T> &z, const vec3<T> &e)
-        : _a(x.x()), _b(x.y()), _c(x.z()), _d(-x.dot(e)), _e(y.x()), _f(y.y()), _g(y.z()), _h(-y.dot(e)), _i(z.x()), _j(z.y()), _k(z.z()), _l(-z.dot(e)), _m(0.0), _n(0.0), _o(0.0), _p(1.0) {}
+        : _a(x.x), _b(x.y), _c(x.z), _d(-x.dot(e)), _e(y.x), _f(y.y), _g(y.z), _h(-y.dot(e)), _i(z.x), _j(z.y), _k(z.z), _l(-z.dot(e)), _m(0.0), _n(0.0), _o(0.0), _p(1.0) {}
 
     // constructs an orthographic projection matrix
     mat4(const T dx, const T dy, const T near, const T far)
         : _a(1.0 / dx), _b(0.0), _c(0.0), _d(0.0), _e(0.0), _f(1.0 / dy), _g(0.0), _h(0.0), _i(0.0), _j(0.0), _k(-2.0 / (far - near)), _l((far + near) / (far - near)), _m(0.0), _n(0.0), _o(0.0), _p(1.0) {}
 
 
-    inline void one(vec4<T>&);
-    inline void two(vec4<T>&);
-    inline void three(vec4<T>&);
-    inline void four(vec4<T>&);
-    inline void w(const T);
-    inline T w() const;
-    inline mat4<T> operator*(const mat4<T>&) const;
-    inline mat4<T> &operator*=(const mat4<T>&);
-    inline vec4<T> operator*(const vec4<T>&) const;
-    inline vec3<T> get_translation() const;
-    inline mat4<T> &set_translation(const vec3<T>&);
-    inline quat<T> get_rotation() const;
-    inline mat4<T> &set_rotation(const mat3<T>&);
-    inline vec3<T> get_scale() const;
-    inline mat4<T> &set_scale(const vec3<T>&);
-    inline bool invert();
-    inline vec4<T> transform(const vec4<T>&) const;
-    inline mat4<T> &transpose();
-    inline mat4<T> transpose_multiply(const mat4<T>&) const;
+    void one(vec4<T>&);
+    void two(vec4<T>&);
+    void three(vec4<T>&);
+    void four(vec4<T>&);
+    void w(const T);
+    T w() const;
+    mat4<T> operator*(const mat4<T>&) const;
+    mat4<T> &operator*=(const mat4<T>&);
+    vec4<T> operator*(const vec4<T>&) const;
+    vec3<T> get_translation() const;
+    mat4<T> &set_translation(const vec3<T>&);
+    quat<T> get_rotation() const;
+    mat4<T> &set_rotation(const mat3<T>&);
+    vec3<T> get_scale() const;
+    mat4<T> &set_scale(const vec3<T>&);
+    bool invert();
+    vec4<T> transform(const vec4<T>&) const;
+    mat4<T> &transpose();
+    mat4<T> transpose_multiply(const mat4<T>&) const;
 
 };
 }
