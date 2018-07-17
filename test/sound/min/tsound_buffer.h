@@ -20,85 +20,9 @@ limitations under the License.
 
 #include "file/min/ogg.h"
 #include "file/min/wave.h"
-#include "sound/min/sound_buffer.h"
 #include "platform/min/test.h"
+#include "sound/min/sound_buffer.h"
 
-bool test_sound_buffer()
-{
-    bool out = true;
-    {
-        // Load a WAV file
-        {
-            // Alert what file we are playing
-            std::cout << "Playing 'invention_no_1.wav' WAVE file" << std::endl;
-
-            // Load a sound buffer
-            min::sound_buffer player;
-
-            // Enumerate available devices
-            player.enumerate_devices();
-
-            // Load a WAVE file
-            min::wave wav = min::wave("data/sound/invention_no_1.wav");
-            size_t w = player.add_wave_pcm(wav);
-
-            // Clear the sound data
-            wav.clear();
-
-            // Create a source
-            size_t s = player.add_source();
-
-            // Bind source to wave data
-            player.bind(w, s);
-
-            // Play the sound file synchronously
-            player.play_sync(s);
-
-            // See if we got any errors
-            out = out && !min::check_al_error();
-            if (!out)
-            {
-                throw std::runtime_error("Failed sound buffer test");
-            }
-        }
-
-        // Load a OGG file
-        {
-            // Alert what file we are playing
-            std::cout << "Playing 'invention_no_1.ogg' OGG file" << std::endl;
-
-            // Load a sound buffer
-            min::sound_buffer player;
-
-            // Enumerate available devices
-            player.enumerate_devices();
-
-            // Load a WAVE file
-            min::ogg ogg = min::ogg("data/sound/invention_no_1.ogg");
-            size_t o = player.add_ogg_pcm(ogg);
-
-            // Clear the sound data
-            ogg.clear();
-
-            // Create a source
-            size_t s = player.add_source();
-
-            // Bind source to wave data
-            player.bind(o, s);
-
-            // Play the sound file synchronously
-            player.play_sync(s);
-
-            // See if we got any errors
-            out = out && !min::check_al_error();
-            if (!out)
-            {
-                throw std::runtime_error("Failed sound buffer test");
-            }
-        }
-    }
-
-    return out;
-}
+bool test_sound_buffer();
 
 #endif
