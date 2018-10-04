@@ -15,11 +15,11 @@ limitations under the License.
 #ifndef TESTMODEL
 #define TESTMODEL
 
-#include <min/aabbox.h>
-#include <min/model.h>
-#include <min/test.h>
-#include <min/vec4.h>
-#include <min/wavefront.h>
+#include "geom/min/aabbox.h"
+#include "scene/min/model.h"
+#include "platform/min/test.h"
+#include "math/min/vec4.h"
+#include "file/min/wavefront.h"
 #include <stdexcept>
 
 bool test_model()
@@ -59,8 +59,8 @@ bool test_model()
     // Test model uv retrieve
     cm = &model.get_meshes();
     uv = (*cm)[0].uv[4];
-    out = out && compare(0.3333, uv.x(), 1E-4);
-    out = out && compare(0.3333, uv.y(), 1E-4);
+    out = out && compare(0.3333, uv.x, 1E-4);
+    out = out && compare(0.3333, uv.y, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model uv retrieve");
@@ -69,9 +69,9 @@ bool test_model()
     // Test model normal retrieve
     cm = &model.get_meshes();
     n = (*cm)[0].normal[4];
-    out = out && compare(0.0, n.x(), 1E-4);
-    out = out && compare(1.0, n.y(), 1E-4);
-    out = out && compare(0.0, n.z(), 1E-4);
+    out = out && compare(0.0, n.x, 1E-4);
+    out = out && compare(1.0, n.y, 1E-4);
+    out = out && compare(0.0, n.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model normal retrieve");
@@ -82,14 +82,14 @@ bool test_model()
     t = (*cm)[0].tangent[4];
     b = (*cm)[0].bitangent[4];
     n = b.cross(t).normalize();
-    out = out && compare(0.0, n.x(), 1E-4);
-    out = out && compare(1.0, n.y(), 1E-4);
-    out = out && compare(0.0, n.z(), 1E-4);
+    out = out && compare(0.0, n.x, 1E-4);
+    out = out && compare(1.0, n.y, 1E-4);
+    out = out && compare(0.0, n.z, 1E-4);
 
     // Check tangent vector
-    out = out && compare(0.0, t.x(), 1E-4);
-    out = out && compare(0.0, t.y(), 1E-4);
-    out = out && compare(-1.0, t.z(), 1E-4);
+    out = out && compare(0.0, t.x, 1E-4);
+    out = out && compare(0.0, t.y, 1E-4);
+    out = out && compare(-1.0, t.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model tangent orthogonality");
@@ -97,18 +97,18 @@ bool test_model()
 
     // Check tangent vector: N X B = T
     t = n.cross(b);
-    out = out && compare(0.0, t.x(), 1E-4);
-    out = out && compare(0.0, t.y(), 1E-4);
-    out = out && compare(-1.0, t.z(), 1E-4);
+    out = out && compare(0.0, t.x, 1E-4);
+    out = out && compare(0.0, t.y, 1E-4);
+    out = out && compare(-1.0, t.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model tangent-bitangent orthogonality");
     }
 
     // Check bitangent vector
-    out = out && compare(1.0, b.x(), 1E-4);
-    out = out && compare(0.0, b.y(), 1E-4);
-    out = out && compare(0.0, b.z(), 1E-4);
+    out = out && compare(1.0, b.x, 1E-4);
+    out = out && compare(0.0, b.y, 1E-4);
+    out = out && compare(0.0, b.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model bitangent orthogonality");
@@ -116,9 +116,9 @@ bool test_model()
 
     // Check bitangent vector: T X N = B
     b = t.cross(n);
-    out = out && compare(1.0, b.x(), 1E-4);
-    out = out && compare(0.0, b.y(), 1E-4);
-    out = out && compare(0.0, b.z(), 1E-4);
+    out = out && compare(1.0, b.x, 1E-4);
+    out = out && compare(0.0, b.y, 1E-4);
+    out = out && compare(0.0, b.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model bitangent-tangent orthogonality");
@@ -127,9 +127,9 @@ bool test_model()
     // Test normal calculation
     model.calculate_normals();
     n = (*cm)[0].normal[4];
-    out = out && compare(0.0, n.x(), 1E-4);
-    out = out && compare(1.0, n.y(), 1E-4);
-    out = out && compare(0.0, n.z(), 1E-4);
+    out = out && compare(0.0, n.x, 1E-4);
+    out = out && compare(1.0, n.y, 1E-4);
+    out = out && compare(0.0, n.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model calculate_normals");
@@ -137,9 +137,9 @@ bool test_model()
 
     // Test get center
     p = model.get_center();
-    out = out && compare(0.0, p.x(), 1E-4);
-    out = out && compare(0.0, p.y(), 1E-4);
-    out = out && compare(0.0, p.z(), 1E-4);
+    out = out && compare(0.0, p.x, 1E-4);
+    out = out && compare(0.0, p.y, 1E-4);
+    out = out && compare(0.0, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model get_center");
@@ -148,9 +148,9 @@ bool test_model()
     // Test center_model
     model.center_model();
     p = model.get_center();
-    out = out && compare(0.0, p.x(), 1E-4);
-    out = out && compare(0.0, p.y(), 1E-4);
-    out = out && compare(0.0, p.z(), 1E-4);
+    out = out && compare(0.0, p.x, 1E-4);
+    out = out && compare(0.0, p.y, 1E-4);
+    out = out && compare(0.0, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed model center_model");

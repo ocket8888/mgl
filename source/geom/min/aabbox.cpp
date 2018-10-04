@@ -15,6 +15,8 @@ limitations under the License.
 
 #include "aabbox.h"
 
+template class min::aabbox<float, min::vec3>;
+
 template <typename T, template <typename> class vec>
 min::aabbox<T, vec>::aabbox(const std::vector<vec<T>> &verts) : _min(), _max() {
 	add(verts);

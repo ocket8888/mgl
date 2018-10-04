@@ -15,6 +15,9 @@ limitations under the License.
 
 #include "wavefront.h"
 
+template class min::wavefront<double, unsigned short>;
+template class min::wavefront<float, unsigned int>;
+
 template <typename T, typename K>
 void min::wavefront<T,K>::flush()
 {

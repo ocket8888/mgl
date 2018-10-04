@@ -15,6 +15,9 @@ limitations under the License.
 
 #include "mesh.h"
 
+template class min::mesh<double, unsigned short>;
+template class min::mesh<float, unsigned int>;
+
 template <typename T, typename K>
 void min::mesh<T,K>::calculate_normal(const size_t a, const size_t b, const size_t c)
 {
@@ -62,11 +65,11 @@ void min::mesh<T,K>::calculate_tangent(const size_t a, const size_t b, const siz
     const vec2<T> duv2 = uv2 - uv0;
 
     // Calculate the determinant
-    const T det = 1.0 / (duv1.x() * duv2.y() - duv1.y() * duv2.x());
+    const T det = 1.0 / (duv1.x * duv2.y - duv1.y * duv2.x);
 
     // Solve inverse matrix equations and calculate tangents
-    const vec3<T> tan = (dv1 * duv2.y() - dv2 * duv1.y()) * det;
-    const vec3<T> bit = (dv2 * duv1.x() - dv1 * duv2.x()) * det;
+    const vec3<T> tan = (dv1 * duv2.y - dv2 * duv1.y) * det;
+    const vec3<T> bit = (dv2 * duv1.x - dv1 * duv2.x) * det;
 
     add_tangents(std::make_pair(tan, bit), ia);
     add_tangents(std::make_pair(tan, bit), ib);
@@ -219,7 +222,7 @@ void min::mesh<T,K>::flip_uv_x_axis()
 {
     for (auto &a : uv)
     {
-        a.x(1.0 - a.x());
+        a.x = 1.0 - a.x;
     }
 }
 
@@ -228,7 +231,7 @@ void min::mesh<T,K>::flip_uv_y_axis()
 {
     for (auto &a : uv)
     {
-        a.y(1.0 - a.y());
+        a.y = 1.0 - a.y;
     }
 }
 

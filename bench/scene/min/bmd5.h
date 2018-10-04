@@ -16,9 +16,9 @@ limitations under the License.
 #define __BENCHMD5__
 
 #include <chrono>
-#include <min/md5_anim.h>
-#include <min/md5_mesh.h>
-#include <min/md5_model.h>
+#include "file/min/md5_anim.h"
+#include "file/min/md5_mesh.h"
+#include "scene/min/md5_model.h"
 
 double bench_md5()
 {

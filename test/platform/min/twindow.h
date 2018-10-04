@@ -16,8 +16,8 @@ limitations under the License.
 #define TESTWINDOW
 
 #include <iostream>
-#include <min/test.h>
-#include <min/window.h>
+#include "platform/min/test.h"
+#include "platform/min/window.h"
 #include <stdexcept>
 
 bool key_press_test = false;

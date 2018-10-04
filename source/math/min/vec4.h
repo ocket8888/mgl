@@ -109,9 +109,9 @@ class vec4
     static std::vector<std::pair<vec4<T>, T>> subdivide_center(const vec4<T>&, const vec4<T>&, const T);
     static void subdivide_ray(std::vector<size_t>&, const vec4<T>&, const vec4<T>&, const vec4<T>&, const vec4<T>&, const vec4<T>&);
     static void sub_overlap(std::vector<uint_fast8_t>&, const vec4<T>&, const vec4<T>&, const vec4<T>&);
-    constexpr static T unit_length();
-    constexpr static T inverse_unit_length();
-    constexpr static vec4<T> up();
+    constexpr static T unit_length(){return var<T>::SQRT3;}
+    constexpr static T inverse_unit_length(){return var<T>::INV_SQRT3;}
+    constexpr static vec4<T> up(){return vec4<T>(0.0, 1.0, 0.0, 1.0);}
     bool within(const vec4<T>&, const vec4<T>&) const;
     vec4<T> &operator+=(const T);
     vec4<T> &operator+=(const vec4<T>&);

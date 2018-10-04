@@ -16,7 +16,7 @@ limitations under the License.
 #define BENCHWAVEFRONT
 
 #include <chrono>
-#include <min/wavefront.h>
+#include "file/min/wavefront.h"
 
 double bench_wavefront()
 {

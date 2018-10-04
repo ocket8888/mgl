@@ -15,10 +15,10 @@ limitations under the License.
 #ifndef TESTAABBTREE
 #define TESTAABBTREE
 
-#include <min/aabbox.h>
-#include <min/test.h>
-#include <min/tree.h>
-#include <min/vec3.h>
+#include "geom/min/aabbox.h"
+#include "platform/min/test.h"
+#include "scene/min/tree.h"
+#include "math/min/vec3.h"
 #include <stdexcept>
 
 bool test_aabb_tree()
@@ -85,8 +85,8 @@ bool test_aabb_tree()
         // Test get_cell center
         auto *node = &t.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(2.8125, p.x(), 1E-4);
-        out = out && compare(2.8125, p.y(), 1E-4);
+        out = out && compare(2.8125, p.x, 1E-4);
+        out = out && compare(2.8125, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec2 get_cell 1 get_center");
@@ -95,8 +95,8 @@ bool test_aabb_tree()
         // Check the cell extents
         // Extent depth 5 should 20/2/2/2/2/2 = 0.625
         p = node->get_cell().get_extent();
-        out = out && compare(0.625, p.x(), 1E-4);
-        out = out && compare(0.625, p.y(), 1E-4);
+        out = out && compare(0.625, p.x, 1E-4);
+        out = out && compare(0.625, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec2 get_cell 1 cell_extents");
@@ -114,8 +114,8 @@ bool test_aabb_tree()
         // Test get leaf center
         node = &t.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(2.1875, p.x(), 1E-4);
-        out = out && compare(2.1875, p.y(), 1E-4);
+        out = out && compare(2.1875, p.x, 1E-4);
+        out = out && compare(2.1875, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec2 get_cell 2 get_center");
@@ -133,8 +133,8 @@ bool test_aabb_tree()
         // Test get leaf center
         node = &t.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(0.9375, p.x(), 1E-4);
-        out = out && compare(0.9375, p.y(), 1E-4);
+        out = out && compare(0.9375, p.x, 1E-4);
+        out = out && compare(0.9375, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec2 get_cell 3 get_center");
@@ -256,9 +256,9 @@ bool test_aabb_tree()
         // Test get_cell center
         auto *node = &t.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(2.8125, p.x(), 1E-4);
-        out = out && compare(2.8125, p.y(), 1E-4);
-        out = out && compare(2.8125, p.z(), 1E-4);
+        out = out && compare(2.8125, p.x, 1E-4);
+        out = out && compare(2.8125, p.y, 1E-4);
+        out = out && compare(2.8125, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec3 get_cell 1 get_center");
@@ -267,9 +267,9 @@ bool test_aabb_tree()
         // Check the cell extents
         // Extent depth 5 should 20/2/2/2/2/2 = 0.625
         p = node->get_cell().get_extent();
-        out = out && compare(0.625, p.x(), 1E-4);
-        out = out && compare(0.625, p.y(), 1E-4);
-        out = out && compare(0.625, p.z(), 1E-4);
+        out = out && compare(0.625, p.x, 1E-4);
+        out = out && compare(0.625, p.y, 1E-4);
+        out = out && compare(0.625, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec3 get_cell 1 cell_extents");
@@ -287,9 +287,9 @@ bool test_aabb_tree()
         // Test get leaf center
         node = &t.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(2.1875, p.x(), 1E-4);
-        out = out && compare(2.1875, p.y(), 1E-4);
-        out = out && compare(2.1875, p.z(), 1E-4);
+        out = out && compare(2.1875, p.x, 1E-4);
+        out = out && compare(2.1875, p.y, 1E-4);
+        out = out && compare(2.1875, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec3 get_cell 2 get_center");
@@ -307,9 +307,9 @@ bool test_aabb_tree()
         // Test get leaf center
         node = &t.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(0.9375, p.x(), 1E-4);
-        out = out && compare(0.9375, p.y(), 1E-4);
-        out = out && compare(0.9375, p.z(), 1E-4);
+        out = out && compare(0.9375, p.x, 1E-4);
+        out = out && compare(0.9375, p.y, 1E-4);
+        out = out && compare(0.9375, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed aabb tree vec3 get_cell 3 get_center");

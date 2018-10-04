@@ -20,6 +20,7 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
+#include "math/min/vec3.h"
 #include "math/min/utility.h"
 
 namespace min

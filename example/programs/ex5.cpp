@@ -13,21 +13,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include <iostream>
-#include <min/bmp.h>
-#include <min/camera.h>
-#include <min/loop_sync.h>
-#include <min/md5_mesh.h>
-#include <min/md5_model.h>
-#include <min/program.h>
-#include <min/settings.h>
-#include <min/shader.h>
-#include <min/skeletal_vertex.h>
-#include <min/text_buffer.h>
-#include <min/texture_buffer.h>
-#include <min/uniform_buffer.h>
-#include <min/utility.h>
-#include <min/vertex_buffer.h>
-#include <min/window.h>
+#include "file/min/bmp.h"
+#include "scene/min/camera.h"
+#include "renderer/min/loop_sync.h"
+#include "file/min/md5_mesh.h"
+#include "scene/min/md5_model.h"
+#include "renderer/min/program.h"
+#include "platform/min/settings.h"
+#include "renderer/min/shader.h"
+#include "renderer/min/skeletal_vertex.h"
+#include "renderer/min/text_buffer.h"
+#include "renderer/min/texture_buffer.h"
+#include "renderer/min/uniform_buffer.h"
+#include "math/min/utility.h"
+#include "renderer/min/vertex_buffer.h"
+#include "platform/min/window.h"
 #include <string>
 
 class md5_render_loop_test

@@ -15,10 +15,10 @@ limitations under the License.
 #ifndef TESTCAMERA
 #define TESTCAMERA
 
-#include <min/camera.h>
-#include <min/frustum.h>
-#include <min/mat4.h>
-#include <min/test.h>
+#include "scene/min/camera.h"
+#include "geom/min/frustum.h"
+#include "math/min/mat4.h"
+#include "platform/min/test.h"
 #include <stdexcept>
 
 bool test_camera()
@@ -40,9 +40,9 @@ bool test_camera()
     mat = c.get_pv_matrix();
     const min::frustum<double> &cf = c.get_frustum();
     p = cf.get_center();
-    out = out && compare(0.0, p.x(), 1E-4);
-    out = out && compare(100.05, p.y(), 1E-4);
-    out = out && compare(0.0, p.z(), 1E-4);
+    out = out && compare(0.0, p.x, 1E-4);
+    out = out && compare(100.05, p.y, 1E-4);
+    out = out && compare(0.0, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed camera frustum get_center");
@@ -53,9 +53,9 @@ bool test_camera()
     c.set_position(p);
     mat = c.get_pv_matrix();
     p = cf.get_center();
-    out = out && compare(0.0, p.x(), 1E-4);
-    out = out && compare(102.05, p.y(), 1E-4);
-    out = out && compare(0.0, p.z(), 1E-4);
+    out = out && compare(0.0, p.x, 1E-4);
+    out = out && compare(102.05, p.y, 1E-4);
+    out = out && compare(0.0, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed camera set_position");
@@ -66,9 +66,9 @@ bool test_camera()
     c.set_look_at(p);
     mat = c.get_pv_matrix();
     p = cf.get_center();
-    out = out && compare(0.0, p.x(), 1E-4);
-    out = out && compare(2.0, p.y(), 1E-4);
-    out = out && compare(-100.05, p.z(), 1E-4);
+    out = out && compare(0.0, p.x, 1E-4);
+    out = out && compare(2.0, p.y, 1E-4);
+    out = out && compare(-100.05, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed camera frustum set lookat");
@@ -76,9 +76,9 @@ bool test_camera()
 
     // Check the right vector
     p = cf.get_right();
-    out = out && compare(1.0, p.x(), 1E-4);
-    out = out && compare(0.0, p.y(), 1E-4);
-    out = out && compare(0.0, p.z(), 1E-4);
+    out = out && compare(1.0, p.x, 1E-4);
+    out = out && compare(0.0, p.y, 1E-4);
+    out = out && compare(0.0, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed camera get_right");
@@ -93,9 +93,9 @@ bool test_camera()
     c.make_dirty();          // must call this to update camera
     mat = c.get_pv_matrix(); // must call this to update camera
     p = cf.get_center();
-    out = out && compare(0.0, p.x(), 1E-4);
-    out = out && compare(2.0, p.y(), 1E-4);
-    out = out && compare(-35.0, p.z(), 1E-4);
+    out = out && compare(0.0, p.x, 1E-4);
+    out = out && compare(2.0, p.y, 1E-4);
+    out = out && compare(-35.0, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed camera update frustum view properties");
@@ -177,9 +177,9 @@ bool test_camera()
     c.move_look_at(1.0, 1.0);
     mat = c.get_pv_matrix();
     p = c.get_look_at();
-    out = out && compare(-0.0349, p.x(), 1E-4);
-    out = out && compare(2.0349, p.y(), 1E-4);
-    out = out && compare(-1.9993, p.z(), 1E-4);
+    out = out && compare(-0.0349, p.x, 1E-4);
+    out = out && compare(2.0349, p.y, 1E-4);
+    out = out && compare(-1.9993, p.z, 1E-4);
     if (!out)
     {
         throw std::runtime_error("Failed camera move look at");

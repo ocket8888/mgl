@@ -78,7 +78,7 @@ class mat3
 
     // constructs a translation matrix
     mat3(const vec2<T> &t)
-        : _a(1.0), _b(0.0), _c(0.0), _d(0.0), _e(1.0), _f(0.0), _g(t.x()), _h(t.y()), _i(1.0) {}
+        : _a(1.0), _b(0.0), _c(0.0), _d(0.0), _e(1.0), _f(0.0), _g(t.x), _h(t.y), _i(1.0) {}
 
     // constructs an orthogonal 3D rotation matrix around the Z axis
     mat3(const mat2<T> &r)
@@ -86,7 +86,7 @@ class mat3
 
     // constructs a matrix that first rotates then translates in 2D
     mat3(const vec2<T> &t, const mat2<T> &r)
-        : _a(r._xc), _b(r._ys), _c(0.0), _d(r._xs), _e(r._yc), _f(0.0), _g(t.x()), _h(t.y()), _i(1.0) {}
+        : _a(r._xc), _b(r._ys), _c(0.0), _d(r._xs), _e(r._yc), _f(0.0), _g(t.x), _h(t.y), _i(1.0) {}
 
     // constructs a 3D rotation matrix
     mat3(const quat<T>&);

@@ -17,9 +17,9 @@ limitations under the License.
 
 #include <chrono>
 #include <iostream>
-#include <min/aabbox.h>
-#include <min/oobbox.h>
-#include <min/sphere.h>
+#include "geom/min/aabbox.h"
+#include "geom/min/oobbox.h"
+#include "geom/min/sphere.h"
 #include <random>
 #include <stdexcept>
 

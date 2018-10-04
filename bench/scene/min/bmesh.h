@@ -17,7 +17,7 @@ limitations under the License.
 
 #include <chrono>
 #include <limits>
-#include <min/mesh.h>
+#include "geom/min/mesh.h"
 
 double bench_bmesh()
 {

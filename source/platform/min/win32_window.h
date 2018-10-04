@@ -16,15 +16,15 @@ limitations under the License.
 #define __WIN32WINDOW__
 
 // Do not reorder the GLEW headers, clang-format will break compiles
-#include <min/glew.h>
+#include "platform/min/glew.h"
 
-#include <min/wglew.h>
+#include "platform/min/wglew.h"
 
 #include <gl\GL.h>
 
 #include <cstdio>
 #include <iostream>
-#include <min/keyboard.h>
+#include "platform/min/keyboard.h"
 #include <stdexcept>
 #include <string>
 #include <utility>

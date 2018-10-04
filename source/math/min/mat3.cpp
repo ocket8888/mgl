@@ -15,6 +15,9 @@ limitations under the License.
 
 #include "mat3.h"
 
+template class min::mat3<float>;
+template class min::mat3<double>;
+
 // constructs a 3D rotation matrix
 template <typename T>
 min::mat3<T>::mat3(const min::quat<T> &r)
@@ -43,25 +46,25 @@ min::mat3<T>::mat3(const min::quat<T> &r)
 template <typename T>
 void min::mat3<T>::one(min::vec3<T> &v)
 {
-    _a = v.x();
-    _b = v.y();
-    _c = v.z();
+    _a = v.x;
+    _b = v.y;
+    _c = v.z;
 }
 
 template <typename T>
 void min::mat3<T>::two(min::vec3<T> &v)
 {
-    _d = v.x();
-    _e = v.y();
-    _f = v.z();
+    _d = v.x;
+    _e = v.y;
+    _f = v.z;
 }
 
 template <typename T>
 void min::mat3<T>::three(min::vec3<T> &v)
 {
-    _g = v.x();
-    _h = v.y();
-    _i = v.z();
+    _g = v.x;
+    _h = v.y;
+    _i = v.z;
 }
 
 template <typename T>
@@ -123,9 +126,9 @@ min::mat3<T> &min::mat3<T>::operator*=(const min::mat3<T> &A)
 template <typename T>
 min::vec3<T> min::mat3<T>::operator*(const min::vec3<T> &A) const
 {
-    T x = _a * A.x() + _d * A.y() + _g * A.z();
-    T y = _b * A.x() + _e * A.y() + _h * A.z();
-    T z = _c * A.x() + _f * A.y() + _i * A.z();
+    T x = _a * A.x + _d * A.y + _g * A.z;
+    T y = _b * A.x + _e * A.y + _h * A.z;
+    T z = _c * A.x + _f * A.y + _i * A.z;
 
     return vec3<T>(x, y, z);
 }
@@ -139,8 +142,8 @@ min::vec2<T> min::mat3<T>::get_translation() const
 template <typename T>
 min::mat3<T> &min::mat3<T>::set_translation(const min::vec2<T> &vec)
 {
-    _g = vec.x();
-    _h = vec.y();
+    _g = vec.x;
+    _h = vec.y;
     return *this;
 }
 
@@ -202,8 +205,8 @@ min::vec2<T> min::mat3<T>::get_scale() const
 template <typename T>
 min::mat3<T> &min::mat3<T>::set_scale(const min::vec2<T> &s)
 {
-    _a = s.x();
-    _e = s.y();
+    _a = s.x;
+    _e = s.y;
     return *this;
 }
 

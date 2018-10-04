@@ -13,17 +13,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include <iostream>
-#include <min/bmp.h>
-#include <min/camera.h>
-#include <min/emitter_buffer.h>
-#include <min/loop_sync.h>
-#include <min/program.h>
-#include <min/settings.h>
-#include <min/shader.h>
-#include <min/texture_buffer.h>
-#include <min/uniform_buffer.h>
-#include <min/wavefront.h>
-#include <min/window.h>
+#include "file/min/bmp.h"
+#include "scene/min/camera.h"
+#include "renderer/min/emitter_buffer.h"
+#include "renderer/min/loop_sync.h"
+#include "renderer/min/program.h"
+#include "platform/min/settings.h"
+#include "renderer/min/shader.h"
+#include "renderer/min/texture_buffer.h"
+#include "renderer/min/uniform_buffer.h"
+#include "file/min/wavefront.h"
+#include "platform/min/window.h"
 #include <string>
 
 class particle_test

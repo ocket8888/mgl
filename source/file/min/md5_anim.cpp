@@ -13,7 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include "md5_anim.h"
-
 //// md5_node ////
 
 const std::string &min::md5_node::get_name() const
@@ -38,7 +37,7 @@ unsigned min::md5_node::get_start() const
 
 
 //// md5_transform ////
-
+template class min::md5_transform<float>;
 template<class T> min::md5_transform<T>::md5_transform(const min::vec3<T> &t, const min::quat<T> &r) : _position(t), _rotation(r)
 {
     _rotation.calculate_w();
@@ -82,7 +81,7 @@ template<class T> const min::quat<T> &min::md5_animated_node<T>::get_rotation() 
 
 
 //// md5_frame_data ////
-
+template class min::md5_frame_data<float>;
 template <class T>
 void min::md5_frame_data<T>::add(const T data)
 {
@@ -103,7 +102,7 @@ void min::md5_frame_data<T>::reserve(size_t n)
 
 
 //// md5_frame ////
-
+template class min::md5_frame<float>;
 template <class T>
 void min::md5_frame<T>::add_node(const min::md5_animated_node<T> &node, const min::mat4<T> &bone)
 {
@@ -131,8 +130,9 @@ void min::md5_frame<T>::reserve(size_t n)
 }
 
 
-//// md5_anim ////
 
+//// md5_anim ////
+template class min::md5_anim<float>;
 template <typename T>
 void min::md5_anim<T>::load_file(const std::string _file)
 {
@@ -521,15 +521,15 @@ void min::md5_anim<T>::process_frame(const min::md5_frame_data<T> &frame_data)
         vec3<T> &position = child.get_position();
         if (flag & 1)
         {
-            position.x(data[start + j++]);
+            position.x = data[start + j++];
         }
         if (flag & 2)
         {
-            position.y(data[start + j++]);
+            position.y = data[start + j++];
         }
         if (flag & 4)
         {
-            position.z(data[start + j++]);
+            position.z = data[start + j++];
         }
 
         // Set the animated rotation

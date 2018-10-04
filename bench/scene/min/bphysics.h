@@ -17,11 +17,11 @@ limitations under the License.
 
 #include <chrono>
 #include <iostream>
-#include <min/aabbox.h>
-#include <min/grid.h>
-#include <min/physics.h>
-#include <min/sphere.h>
-#include <min/tree.h>
+#include "geom/min/aabbox.h"
+#include "scene/min/grid.h"
+#include "scene/min/physics.h"
+#include "geom/min/sphere.h"
+#include "scene/min/tree.h"
 #include <random>
 #include <stdexcept>
 

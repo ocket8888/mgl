@@ -15,18 +15,18 @@ limitations under the License.
 #ifndef TESTTEXTUREBUFFER
 #define TESTTEXTUREBUFFER
 
-#include <min/bmp.h>
-#include <min/camera.h>
-#include <min/convert.h>
-#include <min/dds.h>
-#include <min/program.h>
-#include <min/settings.h>
-#include <min/shader.h>
-#include <min/static_vertex.h>
-#include <min/test.h>
-#include <min/texture_buffer.h>
-#include <min/vertex_buffer.h>
-#include <min/window.h>
+#include "file/min/bmp.h"
+#include "scene/min/camera.h"
+#include "geom/min/convert.h"
+#include "file/min/dds.h"
+#include "renderer/min/program.h"
+#include "platform/min/settings.h"
+#include "renderer/min/shader.h"
+#include "renderer/min/static_vertex.h"
+#include "platform/min/test.h"
+#include "renderer/min/texture_buffer.h"
+#include "renderer/min/vertex_buffer.h"
+#include "platform/min/window.h"
 #include <stdexcept>
 #include <string>
 

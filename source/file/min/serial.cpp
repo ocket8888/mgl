@@ -1,6 +1,7 @@
 #include "serial.h"
 
 template unsigned int min::read_le(const std::vector<uint8_t>&, size_t&);
+template int min::read_le(const std::vector<uint8_t>&, size_t&);
 template unsigned short min::read_le(const std::vector<uint8_t>&, size_t&);
 template char min::read_le(const std::vector<uint8_t>&, size_t&);
 
@@ -56,6 +57,7 @@ T min::read_be(const std::vector<uint8_t> &stream, size_t &next)
 
 template void min::write_le(std::vector<uint8_t>&, const char);
 template void min::write_le(std::vector<uint8_t>&, const unsigned int);
+template void min::write_le(std::vector<uint8_t>&, const int);
 
 template <typename T>
 void min::write_le(std::vector<uint8_t> &stream, const T data)
@@ -72,6 +74,10 @@ void min::write_le(std::vector<uint8_t> &stream, const T data)
     }
 }
 
+template void min::write_be(std::vector<uint8_t>&, const int);
+template void min::write_be(std::vector<uint8_t>&, const unsigned int);
+template void min::write_be(std::vector<uint8_t>&, const char);
+template void min::write_be(std::vector<uint8_t>&, const unsigned short);
 template <typename T>
 void min::write_be(std::vector<uint8_t> &stream, const T data)
 {
@@ -121,6 +127,8 @@ void min::write_be(std::vector<uint8_t> &stream, const T data, const size_t offs
     }
 }
 
+template std::vector<unsigned short> min::read_le_vector(const std::vector<uint8_t>&, size_t&);
+template std::vector<unsigned int> min::read_le_vector(const std::vector<uint8_t>&, size_t&);
 template <typename T>
 std::vector<T> min::read_le_vector(const std::vector<uint8_t> &stream, size_t &next)
 {
@@ -173,6 +181,8 @@ std::vector<T> min::read_be_vector(const std::vector<uint8_t> &stream, size_t &n
     return out;
 }
 
+template void min::write_le_vector(std::vector<uint8_t>&, const std::vector<unsigned short>&);
+template void min::write_le_vector(std::vector<uint8_t>&, const std::vector<unsigned int>&);
 template <typename T>
 void min::write_le_vector(std::vector<uint8_t> &stream, const std::vector<T> &data)
 {
@@ -262,31 +272,31 @@ min::vec4<T> min::read_be_vec4(const std::vector<uint8_t> &stream, size_t &next)
 template <typename T>
 void min::write_le_vec2(std::vector<uint8_t> &stream, const min::vec2<T> &v)
 {
-    write_le<T>(stream, v.x());
-    write_le<T>(stream, v.y());
+    write_le<T>(stream, v.x);
+    write_le<T>(stream, v.y);
 }
 
 template <typename T>
 void min::write_be_vec2(std::vector<uint8_t> &stream, const min::vec2<T> &v)
 {
-    write_be<T>(stream, v.x());
-    write_be<T>(stream, v.y());
+    write_be<T>(stream, v.x);
+    write_be<T>(stream, v.y);
 }
 
 template <typename T>
 void min::write_le_vec3(std::vector<uint8_t> &stream, const min::vec3<T> &v)
 {
-    write_le<T>(stream, v.x());
-    write_le<T>(stream, v.y());
-    write_le<T>(stream, v.z());
+    write_le<T>(stream, v.x);
+    write_le<T>(stream, v.y);
+    write_le<T>(stream, v.z);
 }
 
 template <typename T>
 void min::write_be_vec3(std::vector<uint8_t> &stream, const min::vec3<T> &v)
 {
-    write_be<T>(stream, v.x());
-    write_be<T>(stream, v.y());
-    write_be<T>(stream, v.z());
+    write_be<T>(stream, v.x);
+    write_be<T>(stream, v.y);
+    write_be<T>(stream, v.z);
 }
 
 template <typename T>
@@ -307,6 +317,8 @@ void min::write_be_vec4(std::vector<uint8_t> &stream, const min::vec4<T> &v)
     write_be<T>(stream, v.w());
 }
 
+template std::vector<min::vec2<float>> min::read_le_vector_vec2(const std::vector<uint8_t>&, size_t&);
+template std::vector<min::vec2<double>> min::read_le_vector_vec2(const std::vector<uint8_t>&, size_t&);
 template <typename T>
 std::vector<min::vec2<T>> min::read_le_vector_vec2(const std::vector<uint8_t> &stream, size_t &next)
 {
@@ -359,6 +371,8 @@ std::vector<min::vec2<T>> min::read_be_vector_vec2(const std::vector<uint8_t> &s
     return out;
 }
 
+template std::vector<min::vec3<float>> min::read_le_vector_vec3(const std::vector<uint8_t>&, size_t&);
+template std::vector<min::vec3<double>> min::read_le_vector_vec3(const std::vector<uint8_t>&, size_t&);
 template <typename T>
 std::vector<min::vec3<T>> min::read_le_vector_vec3(const std::vector<uint8_t> &stream, size_t &next)
 {
@@ -411,6 +425,8 @@ std::vector<min::vec3<T>> min::read_be_vector_vec3(const std::vector<uint8_t> &s
     return out;
 }
 
+template std::vector<min::vec4<float>> min::read_le_vector_vec4(const std::vector<uint8_t>&, size_t&);
+template std::vector<min::vec4<double>> min::read_le_vector_vec4(const std::vector<uint8_t>&, size_t&);
 template <typename T>
 std::vector<min::vec4<T>> min::read_le_vector_vec4(const std::vector<uint8_t> &stream, size_t &next)
 {
@@ -463,6 +479,8 @@ std::vector<min::vec4<T>> min::read_be_vector_vec4(const std::vector<uint8_t> &s
     return out;
 }
 
+template void min::write_le_vector_vec2(std::vector<uint8_t>&, const std::vector<min::vec2<double>>&);
+template void min::write_le_vector_vec2(std::vector<uint8_t>&, const std::vector<min::vec2<float>>&);
 template <typename T>
 void min::write_le_vector_vec2(std::vector<uint8_t> &stream, const std::vector<vec2<T>> &data)
 {
@@ -495,6 +513,8 @@ void min::write_be_vector_vec2(std::vector<uint8_t> &stream, const std::vector<v
     }
 }
 
+template void min::write_le_vector_vec3(std::vector<uint8_t>&, const std::vector<vec3<float>>&);
+template void min::write_le_vector_vec3(std::vector<uint8_t>&, const std::vector<vec3<double>>&);
 template <typename T>
 void min::write_le_vector_vec3(std::vector<uint8_t> &stream, const std::vector<vec3<T>> &data)
 {
@@ -527,6 +547,8 @@ void min::write_be_vector_vec3(std::vector<uint8_t> &stream, const std::vector<v
     }
 }
 
+template void min::write_le_vector_vec4(std::vector<uint8_t>&, const std::vector<min::vec4<float>>&);
+template void min::write_le_vector_vec4(std::vector<uint8_t>&, const std::vector<min::vec4<double>>&);
 template <typename T>
 void min::write_le_vector_vec4(std::vector<uint8_t> &stream, const std::vector<vec4<T>> &data)
 {

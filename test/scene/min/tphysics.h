@@ -15,10 +15,10 @@ limitations under the License.
 #ifndef TESTPHYSICS
 #define TESTPHYSICS
 
-#include <min/grid.h>
-#include <min/physics.h>
-#include <min/test.h>
-#include <min/vec2.h>
+#include "scene/min/grid.h"
+#include "scene/min/physics.h"
+#include "platform/min/test.h"
+#include "math/min/vec2.h"
 #include <stdexcept>
 
 bool test_physics_aabb_grid()
@@ -51,8 +51,8 @@ bool test_physics_aabb_grid()
 
         // Test body1 position didn't move
         const min::vec2<double> &p1 = body1.get_position();
-        out = out && compare(1.5, p1.x(), 1E-4);
-        out = out && compare(1.5, p1.y(), 1E-4);
+        out = out && compare(1.5, p1.x, 1E-4);
+        out = out && compare(1.5, p1.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec2 position body 1");
@@ -60,8 +60,8 @@ bool test_physics_aabb_grid()
 
         // Test body2 position falls from 3.5 to 3.4; df = at^2; -10*(0.1 * 0.1) = -0.1
         const min::vec2<double> &p2 = body2.get_position();
-        out = out && compare(1.5, p2.x(), 1E-4);
-        out = out && compare(3.4, p2.y(), 1E-4);
+        out = out && compare(1.5, p2.x, 1E-4);
+        out = out && compare(3.4, p2.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec2 position body2");
@@ -79,10 +79,10 @@ bool test_physics_aabb_grid()
         const min::vec2<double> &v2 = body2.get_linear_velocity();
 
         // Test velocity before collision
-        out = out && compare(0.0, v1.x(), 1E-4);
-        out = out && compare(0.0, v1.y(), 1E-4);
-        out = out && compare(0.0, v2.x(), 1E-4);
-        out = out && compare(-4.100, v2.y(), 1E-4);
+        out = out && compare(0.0, v1.x, 1E-4);
+        out = out && compare(0.0, v1.y, 1E-4);
+        out = out && compare(0.0, v2.x, 1E-4);
+        out = out && compare(-4.100, v2.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec2 velocity before collision");
@@ -90,10 +90,10 @@ bool test_physics_aabb_grid()
 
         // The two boxes are touching after this time, so we don't need a force to prop up body1
         simulation.solve(0.001, 0.01);
-        out = out && compare(0.0, v1.x(), 1E-4);
-        out = out && compare(-4.1100, v1.y(), 1E-4);
-        out = out && compare(0.0, v2.x(), 1E-4);
-        out = out && compare(-0.0100, v2.y(), 1E-4);
+        out = out && compare(0.0, v1.x, 1E-4);
+        out = out && compare(-4.1100, v1.y, 1E-4);
+        out = out && compare(0.0, v2.x, 1E-4);
+        out = out && compare(-0.0100, v2.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec2 velocity collision1");
@@ -102,10 +102,10 @@ bool test_physics_aabb_grid()
         // Advance the simulation to test contact resolution
         simulation.solve(0.001, 0.01);
 
-        out = out && compare(0.0, v1.x(), 1E-4);
-        out = out && compare(-4.1200, v1.y(), 1E-4);
-        out = out && compare(0.0, v2.x(), 1E-4);
-        out = out && compare(-0.0200, v2.y(), 1E-4);
+        out = out && compare(0.0, v1.x, 1E-4);
+        out = out && compare(-4.1200, v1.y, 1E-4);
+        out = out && compare(0.0, v2.x, 1E-4);
+        out = out && compare(-0.0200, v2.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec2 velocity collision2");
@@ -138,9 +138,9 @@ bool test_physics_aabb_grid()
 
         // Test body1 position didn't move
         const min::vec3<double> &p1 = body1.get_position();
-        out = out && compare(1.5, p1.x(), 1E-4);
-        out = out && compare(1.5, p1.y(), 1E-4);
-        out = out && compare(1.5, p1.z(), 1E-4);
+        out = out && compare(1.5, p1.x, 1E-4);
+        out = out && compare(1.5, p1.y, 1E-4);
+        out = out && compare(1.5, p1.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec3 position body 1");
@@ -148,9 +148,9 @@ bool test_physics_aabb_grid()
 
         // Test body2 position falls from 3.5 to 3.4; df = at^2/t; -10*(0.1 * 0.1) = -0.1
         const min::vec3<double> &p2 = body2.get_position();
-        out = out && compare(1.5, p2.x(), 1E-4);
-        out = out && compare(3.4, p2.y(), 1E-4);
-        out = out && compare(1.5, p2.z(), 1E-4);
+        out = out && compare(1.5, p2.x, 1E-4);
+        out = out && compare(3.4, p2.y, 1E-4);
+        out = out && compare(1.5, p2.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec3 position body2");
@@ -168,12 +168,12 @@ bool test_physics_aabb_grid()
         const min::vec3<double> &v2 = body2.get_linear_velocity();
 
         // Test velocity before collision
-        out = out && compare(0.0, v1.x(), 1E-4);
-        out = out && compare(0.0, v1.y(), 1E-4);
-        out = out && compare(0.0, v1.z(), 1E-4);
-        out = out && compare(0.0, v2.x(), 1E-4);
-        out = out && compare(-4.100, v2.y(), 1E-4);
-        out = out && compare(0.0, v2.z(), 1E-4);
+        out = out && compare(0.0, v1.x, 1E-4);
+        out = out && compare(0.0, v1.y, 1E-4);
+        out = out && compare(0.0, v1.z, 1E-4);
+        out = out && compare(0.0, v2.x, 1E-4);
+        out = out && compare(-4.100, v2.y, 1E-4);
+        out = out && compare(0.0, v2.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec2 velocity before collision");
@@ -181,12 +181,12 @@ bool test_physics_aabb_grid()
 
         // The two boxes are touching after this time, so we don't need a force to prop up body1
         simulation.solve(0.001, 0.01);
-        out = out && compare(0.0, v1.x(), 1E-4);
-        out = out && compare(-4.1100, v1.y(), 1E-4);
-        out = out && compare(0.0, v1.z(), 1E-4);
-        out = out && compare(0.0, v2.x(), 1E-4);
-        out = out && compare(-0.0100, v2.y(), 1E-4);
-        out = out && compare(0.0, v2.z(), 1E-4);
+        out = out && compare(0.0, v1.x, 1E-4);
+        out = out && compare(-4.1100, v1.y, 1E-4);
+        out = out && compare(0.0, v1.z, 1E-4);
+        out = out && compare(0.0, v2.x, 1E-4);
+        out = out && compare(-0.0100, v2.y, 1E-4);
+        out = out && compare(0.0, v2.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec3 velocity collision1");
@@ -194,12 +194,12 @@ bool test_physics_aabb_grid()
 
         // Advance the simulation to test contact resolution
         simulation.solve(0.001, 0.01);
-        out = out && compare(0.0, v1.x(), 1E-4);
-        out = out && compare(-4.1200, v1.y(), 1E-4);
-        out = out && compare(0.0, v1.z(), 1E-4);
-        out = out && compare(0.0, v2.x(), 1E-4);
-        out = out && compare(-0.0200, v2.y(), 1E-4);
-        out = out && compare(0.0, v2.z(), 1E-4);
+        out = out && compare(0.0, v1.x, 1E-4);
+        out = out && compare(-4.1200, v1.y, 1E-4);
+        out = out && compare(0.0, v1.z, 1E-4);
+        out = out && compare(0.0, v2.x, 1E-4);
+        out = out && compare(-0.0200, v2.y, 1E-4);
+        out = out && compare(0.0, v2.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed physics vec3 velocity collision2");

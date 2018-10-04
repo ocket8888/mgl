@@ -113,11 +113,6 @@ install:
 uninstall:
 	$(RM) -rI $(MGL_PATH)
 
-gl_test:
-	g++ $(LIB_SOURCES) $(TEST_SOURCES) -Itest $(PARAMS) $(TEST_GL) -o bin/gl_test $(LDFLAGS) 2> "gl_test.txt"
-wl_test:
-	g++ $(LIB_SOURCES) $(TEST_SOURCES) -Itest $(WL_INCLUDE) $(PARAMS) $(TEST_WL) -o bin/wl_test $(LDFLAGS) 2> "wl_test.txt"
-
 benchmarks:
 	g++ $(LIB_SOURCES) $(BENCH_SOURCES) -Ibench $(PARAMS) bench/gl_bench.cpp -o bin/gl_bench $(LDFLAGS) 2> "gcc_bench.txt"
 example1:

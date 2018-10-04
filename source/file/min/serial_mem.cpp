@@ -87,6 +87,8 @@ T min::read_be(const mem_file &stream, size_t &next)
     return *out;
 }
 
+template std::vector<unsigned int> min::read_le_vector(const mem_file&, size_t&);
+template std::vector<unsigned short> min::read_le_vector(const mem_file&, size_t&);
 template <typename T>
 std::vector<T> min::read_le_vector(const mem_file &stream, size_t &next)
 {
@@ -193,6 +195,8 @@ min::vec4<T> min::read_be_vec4(const mem_file &stream, size_t &next)
     return min::vec4<T>(x, y, z, w);
 }
 
+template std::vector<min::vec2<float>> min::read_le_vector_vec2(const min::mem_file&, size_t&);
+template std::vector<min::vec2<double>> min::read_le_vector_vec2(const min::mem_file&, size_t&);
 template <typename T>
 std::vector<min::vec2<T>> min::read_le_vector_vec2(const mem_file &stream, size_t &next)
 {
@@ -245,6 +249,8 @@ std::vector<min::vec2<T>> min::read_be_vector_vec2(const mem_file &stream, size_
     return out;
 }
 
+template std::vector<min::vec3<float>> min::read_le_vector_vec3(const min::mem_file&, size_t&);
+template std::vector<min::vec3<double>> min::read_le_vector_vec3(const min::mem_file&, size_t&);
 template <typename T>
 std::vector<min::vec3<T>> min::read_le_vector_vec3(const mem_file &stream, size_t &next)
 {
@@ -297,6 +303,8 @@ std::vector<min::vec3<T>> min::read_be_vector_vec3(const mem_file &stream, size_
     return out;
 }
 
+template std::vector<min::vec4<float>> min::read_le_vector_vec4(const mem_file&, size_t&);
+template std::vector<min::vec4<double>> min::read_le_vector_vec4(const mem_file&, size_t&);
 template <typename T>
 std::vector<min::vec4<T>> min::read_le_vector_vec4(const mem_file &stream, size_t &next)
 {

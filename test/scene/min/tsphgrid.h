@@ -15,10 +15,10 @@ limitations under the License.
 #ifndef TESTSPHEREGRID
 #define TESTSPHEREGRID
 
-#include <min/grid.h>
-#include <min/sphere.h>
-#include <min/test.h>
-#include <min/vec3.h>
+#include "scene/min/grid.h"
+#include "geom/min/sphere.h"
+#include "platform/min/test.h"
+#include "math/min/vec3.h"
 #include <stdexcept>
 
 bool test_sphere_grid()
@@ -83,8 +83,8 @@ bool test_sphere_grid()
         // Test get_cell center
         auto *node = &g.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(5.0, p.x(), 1E-4);
-        out = out && compare(5.0, p.y(), 1E-4);
+        out = out && compare(5.0, p.x, 1E-4);
+        out = out && compare(5.0, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec2 get_cell 1 get_center");
@@ -93,8 +93,8 @@ bool test_sphere_grid()
         // Check the cell extents
         // Extent scale 2 should 20/2 = 10.0;
         p = node->get_cell().get_extent();
-        out = out && compare(10.0, p.x(), 1E-4);
-        out = out && compare(10.0, p.y(), 1E-4);
+        out = out && compare(10.0, p.x, 1E-4);
+        out = out && compare(10.0, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec2 get_cell 1 cell_extents");
@@ -120,8 +120,8 @@ bool test_sphere_grid()
         // Test get leaf center
         node = &g.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(5.0, p.x(), 1E-4);
-        out = out && compare(5.0, p.y(), 1E-4);
+        out = out && compare(5.0, p.x, 1E-4);
+        out = out && compare(5.0, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec2 get_cell 2 get_center");
@@ -139,8 +139,8 @@ bool test_sphere_grid()
         // Test get leaf center
         node = &g.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(5.0, p.x(), 1E-4);
-        out = out && compare(5.0, p.y(), 1E-4);
+        out = out && compare(5.0, p.x, 1E-4);
+        out = out && compare(5.0, p.y, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec2 get_cell 3 get_center");
@@ -260,9 +260,9 @@ bool test_sphere_grid()
         // Test get_cell center
         auto *node = &g.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(5.0, p.x(), 1E-4);
-        out = out && compare(5.0, p.y(), 1E-4);
-        out = out && compare(5.0, p.z(), 1E-4);
+        out = out && compare(5.0, p.x, 1E-4);
+        out = out && compare(5.0, p.y, 1E-4);
+        out = out && compare(5.0, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec3 get_cell 1 get_center");
@@ -271,9 +271,9 @@ bool test_sphere_grid()
         // Check the cell extents
         // Extent scale 2 should 20/2 = 10.0;
         p = node->get_cell().get_extent();
-        out = out && compare(10.0, p.x(), 1E-4);
-        out = out && compare(10.0, p.y(), 1E-4);
-        out = out && compare(10.0, p.z(), 1E-4);
+        out = out && compare(10.0, p.x, 1E-4);
+        out = out && compare(10.0, p.y, 1E-4);
+        out = out && compare(10.0, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec3 get_cell 1 cell_extents");
@@ -299,9 +299,9 @@ bool test_sphere_grid()
         // Test get leaf center
         node = &g.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(5.0, p.x(), 1E-4);
-        out = out && compare(5.0, p.y(), 1E-4);
-        out = out && compare(5.0, p.z(), 1E-4);
+        out = out && compare(5.0, p.x, 1E-4);
+        out = out && compare(5.0, p.y, 1E-4);
+        out = out && compare(5.0, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec3 get_cell 2 get_center");
@@ -319,9 +319,9 @@ bool test_sphere_grid()
         // Test get leaf center
         node = &g.get_node(p);
         p = node->get_cell().get_center();
-        out = out && compare(5.0, p.x(), 1E-4);
-        out = out && compare(5.0, p.y(), 1E-4);
-        out = out && compare(5.0, p.z(), 1E-4);
+        out = out && compare(5.0, p.x, 1E-4);
+        out = out && compare(5.0, p.y, 1E-4);
+        out = out && compare(5.0, p.z, 1E-4);
         if (!out)
         {
             throw std::runtime_error("Failed sphere grid vec3 get_cell 3 get_center");

@@ -41,9 +41,9 @@ class vec2
     vec2();
     vec2(const T, const T);
 
-    constexpr static T unit_length();
-    constexpr static T inverse_unit_length();
-    constexpr static vec2<T> up();
+    constexpr static T unit_length(){return var<T>::SQRT2;}
+    constexpr static T inverse_unit_length(){return var<T>::INV_SQRT2;}
+    constexpr static vec2<T> up(){return min::vec2<T>(0.0, 1.0);}
     constexpr static coord_sys<T, vec2> axes(){return coord_sys<T, vec2>(vec2<T>(1.0, 0.0), vec2<T>(0.0, 1.0));}
     static std::pair<vec2<T>, vec2<T>> extents(const std::vector<vec2<T>>&);
     static std::vector<std::pair<vec2<T>, vec2<T>>> grid(const vec2<T>&, const vec2<T>&, const size_t);

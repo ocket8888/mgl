@@ -15,39 +15,11 @@ limitations under the License.
 #ifndef TESTDDS
 #define TESTDDS
 
-#include <min/dds.h>
-#include <min/test.h>
 #include <stdexcept>
 
-bool test_dds()
-{
-    bool out = true;
+#include "file/min/dds.h"
+#include "platform/min/test.h"
 
-    // Local variables
-    int s;
-    int w;
-    int h;
-    std::vector<uint8_t> data;
-    const min::dds image = min::dds("data/texture/stone.dds");
-    s = image.get_size();
-    w = image.get_width();
-    h = image.get_height();
-    out = out && compare(256, w);
-    out = out && compare(256, h);
-    out = out && compare(43704, s);
-    if (!out)
-    {
-        throw std::runtime_error("Failed dds image constructor properties");
-    }
-
-    data = image.get_pixels();
-    out = out && compare(43704, data.size());
-    if (!out)
-    {
-        throw std::runtime_error("Failed dds image size");
-    }
-
-    return out;
-}
+bool test_dds();
 
 #endif

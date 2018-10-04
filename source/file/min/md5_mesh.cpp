@@ -74,6 +74,7 @@ unsigned min::vertex_weight::get_count() const
 
 
 //// md5_mesh ////
+template class min::md5_mesh<float, unsigned short>;
 template<typename T, typename K>
 void min::md5_mesh<T,K>::load_file(const std::string _file)
 {

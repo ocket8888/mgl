@@ -18,8 +18,8 @@ limitations under the License.
 #include <min/bphysics.h>
 #include <min/bspatial.h>
 #include <min/bwavefront.h>
-#include <min/grid.h>
-#include <min/tree.h>
+#include "scene/min/grid.h"
+#include "scene/min/tree.h"
 #include <string>
 
 /* Calculate the current flowing through the circuit
@@ -29,7 +29,7 @@ limitations under the License.
      \----=----/
       \---=---/
 I = V/R; 1/R = 1/R1 ... 1/Rn
-I = V * 1/R 
+I = V * 1/R
 */
 
 constexpr size_t N = 40000;

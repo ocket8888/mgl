@@ -14,14 +14,14 @@ limitations under the License.
 */
 #include <chrono>
 #include <iostream>
-#include <min/camera.h>
-#include <min/loop_sync.h>
-#include <min/program.h>
-#include <min/settings.h>
-#include <min/shader.h>
-#include <min/static_vertex.h>
-#include <min/vertex_buffer.h>
-#include <min/window.h>
+#include "scene/min/camera.h"
+#include "renderer/min/loop_sync.h"
+#include "renderer/min/program.h"
+#include "platform/min/settings.h"
+#include "renderer/min/shader.h"
+#include "renderer/min/static_vertex.h"
+#include "renderer/min/vertex_buffer.h"
+#include "platform/min/window.h"
 #include <string>
 
 class screen_draw_test

@@ -877,17 +877,17 @@ template <typename T>
 min::vec2<T> min::vec2<T>::sign() const
 {
     // Get the sign of the min::vector
-    const T x = sgn<T>(x);
-    const T y = sgn<T>(y);
+    const T X = sgn<T>(x);
+    const T Y = sgn<T>(y);
 
-    return min::vec2<T>(x, y);
+    return min::vec2<T>(X, Y);
 }
 
 template <typename T>
 uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
 {
-    T x = x;
-    T y = y;
+    T X = x;
+    T Y = y;
 
     // Get the x portion of key
     uint_fast8_t key = 0;
@@ -895,8 +895,8 @@ uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
     {
         // Set the least significant bit
         key |= 0x1;
-        x -= middle;
-        x = x;
+        X -= middle;
+        x = X;
     }
 
     // Get the y portion of key
@@ -905,8 +905,8 @@ uint_fast8_t min::vec2<T>::subdivide_key(const T middle)
     {
         // Set the least significant bit
         key |= 0x1;
-        y -= middle;
-        y = y;
+        Y -= middle;
+        y = Y;
     }
 
     return key;
@@ -1234,24 +1234,6 @@ void min::vec2<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min::vec2<T
             out.push_back(3);
         }
     }
-}
-
-template <typename T>
-constexpr T min::vec2<T>::unit_length()
-{
-    return var<T>::SQRT2;
-}
-
-template <typename T>
-constexpr T min::vec2<T>::inverse_unit_length()
-{
-    return var<T>::INV_SQRT2;
-}
-
-template <typename T>
-constexpr min::vec2<T> min::vec2<T>::up()
-{
-    return min::vec2<T>(0.0, 1.0);
 }
 
 template <typename T>

@@ -2114,24 +2114,6 @@ void min::vec4<T>::sub_overlap(std::vector<uint_fast8_t> &out, const min::vec4<T
 }
 
 template <typename T>
-constexpr T min::vec4<T>::unit_length()
-{
-    return var<T>::SQRT3;
-}
-
-template <typename T>
-constexpr T min::vec4<T>::inverse_unit_length()
-{
-    return var<T>::INV_SQRT3;
-}
-
-template <typename T>
-constexpr min::vec4<T> min::vec4<T>::up()
-{
-    return vec4<T>(0.0, 1.0, 0.0, 1.0);
-}
-
-template <typename T>
 bool min::vec4<T>::within(const min::vec4<T> &min, const min::vec4<T> &max) const
 {
     // Return true if this vector is within the min and max vector range

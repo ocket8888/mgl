@@ -13,11 +13,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 #include <algorithm>
-#include <min/bmp.h>
-#include <min/dds.h>
-#include <min/strtoken.h>
-#include <min/texture_compressor.h>
-#include <min/window.h>
+#include "file/min/bmp.h"
+#include "file/min/dds.h"
+#include "file/min/strtoken.h"
+#include "renderer/min/texture_compressor.h"
+#include "platform/min/window.h"
 #include <stdexcept>
 #include <string>
 

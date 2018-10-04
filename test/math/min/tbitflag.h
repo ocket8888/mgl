@@ -16,48 +16,11 @@ limitations under the License.
 #define TESTBITFLAG
 
 #include <cstdint>
-#include <min/test.h>
-#include <min/utility.h>
 #include <stdexcept>
 
-bool test_bit_flag()
-{
-    bool out = true;
-    min::bit_flag<uint_fast16_t, uint_fast32_t> flags(256, 256);
+#include "math/min/utility.h"
+#include "platform/min/test.h"
 
-    // Make sure 1/2 is off by default
-    out = out && flags.get(1, 2) == false;
-    if (!out)
-    {
-        throw std::runtime_error("Failed bit_flag get default value");
-    }
-
-    // Set 1/2 to be on
-    flags.set_on(1, 2);
-    out = out && flags.get(1, 2) == true;
-    if (!out)
-    {
-        throw std::runtime_error("Failed bit_flag set_on 1,2");
-    }
-
-    // Set 3/4 to be on
-    flags.set_on(3, 4);
-    out = out && flags.get(3, 4) == true;
-    if (!out)
-    {
-        throw std::runtime_error("Failed bit_flag set_on 3,4");
-    }
-
-    // Turn off 1/2 and make sure 3/4 is still set
-    flags.set_off(1, 2);
-    out = out && flags.get(1, 2) == false;
-    out = out && flags.get(3, 4) == true;
-    if (!out)
-    {
-        throw std::runtime_error("Failed bit_flag get 1,2");
-    }
-
-    return out;
-}
+bool test_bit_flag();
 
 #endif
